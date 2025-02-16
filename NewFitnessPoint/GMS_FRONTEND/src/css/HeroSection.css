@@ -1,0 +1,130 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 65vh;
+  background-image: url('../assets/weightlifting.jpg'); /* Path to your image */
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-image-container {
+  width: 50%; /* Adjust as needed */
+  height: 100%;
+  overflow: hidden; /* Hide overflowing image */
+}
+
+.hero-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the entire container */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  padding: 40px; /* Increased padding */
+}
+
+.hero-content h1 {
+  font-size: 4em;
+  margin-bottom: 20px;
+  font-weight: bold; /* Added bold weight */
+}
+
+.highlight {
+  color: #ff4d4d;
+}
+
+.hero-content p {
+  font-size: 1.2em; /* Reduced font size */
+  margin-bottom: 30px; /* Reduced margin */
+  line-height: 1.6; /* Improved line height */
+}
+
+.social-icons {
+  display: flex; /* Align social icons horizontally */
+  align-items: center; /* Vertically align icons */
+}
+
+.social-icons a {
+  margin-right: 15px;
+}
+
+.social-icons img {
+  height: 30px; /* Increased icon size */
+}
+
+
+
+
+
+.content-right p {
+  font-size: 1em;
+  margin-bottom: 10px;
+ 
+}
+
+.content-right p:first-child {
+  font-weight: bold; /* Make the first line bold */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .hero-image-container {
+    width: 100%;
+  }
+  .hero-content {
+    padding: 20px;
+    margin: 20px 0; /* Add margin for spacing */
+  }
+  
+  .content-right::before {
+    display: none; /* Hide the triangle on smaller screens */
+  }
+}
+
+.content-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  writing-mode: vertical-rl;
+  transform: rotate(360deg);
+  font-family: 'Post No Bills Colombo', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: gray;
+  padding: 10px;
+  text-align: center;
+}
+
+
+.right-banner {
+    writing-mode: vertical-rl; /* Rotates text vertically */
+    transform: rotate(360deg); /* Adjust to correct text orientation */
+    font-size: 1.5rem;
+    color: white;
+    padding: 20px;
+    border-radius: 8px; /* Optional: Rounded edges */
+    text-align: center;
+}
+

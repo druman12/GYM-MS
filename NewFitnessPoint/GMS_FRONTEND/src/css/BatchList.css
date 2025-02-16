@@ -1,0 +1,61 @@
+.batch-list-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .batch-card {
+    background-color: #feeef0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .batch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .batch-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .batch-time {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .see-member-btn {
+    background-color: #f9a1b1;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .see-member-btn:hover {
+    background-color: #f58b9d;
+  }
+  
+  .member-details {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .member-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding-bottom: 5px;
+  }
+  
+  .member-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  

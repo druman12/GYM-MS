@@ -4,6 +4,7 @@ from django.utils import timezone  # type: ignore
 
 # Create your models here.
 class Member(models.Model):
+    member_id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     dateofbirth=models.DateField(default='2023-01-01')
     gender = models.CharField(max_length=10,choices=[('Male', 'Male'),('Female', 'Female')],default='Male')
@@ -48,11 +49,12 @@ class Member(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.member_id}-{self.name}"
 
 
 class MemberMedicalDetails(models.Model):
-    member = models.ForeignKey('Member', on_delete=models.CASCADE)  # ForeignKey linking to MemberModel
+    mmd_id=models.AutoField(primary_key=True)
+    member = models.ForeignKey('Member', on_delete=models.CASCADE , to_field='member_id')  # ForeignKey linking to MemberModel
     blood_group = models.CharField(max_length=3)  # To store blood group like 'A+', 'O-', etc.
     heart_conditions = models.TextField(null=True, blank=True)  # To store heart-related conditions (can be empty)
     orthopedic_conditions = models.TextField(null=True, blank=True)  # To store orthopedic-related conditions
@@ -78,6 +80,7 @@ class MemberMedicalDetails(models.Model):
         return f"{self.member.name}"
 
 class Owner(models.Model):
+    id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=220)
     description=models.TextField()
     profile_photo=models.ImageField(

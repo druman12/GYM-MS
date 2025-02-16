@@ -1,0 +1,139 @@
+/* Contact Section Styles */
+.contact-section {
+  width: 80%;
+  background-color: #f8f9fc;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 60px auto;
+  padding: 40px;
+  font-family: 'Arial', sans-serif;
+}
+
+.contact-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2em;
+  color: #000;
+  font-weight: bold;
+}
+
+.contact-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0; /* Ensures no extra space */
+}
+
+/* Left Section */
+.contact-left {
+  background-color: #ffe5e7;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-box {
+  width: 160px; 
+  height: 160px;
+  margin-bottom: 10px;
+}
+
+.logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.contact-brand {
+  font-size: 1.6em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.highlight {
+  color: red;
+  font-weight: bold;
+}
+
+/* Center Section - No extra margin */
+.contact-center {
+  flex: 2;
+  background-color: #fff2f5;
+  padding: 40px;
+  border-radius: 16px;
+  margin-left: -1px; /* Overlapping effect */
+}
+
+.contact-center p {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Social Icons */
+.social-links {
+  margin-top: 10px;
+}
+
+.social-links i {
+  font-size: 1.4em;
+  color: #444;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Right Section (Quick Links) */
+.contact-right {
+  flex: 1;
+  text-align: left;
+  padding-left: 25px;
+  margin-left: 200px;
+}
+
+.quick-links-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quick-links-list {
+  list-style: none;
+  padding: 0;
+}
+
+.quick-links-list li {
+  font-size: 1em;
+  line-height: 1.4;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-left,
+  .contact-center,
+  .contact-right {
+    width: 100%;
+    text-align: center;
+  }
+  .contact-right {
+    text-align: center;
+    padding-left: 0;
+  }
+}
+
+.quick-links-list li a {
+  text-decoration: none; /* Removes underline */
+  color: black; /* Sets text color to black */
+}
+

@@ -1,0 +1,31 @@
+ /* .personal-details-container {
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 800px;
+    background-color: #fef2f2;
+    margin: 20px auto;
+  }
+  
+  .personal-details h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .personal-details p {
+    font-size: 14px;
+    line-height: 1.5;
+  } */
+   
+    .personal-details-container {
+    background: #ffe6e6;
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+  }
+  
+  .personal-details p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+   
