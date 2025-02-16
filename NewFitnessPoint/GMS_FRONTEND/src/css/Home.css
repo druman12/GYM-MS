@@ -1,0 +1,13 @@
+.app {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f8f8f8;
+  }
+  
+  

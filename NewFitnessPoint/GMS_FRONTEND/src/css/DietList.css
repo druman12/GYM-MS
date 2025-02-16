@@ -1,0 +1,23 @@
+.diet-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fef2f2;
+  }
+  
+  .diet-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .diet-chart {
+    padding: 20px;
+    background-color: #fee;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+  }
+  

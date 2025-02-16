@@ -1,0 +1,71 @@
+/* AboutHeader.css */
+.about-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: gray;
+  height: 100px;
+}
+
+.about-logo {
+  display: flex;
+  align-items: center;
+}
+
+.about-logo img {
+  height: 120px;
+}
+
+.about-nav {
+  display: flex;
+  align-items: center;
+}
+
+.about-nav a {
+  color: gray;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.about-nav a:hover {
+  color: #000;
+}
+
+.Alogin-button {
+  background-color: #FFCED0;
+  color: #000;
+  border: none;
+  text-decoration: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .about-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .about-nav a {
+    margin: 5px;
+  }
+}

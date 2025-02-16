@@ -1,0 +1,20 @@
+/* .bmi-container {
+    width: 600px;
+    height: 400px;
+    background-color: #ffecec;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .bmi-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+   */
+   .bmi-container {
+    background: #ffe6e6;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
