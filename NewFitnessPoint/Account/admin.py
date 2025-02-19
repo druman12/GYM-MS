@@ -4,4 +4,4 @@ from . import models
 admin.site.register(models.Member)
 admin.site.register(models.MemberMedicalDetails)
 admin.site.register(models.Owner)
-
+admin.site.register(models.Trainer)
