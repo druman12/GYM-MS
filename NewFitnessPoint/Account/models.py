@@ -113,3 +113,16 @@ class Owner(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+class Trainer(models.Model):
+    trainer_id=models.AutoField(primary_key=True)
+    name=models.CharField(max_length=120)
+    experience=models.PositiveIntegerField(default=1)
+    trainer_info=models.TextField()
+    trainer_profile_photo=models.ImageField(
+        upload_to='trainer_photo/', 
+        help_text="Upload a profile photo"
+    )
+
+    def __str__(self):
+        return self.name

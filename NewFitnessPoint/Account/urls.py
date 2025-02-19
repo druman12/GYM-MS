@@ -8,4 +8,6 @@ urlpatterns = [
     path('membermedicaldetails/', views.membermedicaldetailsapi,name='api-mmd'),
     path('membermedicaldetails/<int:id>/', views.membermedicaldetailsapi,name='api-mmd-put'),
     path('ownerdetails/',views.OwnerDetailsapi , name='owner details'),
+    path('trainer/<int:id>/',views.trainerapi , name='trainer details'),
+
 ]
