@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from django.db import connection
+from . import models
 
 
 @csrf_exempt
@@ -45,26 +46,34 @@ def membermedicaldetailsapi(request , id=0):
                 columns = [col[0] for col in cursor.description]  # Get column names
                 membersMD = [dict(zip(columns, row)) for row in rows]  # Convert to list of dicts
                 return JsonResponse(membersMD, safe=False)
- 
-# @csrf_exempt
-# def Authenticate(request):
-#     if request.method =='POST':
-#         import json
-#         data=json.loads(request.body)
-#         email = data.get('email')
-#         password = data.get('password')
-#         try:
-#             user = models.Member.objects.get(email=email)
-#             db_date = str(user.dateofbirth)
-#             print(type(db_date))
-#             # Check if the password matches (for simplicity, assuming plain text here)
-#             if db_date == password :
-#                 return JsonResponse({'success': True ,'user_id':user.id}) 
-#             else:
-#                 return JsonResponse({'success' :False , 'error' : 'Invalid credentials'},status=401)
-#         except models.Member.DoesNotExist:
-#             return JsonResponse({'success': False, 'error': 'Invalid email or password'}, status=401)
-#     return JsonResponse({'error':'Invalid method'} ,status=405)
+
+
+@csrf_exempt
+def Authenticate(request):
+    if request.method == 'POST':
+        try:
+            import json
+            data = json.loads(request.body)
+            email = data.get('email')
+            password = data.get('password')  # Assuming password is stored as plaintext date of birth
+            # Fetch user from MySQL database
+            user = models.Member.objects.filter(email=email).first()  # Using `.filter().first()` to avoid exceptions
+            
+            if user:
+                db_date = str(user.dateofbirth)  # Ensure date format matches stored format
+                if db_date == password:
+                    return JsonResponse({'success': True, 'user_id': user.member_id})
+                else:
+                    return JsonResponse({'success': False, 'error': 'Invalid credentials'}, status=401)
+            else:
+                return JsonResponse({'success': False, 'error': 'Invalid email or password'}, status=401)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON format'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid method'}, status=405)
 
 
 @csrf_exempt
