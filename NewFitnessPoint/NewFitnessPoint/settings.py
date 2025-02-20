@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Batches',
     'Exercise',
     'rest_framework',
+    'PT',
 ]
 
 
