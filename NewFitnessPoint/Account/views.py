@@ -57,16 +57,25 @@ def Authenticate(request):
             email = data.get('email')
             password = data.get('password')  # Assuming password is stored as plaintext date of birth
             # Fetch user from MySQL database
-            user = models.Member.objects.filter(email=email).first()  # Using `.filter().first()` to avoid exceptions
+
+            trainer = models.Trainer.objects.filter(email=email).first()  # Using `.filter().first()` to avoid exceptions
             
-            if user:
-                db_date = str(user.dateofbirth)  # Ensure date format matches stored format
+            if trainer:
+                db_date = str(trainer.dateofbirth)  # Ensure date format matches stored format
                 if db_date == password:
-                    return JsonResponse({'success': True, 'user_id': user.member_id})
+                    return JsonResponse({'success': True, 'trainer_id': trainer.trainer_id})
                 else:
                     return JsonResponse({'success': False, 'error': 'Invalid credentials'}, status=401)
             else:
-                return JsonResponse({'success': False, 'error': 'Invalid email or password'}, status=401)
+                user=models.Member.objects.filter(email=email).first()
+                if user:
+                    db_date = str(user.dateofbirth)  # Ensure date format matches stored format
+                    if db_date == password:
+                        return JsonResponse({'success': True, 'member_id': user.member_id})
+                    else:
+                        return JsonResponse({'success': False, 'error': 'Invalid credentials'}, status=401)
+
+                
         
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Invalid JSON format'}, status=400)
