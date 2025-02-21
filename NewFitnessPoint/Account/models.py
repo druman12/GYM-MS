@@ -6,7 +6,7 @@ from django.utils import timezone  # type: ignore
 class Member(models.Model):
     member_id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
-    dateofbirth=models.DateField(default='2023-01-01')
+    dateofbirth=models.DateField(default='2000-01-01')
     gender = models.CharField(max_length=10,choices=[('Male', 'Male'),('Female', 'Female')],default='Male')
     occupation=models.CharField(max_length=120)
     age = models.IntegerField()
@@ -117,6 +117,8 @@ class Owner(models.Model):
 class Trainer(models.Model):
     trainer_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=120)
+    email= models.CharField(max_length=150)
+    dateofbirth=models.DateField(default='2000-01-01')
     experience=models.PositiveIntegerField(default=1)
     trainer_info=models.TextField()
     trainer_profile_photo=models.ImageField(
