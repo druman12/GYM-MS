@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/exercise/', include('Exercise.urls')),
     path('api/pt/',include('PT.urls')),
     path('api/attendance/',include('Attendance.urls')),
+    path('api/batches/', include('Batches.urls')),
 
     # Serve React for all other frontend routes
     re_path(r'^.*$', TemplateView.as_view(template_name="index.html")),  
