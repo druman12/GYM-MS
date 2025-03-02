@@ -20,7 +20,7 @@ function HeroSection() {
     <section className="hero-section">
       <div className="overlay"></div>
       <div className="hero-content">
-        <h1>NEW <span className="highlight">FITNESS</span>POINT</h1>
+        <h1>NEW <span className="highlight">FITNESS </span>POINT</h1>
         <p>{heroData ? heroData.hero_content1 : 'Fetching content...'}</p>
         <div className="social-icons">
           <a href="#"><img src={x} alt="Twitter" /></a>
