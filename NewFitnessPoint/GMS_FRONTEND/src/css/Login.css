@@ -1,52 +1,71 @@
+/* General Page Styling */
 .login-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f3f4f6;
+  background: linear-gradient(135deg, #ffc2c2, #ff6464);
+  animation: fadeIn 1.2s ease-in-out;
+}
+.mobile-back{
+  display: none;    
 }
 
+/* Login Container */
 .login-container {
   display: flex;
-  max-width: 800px;
-  width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  animation: slideUp 0.8s ease-in-out;
 }
 
+/* Left: Login Form */
 .login-form {
   flex: 1;
   padding: 40px;
-}
-
-.login-title {
-  color: #dc2626;
-  font-size: 24px;
-  margin-bottom: 20px;
   text-align: center;
 }
 
-.form-group {
+.login-title {
+  font-size: 2rem;
+  color: #333;
   margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out;
 }
 
-label {
+/* Form Inputs */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: #666;
   display: block;
-  color: #dc2626;
   margin-bottom: 5px;
 }
 
-input[type="email"],
-input[type="password"] {
+.form-group input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
 }
 
+.form-group input:focus {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 5px rgba(255, 75, 43, 0.5);
+  outline: none;
+}
+
+/* Remember Me & Forgot Password */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -64,56 +83,169 @@ input[type="password"] {
 }
 
 .forgot-password {
-  color: #dc2626;
+  color: #ff4b2b;
+  font-size: 0.9rem;
   text-decoration: none;
+  transition: color 0.3s ease-in-out;
 }
 
+.forgot-password:hover {
+  color: #030303;
+}
+
+/* Login Button */
 .login-button {
   width: 100%;
-  padding: 10px;
-  background-color: #dc2626;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
+  font-size: 1rem;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .login-button:hover {
-  background-color: #b91c1c;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3);
 }
 
+/* Right: Branding Section */
 .brand-section {
   flex: 1;
+  background-color: #FFCED0;
+  color: rgb(0, 0, 0);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+  justify-content: center;
+  text-align: center;
   padding: 40px;
 }
 
 .brand-logo {
-  width: 150px;
-  height: auto;
-  margin-bottom: 20px;
+  width: 80%;
+  margin-bottom: 3px;
+  animation: popIn 1s ease-in-out;
 }
 
 .brand-text {
-  font-size: 24px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 2rem;
   font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.brand-text .fitness {
+.fitness {
   color: #dc2626;
 }
 
-@media (max-width: 768px) {
-  .login-container {
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 16ch;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  } 
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .login-page-container{
+    display:flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
   }
+  .mobile-back{
+    margin-bottom: 22px;
+    font-size: 2.2rem;
+    display:inline-block;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid white; /* Cursor effect */
+    animation: typing 6s steps(16) infinite, blink 0.8s infinite;
+  }
+  .mobile-back span{
+    font-size: 2.2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .login-container {
+    flex-direction: column;
+    width: 80%;
+  }
 
+  
   .brand-section {
     display: none;
+  }
+
+  .brand-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-form {
+    padding: 30px;
+  }
+
+  .login-title {
+    font-size: 1.8rem;
+  }
+
+  .form-group input {
+    padding: 10px;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+    padding: 10px;
   }
 }
