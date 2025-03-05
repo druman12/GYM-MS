@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import "../../../css/BatchList.css";
+import "../../css/BatchList.css";
 
 const BatchList = () => {
   const [openBatch, setOpenBatch] = useState(null);

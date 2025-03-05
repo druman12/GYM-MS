@@ -1,6 +1,6 @@
 
 
-import '../../../css/PersonalTraining.css'
+import '../../css/PersonalTraining.css'
 
 const PersonalTraining = () => {
   const members = [

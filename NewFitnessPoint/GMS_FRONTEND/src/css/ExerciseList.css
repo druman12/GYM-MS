@@ -1,38 +1,145 @@
 .exercise-section {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fef2f2;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #F8F8FF;
+}
+
+.exercise-section h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  border-bottom: 3px solid #ff7563;
+  padding-bottom: 10px;
+}
+
+.exercise-container {
+  display: flex;
+  gap: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.305);
+  overflow: hidden;
+}
+
+.exercise-buttons {
+  flex: 0 0 250px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+}
+
+.exercise-buttons button {
+  width: 100%;
+  padding: 12px 15px;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+  color: #495057;
+  font-weight: 500;
+}
+
+.exercise-buttons button:hover {
+  background-color: #e9ecef;
+  border-left-color: #ff765a;
+  color: #ff765a;
+}
+
+.exercise-buttons button.active {
+  background-color: #e9ecef;
+  border-left-color: #ff765a;
+  color: #ff765a;
+}
+
+.exercise-details {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  color: #495057;
+  min-height: 400px;
+}
+
+/* Responsive Breakpoints */
+@media screen and (max-width: 768px) {
   .exercise-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+      flex-direction: column;
   }
-  
+
   .exercise-buttons {
-    display: flex;
-    flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-right: none;
+      border-bottom: 1px solid #e0e0e0;
   }
-  
+
   .exercise-buttons button {
-    background-color: #f77;
-    border: none;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
+      flex: 1 1 50%;
+      text-align: center;
+      border-left: none;
+      border-bottom: 4px solid transparent;
+      padding: 10px;
   }
-  
+
+  .exercise-buttons button:hover {
+      border-left: none;
+      border-bottom-color: #ff765a;
+  }
+
   .exercise-details {
-    flex-grow: 1;
-    margin-left: 15px;
-    padding: 20px;
-    background-color: #fee;
-    border-radius: 5px;
-    text-align: center;
+      min-height: 250px;
   }
-  
+}
+
+@media screen and (max-width: 480px) {
+  .exercise-section {
+      padding: 10px;
+  }
+
+  .exercise-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+  }
+
+  .exercise-buttons {
+      flex-direction: column;
+  }
+
+  .exercise-buttons button {
+      flex: none;
+      width: 100%;
+      border-bottom: 4px solid transparent;
+      text-align: center;
+  }
+
+  .exercise-details {
+      min-height: 200px;
+      padding: 15px;
+  }
+}
+
+/* Scrollbar for buttons on smaller screens */
+@media screen and (max-width: 768px) {
+  .exercise-buttons {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+  }
+
+  .exercise-buttons::-webkit-scrollbar {
+      height: 4px;
+  }
+
+  .exercise-buttons::-webkit-scrollbar-track {
+      background: #f1f1f1;
+  }
+
+  .exercise-buttons::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+  }
+}
