@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: "/static/", // Ensure assets are served from Django's static URL
+  // base : '/', // use when u want to only use frontend not connect with backend
   build: {
     outDir: "dist",
     assetsDir: "assets",

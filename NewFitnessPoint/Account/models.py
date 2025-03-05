@@ -128,3 +128,12 @@ class Trainer(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Gallery(models.Model):
+    gallery_id=models.AutoField(primary_key=True)
+    image=models.ImageField(
+        upload_to='gallery/', 
+        help_text="Upload a gallery image"
+    )
+    def __str__(self):
+        return f"{self.gallery_id}"

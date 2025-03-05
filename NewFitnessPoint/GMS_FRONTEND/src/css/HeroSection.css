@@ -1,9 +1,3 @@
-
-* {
-  padding: 0;
-  margin: 0;
-}
-
 .hero-section {
   display: flex;
   align-items: center;
@@ -126,5 +120,12 @@
     padding: 20px;
     border-radius: 8px; /* Optional: Rounded edges */
     text-align: center;
+    overflow: hidden; /* Hide overflowing text */
 }
 
+@media (max-width: 340px) {
+  .right-banner {
+    display: none; /* Hide the banner on smaller screens */
+  }
+  
+}

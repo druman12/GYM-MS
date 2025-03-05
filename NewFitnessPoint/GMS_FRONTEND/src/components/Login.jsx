@@ -14,6 +14,9 @@ function Login() {
 
   return (
     <div className="login-page-container">
+      <div className="mobile-back">
+          <p>NEW<span className="fitness"> FITNESS </span>POINT </p>
+      </div>
       <div className="login-container">
         <div className="login-form">
           <h1 className="login-title">Login</h1>
@@ -54,8 +57,8 @@ function Login() {
         <div className="brand-section">
           <img src={Logo} alt="New Fitness Point Logo" className="brand-logo" />
           <div className="brand-text">
-            <span>NEW</span>
-            <span className="fitness">FITNESS</span>
+            <span>NEW </span>
+            <span className="fitness">FITNESS </span>
             <span>POINT</span>
           </div>
         </div>

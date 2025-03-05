@@ -5,7 +5,6 @@ import ContactSection from "../ContactSection"
 function Gallery() {
   return (
     <>
-    {/* <Header/> */}
     <AboutHeader/>
     <GalleryPhotos/>
     <ContactSection/>

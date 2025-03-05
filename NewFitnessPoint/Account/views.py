@@ -111,3 +111,13 @@ def trainerapi(request , id=0):
                     return JsonResponse(trainer, safe=False)
                 else:
                     return JsonResponse({'message': 'trainer not found'}, status=404)
+
+@csrf_exempt
+def getGalleryImages(request):
+    if request.method=='GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM account_gallery")
+            rows = cursor.fetchall()
+            columns = [col[0] for col in cursor.description]  # Get column names
+            images = [dict(zip(columns, row)) for row in rows]  # Convert to list of dicts
+            return JsonResponse(images, safe=False)
