@@ -9,8 +9,8 @@ import Footer from './Footer'
     return (
       <>
         <Header /> 
-        <HeroSection /> 
-        <OwnerSection />
+        <HeroSection />  
+        <OwnerSection /> 
         <TrainersSection />
         <ContactSection />
         <Footer />

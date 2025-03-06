@@ -1,7 +1,17 @@
 import '../css/ContactSection.css';
 import Logo from '../assets/gms_logo.png';
+import { useState, useEffect } from 'react';
 
 const ContactSection = () => {
+  const [ContactData, setContactData] = useState(null);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/ownerdetails/')  // Replace with your actual API URL
+      .then(response => response.json())
+      .then(data => setContactData(data))
+      .catch(error => console.error('Error fetching hero data:', error));
+  }, []);
+
   return (
     <div className="contact-section">
       <h1 className="contact-title">Contact Us</h1>
@@ -18,12 +28,9 @@ const ContactSection = () => {
 
         {/* Center Section */}
         <div className="contact-center">
-          <p>
-            Address: Quard view Complex, College Rd, opp. Hyundai Showroom,
-            Shanti Nagar, Nadiad, Gujarat 387001
-          </p>
-          <p>Contact No.: +91 8000041999</p>
-          <p>Email: gymemail@gmail.com</p>
+        <p>{ContactData ? ContactData.Address : 'Loading...'}</p>
+          <p>{ContactData ? ContactData.officeMobileNo:'Loading...'}</p>
+          <p>{ContactData ? ContactData.officeEmail:'Loading...'}</p>
           <div className="social-links">
             <i className="fab fa-facebook"></i>
             <i className="fab fa-twitter"></i>

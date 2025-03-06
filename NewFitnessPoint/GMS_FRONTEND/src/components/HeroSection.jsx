@@ -21,7 +21,7 @@ function HeroSection() {
       <div className="overlay"></div>
       <div className="hero-content">
         <h1>NEW <span className="highlight">FITNESS </span>POINT</h1>
-        <p>{heroData ? heroData.hero_content1 : 'Fetching content...'}</p>
+        <p>{heroData ? heroData.hero_content1 : 'Loading...'}</p>
         <div className="social-icons">
           <a href="#"><img src={x} alt="Twitter" /></a>
           <a href="#"><img src={fashbook} alt="Facebook" /></a>
@@ -30,7 +30,7 @@ function HeroSection() {
       </div>
       <div className="content-right">
         <div className="right-banner">
-          <p>{heroData ? heroData.hero_content2 : 'Fetching content...'}</p>
+          <p>{heroData ? heroData.hero_content2 : 'Loading...'}</p>
         </div>
       </div>
     </section>
