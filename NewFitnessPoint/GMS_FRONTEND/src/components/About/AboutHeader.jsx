@@ -1,11 +1,15 @@
 import Logo from '../../assets/gms_logo.png';
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import '../../css/AboutHeader.css';
 import { useState, useEffect } from 'react';
+import { useLoading } from '../LoadingContext'; // Import the loading context
+
 
 function Header() {
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { showLoader, hideLoader } = useLoading(); // Get loading functions
+  const navigate = useNavigate();
   
   // Check if screen is mobile size
   useEffect(() => {
@@ -32,6 +36,16 @@ function Header() {
   function closeNav() {
     setSideNavOpen(false);
   }
+  const handleNavigation = (path, e) => {
+    e.preventDefault();
+    showLoader(); // Show loader before navigation
+    
+    // Use setTimeout to simulate loading (can be removed in production)
+    setTimeout(() => {
+      navigate(path);
+      hideLoader(); // Hide loader after navigation
+    }, 500); // Simulating a short delay for demonstration
+  };
   
   return (
     <header className="Amain-header">
@@ -49,22 +63,36 @@ function Header() {
       {/* Regular navigation for desktop */}
       {!isMobile ? (
         <nav className="Amain-nav desktop-nav">
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <Link to="/gallery">Gallery</Link>
-          <a href="/contact">Contact</a>
+          <a href="/" onClick={(e) => handleNavigation('/', e)}>Home</a>
+          <a href="/about" onClick={(e) => handleNavigation('/about', e)}>About</a>
+          <Link to="/gallery" onClick={(e) => handleNavigation('/gallery', e)}>Gallery</Link>
+          <a href="/contact" onClick={(e) => handleNavigation('/contact', e)}>Contact</a>
         </nav>
       ) : (
         <div className={`Asidenav ${sideNavOpen ? 'open' : ''}`} id="mobile-nav">
           <button className="closebtn" onClick={closeNav}>&times;</button>
           <div className="Asidenav-links">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <Link to="/gallery">Gallery</Link>
-            <a href="/contact">Contact</a>
+            <a href="/" onClick={(e) => {
+              closeNav();
+              handleNavigation('/', e);
+            }}>Home</a>
+            <a href="/about" onClick={(e) => {
+              closeNav();
+              handleNavigation('/about', e);
+            }}>About</a>
+            <Link to="/gallery" onClick={(e) => {
+              closeNav();
+              handleNavigation('/gallery', e);
+            }}>Gallery</Link>
+            <a href="/contact" onClick={(e) => {
+              closeNav();
+              handleNavigation('/contact', e);
+            }}>Contact</a>
           </div>
           <div className="Asidenav-footer">
-            <Link to="/login" className="Asidenav-login-button">Login</Link>
+            <Link to="/login" className="Asidenav-login-button" onClick={(e) => {
+              handleNavigation('/login', e);
+            }}>Login</Link>
           </div>
         </div>
       )}

@@ -141,6 +141,38 @@
 .fitness {
   color: #dc2626;
 }
+/* Add these styles to your existing Login.css file */
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above everything else */
+  backdrop-filter: blur(5px); /* This creates the blur effect */
+  -webkit-backdrop-filter: blur(5px); /* For Safari support */
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loader-container p {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #fa7070;
+}
 
 /* Animations */
 @keyframes fadeIn {
