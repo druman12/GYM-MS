@@ -28,9 +28,9 @@ const ContactSection = () => {
 
         {/* Center Section */}
         <div className="contact-center">
-        <p>{ContactData ? ContactData.Address : 'Loading...'}</p>
-          <p>{ContactData ? ContactData.officeMobileNo:'Loading...'}</p>
-          <p>{ContactData ? ContactData.officeEmail:'Loading...'}</p>
+        <p>{ContactData ? ContactData.Address : 'Loading...'} </p>
+          <p>{ContactData ? ContactData.officeMobileNo:'Loading...'} </p>
+          <p>{ContactData ? ContactData.officeEmail:'Loading...'} </p>
           <div className="social-links">
             <i className="fab fa-facebook"></i>
             <i className="fab fa-twitter"></i>
