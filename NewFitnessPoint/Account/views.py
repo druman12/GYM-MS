@@ -63,24 +63,23 @@ def Authenticate(request):
             if trainer:
                 db_date = str(trainer.dateofbirth)  # Ensure date format matches stored format
                 if db_date == password:
-                    return JsonResponse({'success': True, 'trainer_id': trainer.trainer_id})
+                    return JsonResponse({'status': True, 'trainer_id': trainer.trainer_id})
                 else:
-                    return JsonResponse({'success': False, 'error': 'Invalid credentials'}, status=401)
+                    return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
             else:
                 user=models.Member.objects.filter(email=email).first()
                 if user:
                     db_date = str(user.dateofbirth)  # Ensure date format matches stored format
                     if db_date == password:
-                        return JsonResponse({'success': True, 'member_id': user.member_id})
+                        return JsonResponse({'status': True, 'member_id': user.member_id})
                     else:
-                        return JsonResponse({'success': False, 'error': 'Invalid credentials'}, status=401)
-
-                
-        
+                        return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
+                else:
+                    return JsonResponse({'status': False, 'error': 'User not found'}, status=404)
         except json.JSONDecodeError:
-            return JsonResponse({'success': False, 'error': 'Invalid JSON format'}, status=400)
+            return JsonResponse({'status': False, 'error': 'Invalid JSON format'}, status=400)
         except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+            return JsonResponse({'status': False, 'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
@@ -111,6 +110,13 @@ def trainerapi(request , id=0):
                     return JsonResponse(trainer, safe=False)
                 else:
                     return JsonResponse({'message': 'trainer not found'}, status=404)
+            else:
+                # Fetch all trainer (all columns)
+                cursor.execute("SELECT * FROM account_trainer")
+                rows = cursor.fetchall()
+                columns = [col[0] for col in cursor.description]  # Get column names
+                trainer = [dict(zip(columns, row)) for row in rows]  # Convert to list of dicts
+                return JsonResponse(trainer, safe=False)
 
 @csrf_exempt
 def getGalleryImages(request):
