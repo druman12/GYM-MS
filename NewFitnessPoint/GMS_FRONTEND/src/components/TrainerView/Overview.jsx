@@ -1,8 +1,11 @@
-import '../../../css/Overview.css'
+import '../../css/Overview.css'
+import Sidebar from './SideBar';
 
-const Overview = () => {
+function Overview() {
   return (
+    
     <div className="overview-container">
+      <Sidebar />
       <h2 className="overview-title">Overview</h2>
       <div className="cards-container">
         <div className="card">

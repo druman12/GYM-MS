@@ -1,5 +1,5 @@
 
-import "../../../css/Attenancetable.css"
+import "../../css/Attenancetable.css"
 
 function AttendanceTable() {
   return (

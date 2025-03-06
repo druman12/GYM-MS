@@ -1,58 +1,38 @@
-/* .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-  }
-  
-  .profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .member-name {
-    flex-grow: 1;
-    text-align: left;
-    margin-left: 10px;
-  }
-  
-  .logout-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-   */
-   .Memberheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 15px;
+.Memberheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+}
 
-   
-  }
-  
-  .profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .member-name {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .logout-btn {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
+.Profile {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+
+.member-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: #ff4040;
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.logout-btn:hover {
+  background: #fe0606;
+}
