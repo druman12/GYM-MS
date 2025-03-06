@@ -106,6 +106,10 @@ class Owner(models.Model):
     officeMobileNo=models.CharField(max_length=10)
     officeEmail=models.EmailField(max_length=120)
 
+    facebookLink=models.CharField(max_length=120)
+    instagramLink=models.CharField(max_length=120)
+    twitterLink=models.CharField(max_length=120)
+
     def save(self, *args, **kwargs):
         if not self.pk and Owner.objects.exists():
             raise ValueError("Only one Owner instance is allowed.")
