@@ -1,19 +1,117 @@
+/* Container Layout */
 .overview-container {
-  padding: 20px;
+  display: flex;
+  height: 100vh;
   font-family: Arial, sans-serif;
 }
 
+
+/* Collapsible sidebar for smaller screens */
+/* .sidebar.collapsed {
+  transform: translateX(-100%);
+  position: absolute;
+  z-index: 1000;
+} */
+
+/* Trainer Profile */
+.trainer-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  background-image: url('https://via.placeholder.com/60');
+  background-size: cover;
+}
+
+/* Trainer Name */
+.trainer-name {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* Navigation Links */
+nav ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+nav ul li {
+  width: 100%;
+}
+
+nav ul li a {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+nav ul li a.active {
+  background-color: #fda4af;
+  color: black;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Member Header (Top Bar) */
+.member-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+/* Menu button for mobile */
+.menu-button {
+  display: none;
+  background: #fda4af;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+
+/* Logout Button */
+.logout-button {
+  background-color: #fda4af;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Overview Title */
 .overview-title {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin: 20px 0;
 }
 
+/* Cards Container */
 .cards-container {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
+/* Individual Card */
 .card {
   background-color: #feeef0;
   padding: 15px;
@@ -21,14 +119,72 @@
   text-align: center;
   width: 120px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
 }
 
 .card-title {
   font-size: 14px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .card-number {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .overview-container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+  }
+
+  .main-content {
+      padding: 15px;
+  }
+
+  .cards-container {
+      justify-content: space-between;
+  }
+
+  .card {
+      width: 45%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 1000;
+      transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+      transform: translateX(0);
+  }
+
+  .menu-button {
+      display: block;
+  }
+
+  .cards-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .card {
+      width: 80%;
+  }
 }

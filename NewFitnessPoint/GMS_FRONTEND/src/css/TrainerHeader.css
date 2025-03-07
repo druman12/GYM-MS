@@ -1,0 +1,36 @@
+.trainer-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent;
+    height: 50px;
+}
+
+/* Log Out Button */
+.logout-btn {
+    background-color: #fda4af;
+    border: 1px solid #f58b9d;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    color: black;
+}
+
+.logout-btn:hover {
+    background-color: #f58b9d;
+}
+
+/* Make it responsive */
+@media (max-width: 600px) {
+    .trainer-header {
+        padding: 8px 10px;
+    }
+
+    .logout-btn {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+}
