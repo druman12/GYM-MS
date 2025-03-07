@@ -1,20 +1,42 @@
-import "../../../css/personalTraining.css"
+import "../../../css/personalTraining.css";
 import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
+import { useState, useEffect } from "react";
 
 const PersonalTraining = () => {
-  const members = [
-    { name: "John show", membership: "Premium", joinDate: "dd/mm/yyyy" },
-    { name: "John show", membership: "Premium", joinDate: "dd/mm/yyyy" },
-    { name: "John show", membership: "Premium", joinDate: "dd/mm/yyyy" },
-  ];
+  const trainer_id = localStorage.getItem("userId");
+  const [loading, setLoading] = useState(true);
+  const [PT, setPT] = useState(null);
+  const url = `http://127.0.0.1:8000/api/pt/${trainer_id}/`;
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setPT(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching Batches data:", error);
+        setLoading(false);
+      });
+  }, [url]);
+
+
+
+  if (loading) {
+    return <p>Loading batches...</p>;
+  }
+
+  const PT_data = PT.members;
+
 
   return (
     <div className="dashboard-container">
       <div className="content-wrapper">
         <Sidebar />
         <div className="main-content">
-        <TrainerHeader />
+          <TrainerHeader />
           <div className="members-table">
             <table>
               <thead>
@@ -25,11 +47,11 @@ const PersonalTraining = () => {
                 </tr>
               </thead>
               <tbody>
-                {members.map((member, index) => (
+                {PT_data.map((member, index) => (
                   <tr key={index}>
-                    <td>{member.name}</td>
-                    <td>{member.membership}</td>
-                    <td>{member.joinDate}</td>
+                    <td>{member ? member.name : "Loading..."}</td>
+                    <td>{member ? member.subscription_plan : "Loading..."}</td>
+                    <td>{member ? member.joining_date : "Loading..."}</td>
                   </tr>
                 ))}
               </tbody>

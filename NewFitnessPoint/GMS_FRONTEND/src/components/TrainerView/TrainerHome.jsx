@@ -1,4 +1,4 @@
-import Overview from '../TrainerView/Overview';
+import Overview from '../TrainerView/Pages/Overview';
 
 function TrainerHome() {
     return (
