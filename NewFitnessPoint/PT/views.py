@@ -2,7 +2,6 @@ from django.http import JsonResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 
-
 @csrf_exempt
 def get_trainer_members(request, trainer_id):
         if request.method == 'GET':
@@ -19,13 +18,21 @@ def get_trainer_members(request, trainer_id):
                 # Fetch all results
                 members = cursor.fetchall()
 
-            # If no members found, return empty list
+            # If no members found, return empty list with count 0
             if not members:
-                return JsonResponse({"trainer_id": trainer_id, "members": []}, status=200)
+                return JsonResponse({"trainer_id": trainer_id, "members": [], "PT_count": 0}, status=200)
 
             # Format the response
             member_list = [
                 {"name": member[0], "subscription_plan": member[1], "joining_date": str(member[2])}
                 for member in members
             ]
-            return JsonResponse({"trainer_id": trainer_id, "members": member_list}, status=200)
+            
+            # Count the total members
+            total_members = len(member_list)
+            
+            return JsonResponse({
+                "trainer_id": trainer_id, 
+                "members": member_list, 
+                "PT_count": total_members
+            }, status=200)
