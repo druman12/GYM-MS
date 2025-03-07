@@ -15,9 +15,9 @@ export default function TrainersSection() {
         const fetchTrainers = async () => {
             try {
                 const urls = [
-                    "http://127.0.0.1:8000/api/trainer/1/",
-                    "http://127.0.0.1:8000/api/trainer/2/",
-                    "http://127.0.0.1:8000/api/trainer/3/"
+                    "http://127.0.0.1:8000/api/trainer/3/",
+                    "http://127.0.0.1:8000/api/trainer/4/",
+                    "http://127.0.0.1:8000/api/trainer/5/"
                 ];
 
                 const responses = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
@@ -73,7 +73,7 @@ export default function TrainersSection() {
             <h2>Our Expert Trainers</h2>
             {trainers.length === 0 ? (
                 <p>Loading trainers...</p>
-            ) : (
+            ) : ( 
                 <div className="carousel-container">
                     <div
                         ref={carouselRef}

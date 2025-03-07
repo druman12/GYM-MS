@@ -28,6 +28,7 @@
 }
 
 .trainer-image-container {
+  background-color: #666;
   width: 100px;
   height: 100px;
   border-radius: 50%;
