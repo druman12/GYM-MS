@@ -1,76 +1,110 @@
-.trainers-section {
-  padding: 40px 20px;
-  text-align: center;
-  background-color: #f8f9fc;
+.attendance-container {
+  display: flex;
+  height: 100vh;
   overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-.trainers-section h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
 
-.carousel-container {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 100%;
-  max-width: 1200px; /* Ensures proper centering */
-  margin: auto;
-  position: relative;
-}
 
-.carousel {
-  display: flex;
-  transition: transform 1s ease-in-out;
-  will-change: transform;
-}
-
-.trainer-card {
-  min-width: 33.33%;
-  max-width: 33.33%;
-  height: 250px; /* Slightly taller for better proportion */
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  transition: transform 0.5s ease-in-out;
-}
-
-.trainer-image-container {
-  flex: 0 0 100px;
-  margin-right: 15px;
-}
-
-.trainer-image-container img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.trainer-info {
+/* Main Content */
+.attendance-content {
   flex: 1;
-  text-align: left;
+  padding: 20px;
+  overflow-x: auto;
 }
 
-.trainer-info h3 {
-  font-size: 1.2em;
+/* Title */
+.attendance-title {
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin: 15px 0;
 }
 
-.trainer-info h4 {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 5px;
+/* Month-Year Placeholder */
+.month-year {
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
-.trainer-info p {
-  font-size: 0.8em;
-  color: #444;
-  line-height: 1.4;
+/* Table Container */
+.attendance-table-wrapper {
+  background-color: #feeef0;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* Attendance Table */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #feeef0;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.attendance-table th {
+  background-color: #fda4af;
+  color: black;
+  font-weight: bold;
+}
+
+.present {
+  color: green;
+  font-weight: bold;
+}
+
+.absent {
+  color: red;
+  font-weight: bold;
+}
+
+/* RESPONSIVENESS */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .attendance-container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+  }
+
+  .attendance-content {
+      padding: 10px;
+  }
+
+  .attendance-table th, .attendance-table td {
+      padding: 8px;
+      font-size: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .attendance-container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+      height: auto;
+  }
+
+  .attendance-table {
+      font-size: 12px;
+  }
+
+  .attendance-table th, .attendance-table td {
+      padding: 5px;
+  }
 }

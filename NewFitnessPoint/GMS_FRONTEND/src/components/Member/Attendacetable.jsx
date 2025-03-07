@@ -1,7 +1,8 @@
 
-import "../../css/Attenancetable.css"
+import "../../css/attendancetable.css"
 
-function AttendanceTable() {
+
+function Attendacetable() {
   return (
     <div className="attendance-section">
       <div className="attendance-header">
@@ -31,5 +32,5 @@ function AttendanceTable() {
   )
 }
 
-export default AttendanceTable
+export default Attendacetable
 

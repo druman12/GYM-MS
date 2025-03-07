@@ -1,34 +1,40 @@
-import "../../css/SideBar.css";
 
+import { NavLink } from 'react-router-dom';
+import '../../css/SideBar.css';
 
 function Sidebar() {
-  return (
-    <aside className="sidebar">
-      <div className="profile">
-        <div className="avatar"></div>
-        <span className="trainer-name">Trainer name</span>
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <a href="#overviews">Overviews</a>
-          </li>
-          <li>
-            <a href="#attendance" className="active">
-              Attendance
-            </a>
-          </li>
-          <li>
-            <a href="#batches">Batches</a>
-          </li>
-          <li>
-            <a href="#personal-training">Personal training</a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-  )
+    return (
+        <div className="sidebar">
+            <div className="trainer-profile">
+                <div className="avatar"></div>
+                <span className="trainer-name">Trainer name</span>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <NavLink to="/overview" className={({ isActive }) => isActive ? "active" : ""}>
+                            Overview
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/attendance" className={({ isActive }) => isActive ? "active" : ""}>
+                            Attendance
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/batches" className={({ isActive }) => isActive ? "active" : ""}>
+                            Batches
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/personaltraining" className={({ isActive }) => isActive ? "active" : ""}>
+                            Personal training
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    );
 }
 
-export default Sidebar
-
+export default Sidebar;
