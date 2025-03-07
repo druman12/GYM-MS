@@ -29,12 +29,12 @@ function Login() {
       
       if (data.status === true) {
         if (data.member_id) {
-          localStorage.setItem("userId", data.member_id);
-          localStorage.setItem("userType", "member");
+          sessionStorage.setItem("userId", data.member_id);
+          sessionStorage.setItem("userType", "member");
           navigate("/member-home");
         } else if (data.trainer_id) {
-          localStorage.setItem("userId", data.trainer_id);
-          localStorage.setItem("userType", "trainer");
+          sessionStorage.setItem("userId", data.trainer_id);
+          sessionStorage.setItem("userType", "trainer");
           navigate("/trainer-home");
         }
       } else {
@@ -107,7 +107,7 @@ function Login() {
               height="80"
               width="80"
               radius="9"
-              color="#ff416c"
+              color="#FFCED0"
               ariaLabel="loading"
               wrapperStyle={{}}
               wrapperClass=""

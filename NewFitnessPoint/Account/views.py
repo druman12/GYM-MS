@@ -63,7 +63,8 @@ def Authenticate(request):
             if trainer:
                 db_date = str(trainer.dateofbirth)  # Ensure date format matches stored format
                 if db_date == password:
-                    return JsonResponse({'status': True, 'trainer_id': trainer.trainer_id})
+                    
+                    return JsonResponse({'status': True, 'trainer_id': trainer.trainer_id , 'user_type':'trainer'})
                 else:
                     return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
             else:
@@ -71,7 +72,7 @@ def Authenticate(request):
                 if user:
                     db_date = str(user.dateofbirth)  # Ensure date format matches stored format
                     if db_date == password:
-                        return JsonResponse({'status': True, 'member_id': user.member_id})
+                        return JsonResponse({'status': True, 'member_id': user.member_id , 'user_type':'member'})
                     else:
                         return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
                 else:

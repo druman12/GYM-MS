@@ -8,16 +8,23 @@ const MemberHeader = () => {
   const navigate = useNavigate();
 
   // Function to handle navigation with loading state
-  const handleNavigation = (path, e) => {
-    e.preventDefault();
-    showLoader(); // Show loader before navigation
+  const handleAction = (path, e = null) => {
+    if (e) e.preventDefault();
     
-    // Use setTimeout to simulate loading (can be removed in production)
+    showLoader(); // Show loader before navigation
+
+    // If logging out, clear localStorage
+    if (path === '/') {
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userType');
+    }
+
     setTimeout(() => {
-      navigate(path);
-      hideLoader(); // Hide loader after navigation
-    }, 500); // Simulating a short delay for demonstration
-  };
+        navigate(path);
+        hideLoader(); // Hide loader after navigation
+    }, 500); // Simulated delay
+};
+
 
   return (
     <div className="Memberheader">
@@ -25,7 +32,7 @@ const MemberHeader = () => {
       <img src={PP} alt="Profile_img" className="profile-pic" />
       <span className="member-name">Member name</span>
       </div>    
-      <button className="logout-btn" onClick={(e) => handleNavigation('/', e)}>Log Out</button>
+      <button className="logout-btn" onClick={() => handleAction('/')}>Log Out</button>
     </div>
   );
 };

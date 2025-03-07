@@ -37,7 +37,7 @@ export function LoadingProvider({ children }) {
               height="80"
               width="80"
               radius="9"
-              color="#ff416c"
+              color="#FFCED0"
               ariaLabel="loading"
               wrapperStyle={{}}
               wrapperClass=""
