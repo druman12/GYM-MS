@@ -32,7 +32,7 @@ const ProtectedRoute = ({ element, requiredUserType }) => {
     if (userType === 'member') {
       return <Navigate to="/member-home" replace />;
     } else if (userType === 'trainer') {
-      return <Navigate to="/trainer-home" replace />;
+      return <Navigate to="/overview" replace />;
     } else {
       return <Navigate to="/" replace />;
     }
@@ -53,19 +53,31 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactSection />} />
           <Route path='/login' element={<Login />} />
-            
-         <Route path='/overview' element={<Overview />}/>
-        <Route path="/batches" element={<BatchList />} />
-        <Route path="/attendance" element={<Attendance/>} />
-        <Route path="/personaltraining" element={<PersonalTraining />} />
           
           {/* Protected Routes */}
+          <Route 
+            path="/overview" 
+            element={<ProtectedRoute element={<Overview />} requiredUserType="trainer" />} 
+          />
+          <Route 
+            path="/batches" 
+            element={<ProtectedRoute element={<BatchList />} requiredUserType="trainer" />} 
+          />
+          <Route 
+            path="/attendance" 
+            element={<ProtectedRoute element={<Attendance />} requiredUserType="trainer" />} 
+          />
+          <Route 
+            path="/personaltraining" 
+            element={<ProtectedRoute element={<PersonalTraining />} requiredUserType="trainer" />} 
+          />
+          
           <Route 
             path="/member-home" 
             element={<ProtectedRoute element={<MemberHome />} requiredUserType="member" />} 
           />
           <Route 
-            path="/trainer-home" 
+            path="/overview" 
             element={<ProtectedRoute element={<TrainerHome />} requiredUserType="trainer" />} 
           />
           <Route 

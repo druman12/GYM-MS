@@ -35,7 +35,7 @@ function Login() {
         } else if (data.trainer_id) {
           sessionStorage.setItem("userId", data.trainer_id);
           sessionStorage.setItem("userType", "trainer");
-          navigate("/trainer-home");
+          navigate("/overview");
         }
       } else {
         setError("Login failed. Please check your email and password.");

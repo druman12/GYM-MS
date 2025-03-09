@@ -86,9 +86,9 @@ WSGI_APPLICATION = 'NewFitnessPoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'GMS_NFP',
+        'NAME': 'gms_nfp',
         'USER': 'root',
-        'PASSWORD': 'vivek',
+        'PASSWORD': '1225',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     },
