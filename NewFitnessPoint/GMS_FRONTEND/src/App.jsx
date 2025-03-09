@@ -32,7 +32,7 @@ const ProtectedRoute = ({ element, requiredUserType }) => {
     if (userType === 'member') {
       return <Navigate to="/member-home" replace />;
     } else if (userType === 'trainer') {
-      return <Navigate to="/trainer-home" replace />;
+      return <Navigate to="/overview" replace />;
     } else {
       return <Navigate to="/" replace />;
     }
@@ -77,7 +77,7 @@ function App() {
             element={<ProtectedRoute element={<MemberHome />} requiredUserType="member" />} 
           />
           <Route 
-            path="/trainer-home" 
+            path="/overview" 
             element={<ProtectedRoute element={<TrainerHome />} requiredUserType="trainer" />} 
           />
           <Route 
