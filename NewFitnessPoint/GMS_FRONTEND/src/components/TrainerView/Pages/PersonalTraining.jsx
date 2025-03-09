@@ -4,7 +4,7 @@ import TrainerHeader from "../TrainerHeader";
 import { useState, useEffect } from "react";
 
 const PersonalTraining = () => {
-  const trainer_id = localStorage.getItem("userId");
+  const trainer_id = sessionStorage.getItem("userId");
   const [loading, setLoading] = useState(true);
   const [PT, setPT] = useState(null);
   const url = `http://127.0.0.1:8000/api/pt/${trainer_id}/`;

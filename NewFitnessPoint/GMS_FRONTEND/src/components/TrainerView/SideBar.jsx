@@ -4,7 +4,7 @@ import '../../css/SideBar.css';
 
 function Sidebar() {
 
-    const trainer_id=localStorage.getItem('userId');
+    const trainer_id=sessionStorage.getItem('userId');
     const [trainer, setTrainer] = useState(null);
     const url=`http://127.0.0.1:8000/api/trainer/${trainer_id}/`
     

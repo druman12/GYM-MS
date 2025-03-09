@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const BatchList = () => {
   const [openBatch, setOpenBatch] = useState(null);
   const [loading, setLoading] = useState(true);
-  const trainer_id = localStorage.getItem("userId");
+  const trainer_id = sessionStorage.getItem("userId");
   const [Batches, setBatches] = useState(null);
   const url = `http://127.0.0.1:8000/api/batches/trainer/${trainer_id}/`;
 

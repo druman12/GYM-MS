@@ -6,7 +6,7 @@ import {  useEffect } from 'react';
 
 function Overview() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-     const trainer_id=localStorage.getItem('userId');
+     const trainer_id=sessionStorage.getItem('userId');
         const [Batches, setBatches] = useState(null);
         const url=`http://127.0.0.1:8000/api/batches/trainer/${trainer_id}/`
         
