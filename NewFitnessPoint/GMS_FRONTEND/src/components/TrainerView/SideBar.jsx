@@ -13,7 +13,7 @@ function Sidebar() {
           .then(response => response.json())
           .then(data => setTrainer(data))
           .catch(error => console.error('Error fetching trainer data:', error));
-      }, []);
+      }, [url]);
 
     return (
         <div className="sidebar">
