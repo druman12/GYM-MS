@@ -1,56 +1,87 @@
 import "../../../css/Attendance.css";
-import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
+import Sidebar from "../SideBar";
+import { useState, useEffect } from 'react';
 
+function Attendance() {
+    const [attendance, setAttendance] = useState([]);
+    const [isAbsent, setIsAbsent] = useState({});
+    const [currentDate, setCurrentDate] = useState("");
+    
+    const url1 = `http://127.0.0.1:8000/api/member/`;
+    
+    useEffect(() => {
+        fetch(url1)
+            .then(response => response.json())
+            .then(data => {
+                setAttendance(data);
+                const initialStatus = data.reduce((acc, member) => {
+                    acc[member.member_id] = true;
+                    return acc;
+                }, {});
+                setIsAbsent(initialStatus);
+            })
+            .catch(error => console.error('Error fetching Attendance data:', error));
+        
+        const today = new Date().toISOString().split('T')[0];
+        setCurrentDate(today);
+    }, [url1]);
+    
+    const toggleAttendance = (id) => {
+        setIsAbsent(prevState => ({
+            ...prevState,
+            [id]: !prevState[id]
+        }));
+    };
 
-const Attendance = () => {
     return (
         <div className="attendance-container">
-            
-                <Sidebar />
-            
             <div className="attendance-content">
-                <TrainerHeader/>
-                <h3 className="attendance-title">Mark Attendance</h3>
-                <p className="month-year">&lt; Month year &gt;</p>
-                <div className="attendance-table-wrapper">
-                    <table className="attendance-table">
-                        <thead>
-                            <tr>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
-                                <th>Sunday</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td className="absent">A</td>
-                                <td className="present">P</td>
-                                <td className="absent">A</td>
-                                <td className="present">P</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <Sidebar />
+                <div className="attendance-main">
+                <TrainerHeader />
+                    <h2 className="attendance-title">Mark Attendance</h2>
+                    <div className="attendance-header">
+                        <span className="date-placeholder">{currentDate}</span>
+                        <span className="trainer-name">Trainer Name</span>
+                    </div>
+                    <div className="attendance-table-wrapper">
+                        <table className="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th>Member Name</th>
+                                    <th>Membership Type</th>
+                                    <th>Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {attendance.length > 0 ? (
+                                    attendance.map(member => (
+                                        <tr key={member.member_id}>
+                                            <td>{member.name}</td>
+                                            <td>{member.subscription_plan}</td>
+                                            <td>
+                                                <button 
+                                                    className={`attendance-status ${isAbsent[member.member_id] ? 'absent' : 'present'}`} 
+                                                    onClick={() => toggleAttendance(member.member_id)}
+                                                >
+                                                    {isAbsent[member.member_id] ? 'Absent' : 'Present'}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="3">Loading...</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     );
-};
+}
 
 export default Attendance;

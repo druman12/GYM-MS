@@ -1,110 +1,78 @@
 .attendance-container {
   display: flex;
+  flex-direction: column;
+  background-color: #fff;
   height: 100vh;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
 }
 
-
-
-/* Main Content */
 .attendance-content {
+  display: flex;
+}
+
+.attendance-main {
   flex: 1;
   padding: 20px;
-  overflow-x: auto;
 }
 
-/* Title */
 .attendance-title {
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin: 15px 0;
+  margin-bottom: 10px;
 }
 
-/* Month-Year Placeholder */
-.month-year {
-  margin-bottom: 15px;
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.date-placeholder {
+  font-size: 1rem;
+  color: #333;
+}
+
+.trainer-name {
   font-weight: bold;
 }
 
-/* Table Container */
 .attendance-table-wrapper {
-  background-color: #feeef0;
+  background-color: #fdeff0;
   padding: 15px;
   border-radius: 8px;
-  overflow-x: auto;
 }
 
-/* Attendance Table */
 .attendance-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #feeef0;
 }
 
-.attendance-table th, .attendance-table td {
+.attendance-table th,
+.attendance-table td {
   padding: 10px;
-  border: 1px solid #ddd;
   text-align: center;
 }
 
 .attendance-table th {
-  background-color: #fda4af;
-  color: black;
+  background-color: #fecdd3;
+  font-weight: bold;
+  padding: 12px;
+}
+
+.attendance-status.absent {
+  background-color: #fecdd3;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #333;
   font-weight: bold;
 }
 
-.present {
-  color: green;
-  font-weight: bold;
-}
-
-.absent {
-  color: red;
-  font-weight: bold;
-}
-
-/* RESPONSIVENESS */
-
-/* Tablet */
-@media (max-width: 768px) {
-  .attendance-container {
-      flex-direction: column;
-  }
-
-  .sidebar {
-      width: 100%;
-      border-right: none;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-  }
-
-  .attendance-content {
-      padding: 10px;
-  }
-
-  .attendance-table th, .attendance-table td {
-      padding: 8px;
-      font-size: 14px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .attendance-container {
-      flex-direction: column;
-  }
-
-  .sidebar {
-      width: 100%;
-      height: auto;
-  }
-
-  .attendance-table {
-      font-size: 12px;
-  }
-
-  .attendance-table th, .attendance-table td {
-      padding: 5px;
-  }
+.attendance-status.present {
+  background-color: #fecdd3;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 700;
 }

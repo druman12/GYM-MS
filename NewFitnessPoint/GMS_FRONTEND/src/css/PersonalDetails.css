@@ -1,31 +1,107 @@
- /* .personal-details-container {
-    border: 2px solid #007bff;
-    border-radius: 10px;
+.personal-details-container {
+  width: 100%;
+  border: 1px solid #e5c7c7;
+  border-radius: 8px;
+  background-color: #fef1f1;
+  padding: 20px 30px;
+  margin: 0 auto;
+  margin-top: 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.personal-details-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+  color: #000;
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  line-height: 1.5;
+  flex-wrap: wrap;
+}
+
+.detail-label {
+  min-width: 120px;
+  width: 120px;
+  color: #333;
+  text-align: left;
+  margin-right: 10px;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.detail-value {
+  color: #000;
+  flex: 1;
+  font-size: 14px;
+  min-width: 150px;
+  font-weight: 500;
+}
+
+.bmi-report-container {
+  width: 100%;
+  max-width: 930px;
+  background-color: #fef1f1;
+  border-radius: 8px;
+  border: 1px solid #e5c7c7;
+  padding: 20px 30px;
+  margin: 15px auto;
+  box-sizing: border-box;
+}
+
+.bmi-report-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+  color: #000;
+}
+
+
+
+/* Mobile and tablet responsiveness */
+@media (max-width: 768px) {
+  .personal-details-container,
+  .bmi-report-container {
     padding: 15px;
-    max-width: 800px;
-    background-color: #fef2f2;
-    margin: 20px auto;
   }
   
-  .personal-details h2 {
+  .detail-row {
+    margin-bottom: 5px;
+  }
+  
+  .detail-label {
+    min-width: 100px;
+    width: 100px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .personal-details-container,
+  .bmi-report-container {
+    padding: 10px;
+  }
+  
+  .detail-row {
+    flex-direction: column;
     margin-bottom: 10px;
-    font-size: 18px;
   }
   
-  .personal-details p {
-    font-size: 14px;
-    line-height: 1.5;
-  } */
-
- .personal-details-container {
-   background: #ffe6e6;
-   margin: 5px;
-   border-radius: 8px;
-   padding-left: 8px;
- }
-
- .personal-details p {
-  margin-top: 5px;
-   margin: 5px 0;
-   font-size: 14px;
- }
+  .detail-label {
+    width: 100%;
+    margin-bottom: 2px;
+  }
+  
+  .detail-value {
+    width: 100%;
+  }
+}
