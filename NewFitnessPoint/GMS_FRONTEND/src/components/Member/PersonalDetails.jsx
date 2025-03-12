@@ -1,78 +1,77 @@
 
-import '../../css/PersonalTraining.css';
+import '../../css/PersonalDetails.css';
+import { useEffect, useState } from 'react';
 
-const PersonalTraining = () => {
+const PersonalDetails = () => {
+  const memberId = sessionStorage.getItem("userId");
+  const [loading, setLoading] = useState(true);
+  const [PersonalDetail,setPersonalDetail]=useState(null);
+
+  const url = `http://127.0.0.1:8000/api/member/${memberId}/`;
+
+  useEffect(() => {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setPersonalDetail(data);
+            setLoading(false);
+        })
+        .catch(error => {
+            console.error('Error fetching Batches data:', error);
+            setLoading(false);
+        });
+}, [url]);
+
+
+
+if (loading) return <p>Loading...</p>;
   return (
-    <div className="trainer-dashboard">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <div className="trainer-profile">
-          <div className="trainer-avatar">
-            <img src="/placeholder.svg?height=80&width=80" alt="Trainer" />
-          </div>
-          <div className="trainer-name">Trainer name</div>
+    <div className="personal-details-container">
+      <h3 className="personal-details-title">Personal Details</h3>
+      
+      <div className="details-grid">
+        <div className="detail-row">
+          <span className="detail-label">Name :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.name:'Loading...'}</span>
         </div>
-
-        <nav className="sidebar-nav">
-          <ul>
-            <li>
-              <a href="/overviews">Overviews</a>
-            </li>
-            <li>
-              <a href="/attendance">Attendance</a>
-            </li>
-            <li>
-              <a href="/batches">Batches</a>
-            </li>
-            <li>
-              <a href="/personal-training" className="active">
-                Personal training
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
-      {/* Main content */}
-      <div className="main-content">
-        <header className="header">
-          <button className="logout-button">Log Out</button>
-        </header>
-
-        <main className="content">
-          <div className="table-container">
-            <table className="client-table">
-              <thead>
-                <tr>
-                  <th>name</th>
-                  <th>membership type</th>
-                  <th>Join date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>John show</td>
-                  <td>Premium</td>
-                  <td>dd/mm/yyyy</td>
-                </tr>
-                <tr>
-                  <td>John show</td>
-                  <td>Premium</td>
-                  <td>dd/mm/yyyy</td>
-                </tr>
-                <tr>
-                  <td>John show</td>
-                  <td>Premium</td>
-                  <td>dd/mm/yyyy</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </main>
+        
+        <div className="detail-row">
+          <span className="detail-label">Date Of Birth :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.dateofbirth:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Gender :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.gender:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Height/weight :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.height/PersonalDetail.weight:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Occupation :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.occupation:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Address</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.address:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Telephone:</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.mobile_no:'Loading...'}</span>
+        </div>
+        
+        <div className="detail-row">
+          <span className="detail-label">Email :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.email:'Loading...'}</span>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PersonalTraining
-
+export default PersonalDetails;

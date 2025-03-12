@@ -59,7 +59,7 @@ def Authenticate(request):
             # Fetch user from MySQL database
 
             trainer = models.Trainer.objects.filter(email=email).first()  # Using `.filter().first()` to avoid exceptions
-            
+            print(trainer)
             if trainer:
                 db_date = str(trainer.dateofbirth)  # Ensure date format matches stored format
                 if db_date == password:
@@ -69,8 +69,11 @@ def Authenticate(request):
                     return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
             else:
                 user=models.Member.objects.filter(email=email).first()
+                print(user)
                 if user:
                     db_date = str(user.dateofbirth)  # Ensure date format matches stored format
+                    print(db_date)
+                    print(user)
                     if db_date == password:
                         return JsonResponse({'status': True, 'member_id': user.member_id , 'user_type':'member'})
                     else:

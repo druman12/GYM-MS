@@ -14,6 +14,7 @@ import Overview from './components/TrainerView/Pages/Overview'
 import BatchList from './components/TrainerView/Pages/BatchList'
 import Attendance from './components//TrainerView/Pages/Attendance'
 import PersonalTraining from './components/TrainerView/Pages/PersonalTraining'
+import PersonalDetails from './components/Member/PersonalDetails'
 
 // Protected Route component
 const ProtectedRoute = ({ element, requiredUserType }) => {
@@ -83,6 +84,10 @@ function App() {
           <Route 
             path="/memberprofile" 
             element={<ProtectedRoute element={<MemberProfileView />} requiredUserType="member" />} 
+          />
+          <Route 
+            path="/personalDetails" 
+            element={<ProtectedRoute element={<PersonalDetails />} requiredUserType="member" />} 
           />
           
           {/* Catch all - 404 */}

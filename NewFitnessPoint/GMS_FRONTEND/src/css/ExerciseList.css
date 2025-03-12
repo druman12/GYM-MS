@@ -43,12 +43,17 @@
   transition: all 0.3s ease;
   color: #495057;
   font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .exercise-buttons button:hover {
   background-color: #e9ecef;
   border-left-color: #ff765a;
   color: #ff765a;
+  font-size: 18px;
 }
 
 .exercise-buttons button.active {
@@ -60,86 +65,196 @@
 .exercise-details {
   flex: 1;
   padding: 20px;
-  background-color: white;
+  background-color: #fee;
   color: #495057;
   min-height: 400px;
+}
+
+/* Table Styling */
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.exercise-table th {
+  background-color: #ec9483;
+  color: white;
+  font-weight: bold;
+  padding: 12px 15px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.exercise-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 15px;
+}
+
+.exercise-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.exercise-table tbody tr:nth-child(even) {
+  background-color: #fff5f5;
+}
+
+.exercise-table tbody tr:hover {
+  background-color: #ffebe8;
+}
+
+.exercises-list h3 {
+  color: #ff765a;
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 /* Responsive Breakpoints */
 @media screen and (max-width: 768px) {
   .exercise-container {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .exercise-buttons {
-      flex-direction: row;
-      flex-wrap: wrap;
-      border-right: none;
-      border-bottom: 1px solid #e0e0e0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
   }
 
   .exercise-buttons button {
-      flex: 1 1 50%;
-      text-align: center;
-      border-left: none;
-      border-bottom: 4px solid transparent;
-      padding: 10px;
+    flex: 1 1 30%;
+    text-align: center;
+    border-left: none;
+    border-bottom: 4px solid transparent;
+    padding: 10px 5px;
+    font-size: 14px;
   }
 
   .exercise-buttons button:hover {
-      border-left: none;
-      border-bottom-color: #ff765a;
+    border-left: none;
+    border-bottom-color: #ff765a;
+    font-size: 15px;
   }
 
   .exercise-details {
-      min-height: 250px;
+    min-height: 250px;
+  }
+  
+  .exercise-table th,
+  .exercise-table td {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+}
+
+/* Added more specific breakpoint for small screens like iPhone SE */
+@media screen and (max-width: 600px) {
+  .exercise-buttons button {
+    flex: 1 1 45%;
+    font-size: 13px;
+    padding: 8px 5px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .exercise-section {
-      padding: 10px;
+    padding: 10px;
   }
 
   .exercise-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 
   .exercise-buttons {
-      flex-direction: column;
+    flex-direction: column;
+    padding: 5px;
   }
 
   .exercise-buttons button {
-      flex: none;
-      width: 100%;
-      border-bottom: 4px solid transparent;
-      text-align: center;
+    flex: none;
+    width: 100%;
+    border-left: 4px solid transparent;
+    border-bottom: none;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  
+  .exercise-buttons button:hover {
+    border-bottom: none;
+    border-left-color: #ff765a;
+  }
+  
+  .exercise-buttons button.active {
+    border-bottom: none;
+    border-left-color: #ff765a;
   }
 
   .exercise-details {
-      min-height: 200px;
-      padding: 15px;
+    min-height: 200px;
+    padding: 15px;
+  }
+  
+  .exercise-table th,
+  .exercise-table td {
+    padding: 8px 5px;
+    font-size: 13px;
+  }
+}
+
+/* iPhone SE and other very small screens */
+@media screen and (max-width: 375px) {
+  .exercise-section h2 {
+    font-size: 1.3rem;
+  }
+  
+  .exercise-buttons button {
+    padding: 8px 5px;
+    font-size: 13px;
+  }
+  
+  .exercise-buttons button:hover {
+    font-size: 14px;
+  }
+  
+  .exercise-table th,
+  .exercise-table td {
+    padding: 6px 3px;
+    font-size: 12px;
+  }
+  
+  .exercises-list h3 {
+    font-size: 18px;
   }
 }
 
 /* Scrollbar for buttons on smaller screens */
 @media screen and (max-width: 768px) {
   .exercise-buttons {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .exercise-buttons::-webkit-scrollbar {
-      height: 4px;
+    height: 4px;
   }
 
   .exercise-buttons::-webkit-scrollbar-track {
-      background: #f1f1f1;
+    background: #f1f1f1;
   }
 
   .exercise-buttons::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
+    background: #888;
+    border-radius: 4px;
   }
 }
