@@ -11,4 +11,7 @@ urlpatterns = [
     path('trainer/<int:id>/',views.trainerapi , name='trainer details'),
     path('trainers/',views.trainerapi , name='all trainers details'),
     path('gallery/',views.getGalleryImages , name='gallery details'),
+    path('send-otp/',views.send_otp , name='OTP details'),
+    path('verify-otp/',views.verify_otp , name='Verify-otp details'),
+    path('reset_password/' , views.reset_password, name="resent-password API"),
 ]

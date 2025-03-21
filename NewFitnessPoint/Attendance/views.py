@@ -58,7 +58,6 @@ def mark_member_attendance(request):
         
         # Get or create today's attendance record
         attendance_date, created = MemberAttendance.objects.get_or_create(
-            trainer=trainer,
             date=today
         )
         
@@ -66,6 +65,7 @@ def mark_member_attendance(request):
         member_attendance, created = AllMemberAttendance.objects.get_or_create(
             date=attendance_date,
             member=member,
+            trainer=trainer,
             defaults={'attendance': attendance_status}
         )
         

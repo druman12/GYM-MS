@@ -15,6 +15,8 @@ import BatchList from './components/TrainerView/Pages/BatchList'
 import Attendance from './components//TrainerView/Pages/Attendance'
 import PersonalTraining from './components/TrainerView/Pages/PersonalTraining'
 import PersonalDetails from './components/Member/PersonalDetails'
+import OTPSection from './components/OTPSection';
+import ForgotPassword from './components/ForgotPassword';
 
 // Protected Route component
 const ProtectedRoute = ({ element, requiredUserType }) => {
@@ -54,6 +56,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactSection />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/otp-verification' element={<OTPSection />} />
+          <Route path='/reset-password' element={<ForgotPassword />} />
           
           {/* Protected Routes */}
           <Route 

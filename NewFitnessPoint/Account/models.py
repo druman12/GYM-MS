@@ -8,6 +8,7 @@ import cloudinary.models
 class Member(models.Model):
     member_id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
+    password=models.CharField(max_length=255,blank=True, null=True , default="None")
     dateofbirth=models.DateField(default='2000-01-01')
     gender = models.CharField(max_length=10,choices=[('Male', 'Male'),('Female', 'Female')],default='Male')
     occupation=models.CharField(max_length=120)
@@ -128,6 +129,7 @@ class Owner(models.Model):
 class Trainer(models.Model):
     trainer_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=120)
+    password=models.CharField(max_length=255,blank=True, null=True , default="None")
     email= models.CharField(max_length=150)
     dateofbirth=models.DateField(default='2000-01-01')
     experience=models.PositiveIntegerField(default=1)
@@ -143,10 +145,15 @@ class Trainer(models.Model):
     
 class Gallery(models.Model):
     gallery_id=models.AutoField(primary_key=True)
-    # image=models.ImageField(
-    #     upload_to='gallery/', 
-    #     help_text="Upload a gallery image"
-    # )
     image = cloudinary.models.CloudinaryField('image',folder="images/Gallery", help_text="Upload a gallery image")
     def __str__(self):
         return f"{self.gallery_id}"
+    
+
+class OTPVerification(models.Model):
+    email = models.EmailField()  # Stores email instead of linking to a model
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"OTP for {self.email}"

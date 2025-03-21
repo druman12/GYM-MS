@@ -80,6 +80,11 @@ function Login() {
                 disabled={isLoading}
               />
             </div>
+            <div className="forgot-password">
+              <p onClick={() => navigate("/otp-verification")} className="forgot-password-link">
+                Forgot Password?
+              </p>
+            </div>
             <button 
               type="submit" 
               className="login-button" 
