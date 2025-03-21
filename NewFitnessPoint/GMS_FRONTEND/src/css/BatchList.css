@@ -134,50 +134,16 @@
   background-color: #feeef0; /* Hover effect */
 }
 
-/* Responsive Table */
-@media (max-width: 768px) {
-  .mmember-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-}
+/* Existing desktop styles remain unchanged */
 
-
-/* --- RESPONSIVE BEHAVIOR --- */
-
-/* Tablet - Sidebar goes to top */
-/* @media (max-width: 1024px) {
-  
-
-  .sidebar {
-      width: 100%;
-      height: auto;
-      padding: 10px 0;
-      border-right: none;
-      border-bottom: 1px solid #ddd;
-  }
-
-  .batch-content {
-      padding: 15px;
-  }
-
-  .batch-header {
-      flex-direction: row;
-      align-items: center;
-  }
-} */
-
-/* Mobile - Stack everything, larger tap targets */
+/* --- MOBILE VIEW (MAX WIDTH: 600px) --- */
 @media (max-width: 600px) {
   .batch-list-container {
-      flex-direction: column;
+      flex-direction: column; /* Stack content */
   }
 
   .sidebar {
-      width: 100%;
-      padding: 10px 0;
-      text-align: center;
+      display: none; /* Hide sidebar */
   }
 
   .batch-content {
@@ -185,7 +151,7 @@
   }
 
   .batch-card {
-      padding: 10px;
+      padding: 12px;
   }
 
   .batch-header {
@@ -198,10 +164,41 @@
       margin-top: 8px;
   }
 
+  .member-details {
+      overflow-x: auto;
+  }
+
+  .mmember-table {
+      
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+
+  .mmember-table th, .mmember-table td {
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+  }
+
   .member-header,
   .member-row {
       flex-direction: column;
       align-items: flex-start;
       gap: 4px;
+  }
+}
+
+.mobile-header {
+  display: none;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .mobile-header {
+    display: block; /* Show only on mobile */
   }
 }

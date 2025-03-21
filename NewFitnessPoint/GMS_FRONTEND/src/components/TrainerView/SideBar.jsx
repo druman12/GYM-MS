@@ -6,13 +6,14 @@ function Sidebar() {
   const trainer_id = sessionStorage.getItem("userId");
   const [trainer, setTrainer] = useState(null);
   const url = `http://127.0.0.1:8000/api/trainer/${trainer_id}/`;
+  
+   useEffect(() => {
+       fetch(url)  // Replace with your actual API URL
+          .then(response => response.json())
+          .then(data => setTrainer(data))
+          .catch(error => console.error('Error fetching trainer data:', error));
+      }, [url]);
 
-  useEffect(() => {
-    fetch(url) // Replace with your actual API URL
-      .then((response) => response.json())
-      .then((data) => setTrainer(data))
-      .catch((error) => console.error("Error fetching trainer data:", error));
-  }, [url]);
 
   return (
     <div className="sidebar">
