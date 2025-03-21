@@ -53,7 +53,8 @@ const GalleryPhotos = () => {
           images.map((item) => (
             <div className="gallery-box" key={item.gallery_id}>
               <img
-                src={item.image || "/placeholder.svg"}
+                // src={item.image || "/placeholder.svg"}
+                src={item.image_url}
                 alt={`Gallery image ${item.gallery_id}`}
                 className="gallery-image"
               />

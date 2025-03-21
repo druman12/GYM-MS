@@ -2,8 +2,10 @@ import '../../css/TrainerHeader.css'
 import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
 
+
 const TrainerHeader = () => {
-    const { showLoader, hideLoader } = useLoading(); // Get loading functions
+    const { showLoader, hideLoader } = useLoading();
+     // Get loading functions
     const navigate = useNavigate();
 
   // Function to handle navigation with loading state

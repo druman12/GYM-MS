@@ -97,6 +97,52 @@
   font-style: italic;
   color: #777;
 }
+.mmember-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures equal column distribution */
+  margin-top: 10px;
+}
+
+
+
+.mmember-table th, .mmember-table td {
+  border:  #ddd;
+  padding: 10px;
+  text-align: center; /* Center the text */
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+ 
+
+
+.mmember-table th {
+  background-color: #fda4af; /* Header background color */
+  color: white;
+  font-weight: bold;
+}
+
+
+.mmember-table tr:nth-child(even) {
+  background-color: #feeef0; /* Alternate row color */
+}
+
+.mmember-table tr:hover {
+  background-color: #feeef0; /* Hover effect */
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .mmember-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
 
 /* --- RESPONSIVE BEHAVIOR --- */
 

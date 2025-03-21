@@ -1,5 +1,5 @@
 /* Header.css */
-.main-header {
+.Hmain-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,14 +9,15 @@
   height: 100px;
 }
 
-.main-logo {
+.Hmain-logo {
   max-height: fit-content;
   display: flex;
   align-items: center;
 }
 
-.main-logo img {
+.Hmain-logo img {
   height: 100px;
+  width: 100%;
 }
 
 .desktop-nav {

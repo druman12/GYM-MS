@@ -1,7 +1,5 @@
 import '../css/HeroSection.css';
-import insta from '../assets/instragram.png';
-import fashbook from '../assets/fashbook.png';
-import x from '../assets/x.png';
+
 import { useState, useEffect } from 'react';
 
 
@@ -22,11 +20,6 @@ function HeroSection() {
       <div className="hero-content">
         <h1>NEW <span className="highlight">FITNESS </span>POINT</h1>
         <p>{heroData ? heroData.hero_content1 : 'Loading...'}</p>
-        <div className="social-icons">
-          <a href="#"><img src={x} alt="Twitter" /></a>
-          <a href="#"><img src={fashbook} alt="Facebook" /></a>
-          <a href="#"><img src={insta} alt="Instagram" /></a>
-        </div>
       </div>
       <div className="content-right">
         <div className="right-banner">

@@ -9,7 +9,7 @@ export default function TrainersSection() {
     const transitionDuration = 500;
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const baseImageUrl = "http://127.0.0.1:8000/";
+    // const baseImageUrl = "http://127.0.0.1:8000/";
 
     useEffect(() => {
         const fetchTrainers = async () => {
@@ -23,9 +23,9 @@ export default function TrainersSection() {
                 const responses = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
                 const formattedTrainers = responses.map(trainer => ({
                     name: trainer.name,
-                    designation: "Expert Trainer",
+                    experience: "Experience: " + trainer.experience + " years",
                     description: trainer.trainer_info,
-                    image: baseImageUrl + trainer.trainer_profile_photo
+                    image: trainer.trainer_profile_photo
                 }));
                 setTrainers(formattedTrainers);
             } catch (error) {
@@ -92,7 +92,7 @@ export default function TrainersSection() {
                             >
                                 <div className="trainer-image-container">
                                     <img
-                                       // src={trainer.image || "/placeholder.svg"}
+                                       src={trainer.image}
                                         alt={trainer.name}
                                         onError={(e) => {
                                             e.target.src = "https://via.placeholder.com/100";
@@ -101,7 +101,7 @@ export default function TrainersSection() {
                                 </div>
                                 <div className="trainer-info">
                                     <h3>{trainer.name}</h3>
-                                    <h4>{trainer.designation}</h4>
+                                    <h4>{trainer.experience}</h4>
                                     <p>{trainer.description}</p>
                                 </div>
                             </div>

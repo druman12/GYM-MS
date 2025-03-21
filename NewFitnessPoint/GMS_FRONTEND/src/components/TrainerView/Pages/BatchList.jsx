@@ -13,20 +13,20 @@ const BatchList = () => {
 
   useEffect(() => {
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setBatches(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error fetching Batches data:', error);
-            setLoading(false);
-        });
-}, [url]);
+      .then((response) => response.json())
+      .then((data) => {
+        setBatches(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching Batches data:", error);
+        setLoading(false);
+      });
+  }, [url]);
 
-if (loading) {
+  if (loading) {
     return <p>Loading batches...</p>;
-}
+  }
 
   const Batch_data = Batches.batches;
 
@@ -63,24 +63,26 @@ if (loading) {
             {openBatch === batch.batch_id && (
               <div className="member-details">
                 {batch.member_count > 0 ? (
-                  <>
-                    <div className="member-header">
-                      <span>Name</span>
-                      <span>Membership</span>
-                      <span>Join Date</span>
-                    </div>
-                    {batch.members.map((member, index) => (
-                      <div key={index} className="member-row">
-                        <span>{member ? member.name : "Loading..."}</span>
-                        <span>
-                          {member ? member.subscription_plan : "Loading..."}
-                        </span>
-                        <span>
-                          {member ? member.joining_date : "Loading..."}
-                        </span>
-                      </div>
-                    ))}
-                  </>
+                  <table className="mmember-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Membership</th>
+                        <th>Join Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {batch.members.map((member, index) => (
+                        <tr key={index}>
+                          <td>{member ? member.name : "Loading..."}</td>
+                          <td>
+                            {member ? member.subscription_plan : "Loading..."}
+                          </td>
+                          <td>{member ? member.joining_date : "Loading..."}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 ) : (
                   <p className="no-members">No members in this batch.</p>
                 )}

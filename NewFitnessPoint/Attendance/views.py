@@ -9,6 +9,15 @@ from .models import MemberAttendance, AllMemberAttendance
 
 @csrf_exempt
 def get_member_attendance(request, member_id):
+    # Fetch joining_date and subscription_end_date from Member model
+    try:
+        member = Member.objects.get(member_id=member_id)
+        joining_date = member.joining_date
+        subscription_end_date = member.subscription_end_date
+    except Member.DoesNotExist:
+        return JsonResponse({"error": "Member not found"}, status=404)
+
+    # Fetch attendance records
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT ma.date, ama.attendance
@@ -24,7 +33,13 @@ def get_member_attendance(request, member_id):
         {"date": str(row[0]), "attendance": row[1]} for row in results
     ]
 
-    return JsonResponse({"member_id": member_id, "attendance": attendance_list})
+    # Return response with joining_date and subscription_end_date
+    return JsonResponse({
+        "member_id": member_id,
+        "joining_date": str(joining_date),
+        "subscription_end_date": str(subscription_end_date),
+        "attendance": attendance_list
+    })
 
 @csrf_exempt
 def mark_member_attendance(request):

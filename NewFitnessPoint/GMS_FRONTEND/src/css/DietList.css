@@ -25,3 +25,51 @@
   text-align: center;
   width: 100%;
 }
+.diet-image{
+  width: 60%;
+  height: 350px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.diet-image:hover {
+  transform: scale(1.05);
+}
+
+.full-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Full-Screen Image */
+.full-screen-image {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  cursor: zoom-out;
+}
+
+/* Close Button (Top-Right of Screen) */
+.close-btn-global {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.close-btn-global:hover {
+  color: red;
+}

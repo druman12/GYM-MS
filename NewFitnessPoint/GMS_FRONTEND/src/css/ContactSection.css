@@ -12,6 +12,30 @@
   color: #333;
 }
 
+.cback-button {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* Move to left side */
+  background-color: #ffced0a3; /* White background */
+  border: none;
+  font-size: 40px; /* Bigger size */
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 50%; /* Optional: Makes it circular */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Increase size */
+  height: 50px; /* Increase size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds slight shadow */
+}
+
+.back-button:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+}
+
+
 /* Contact Content Layout */
 .contact-content {
   display: flex;

@@ -49,8 +49,8 @@ function Header() {
   };
   
   return (
-    <header className="main-header">
-      <div className="main-logo">
+    <header className="Hmain-header">
+      <div className="Hmain-logo">
         <img src={Logo} alt="Fitness Logo" />
       </div>
       
