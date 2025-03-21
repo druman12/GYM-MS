@@ -33,33 +33,36 @@ const PersonalTraining = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="content-wrapper">
-        <Sidebar />
-        <div className="PTmain-content">
-          <TrainerHeader />
-          <div className="members-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>name</th>
-                  <th>membership type</th>
-                  <th>Join date</th>
+    <div className="content-wrapper">
+      <Sidebar />
+      <div className="PTmain-content">
+        <TrainerHeader />
+        <h2 className="mobile-header">Personal Training</h2> {/* Add this header */}
+        <div className="members-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Membership Type</th>
+                <th>Join Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PT_data.map((member, index) => (
+                <tr key={index}>
+                  <td>{member ? member.name : "Loading..."}</td>
+                  <td>{member ? member.subscription_plan : "Loading..."}</td>
+                  <td>{member ? member.joining_date : "Loading..."}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {PT_data.map((member, index) => (
-                  <tr key={index}>
-                    <td>{member ? member.name : "Loading..."}</td>
-                    <td>{member ? member.subscription_plan : "Loading..."}</td>
-                    <td>{member ? member.joining_date : "Loading..."}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+  </div>
+  
+
   );
 };
 

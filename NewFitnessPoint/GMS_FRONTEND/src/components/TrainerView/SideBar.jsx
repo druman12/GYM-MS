@@ -8,6 +8,7 @@ function Sidebar() {
     const [trainer, setTrainer] = useState(null);
     const url=`http://127.0.0.1:8000/api/trainer/${trainer_id}/`
     
+    
       useEffect(() => {
         fetch(url)  // Replace with your actual API URL
           .then(response => response.json())
