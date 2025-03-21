@@ -7,10 +7,10 @@ class AllMemberAttendanceInline(admin.TabularInline):  # or admin.StackedInline
 
 @admin.register(MemberAttendance)
 class MemberAttendanceAdmin(admin.ModelAdmin):
-    list_display = ('date', 'trainer')
+    list_display = ('date',)
     inlines = [AllMemberAttendanceInline]
 
 
 class AllMemberAttendanceAdmin(admin.ModelAdmin):
-    list_display = ('date', 'member', 'attendance')
+    list_display = ('date', 'member','trainer' , 'attendance')
     list_filter = ('attendance', 'date', 'member')

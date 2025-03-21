@@ -58,14 +58,13 @@ nav ul li a {
   font-weight: bold;
   display: block;
   padding: 12px 20px;
-  width: 100%; /* Make sure link itself fills the <li> */
+  width: 100%; 
   box-sizing: border-box;
 }
 
-/* This makes the active link background cover the full width */
 nav ul li a.active {
   background-color: #ff99a0;
   color: black;
-  width: 100%; /* Fill the full width of the sidebar */
-  display: block; /* Block-level to occupy full space */
+  width: 100%; 
+  display: block;
 }

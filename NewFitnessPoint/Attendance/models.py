@@ -5,7 +5,6 @@ from Account.models import Member, Trainer
 
 # Create your models here.
 class MemberAttendance(models.Model):
-    trainer = models.ForeignKey(Trainer, on_delete=models.DO_NOTHING)
     date = models.DateField(default=date.today)
     
     def __str__(self):
@@ -16,6 +15,7 @@ class MemberAttendance(models.Model):
 class AllMemberAttendance(models.Model):
     date = models.ForeignKey(MemberAttendance, on_delete=models.CASCADE)
     member = models.ForeignKey(Member, on_delete=models.DO_NOTHING)
+    trainer=models.ForeignKey(Trainer , on_delete=models.DO_NOTHING)
     attendance_choice = [
         ('present', 'Present'),
         ('absent', 'Absent'),
