@@ -1,86 +1,4 @@
-/* .attendance-container {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  height: 100vh;
-}
 
-.attendance-content {
-  display: flex;
-}
-
-.attendance-main {
-  flex: 1;
-  padding: 20px;
-}
-
-.attendance-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.attendance-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.date-placeholder {
-  font-size: 1rem;
-  color: #333;
-}
-
-.trainer-name {
-  font-weight: bold;
-  margin-right: 12%;
-  
-}
-
-.attendance-table-wrapper {
-  background-color: #fdeff0;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.attendance-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attendance-table th,
-.attendance-table td {
-  padding: 10px;
-  text-align: center;
-}
-
-.attendance-table th {
-  background-color: #fecdd3;
-  font-weight: bold;
-  padding: 12px;
-}
-
-.attendance-status.absent {
-  background-color: #fecdd3;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  color: #333;
-  font-weight: bold;
-}
-
-.attendance-status.present {
-  background-color: #fecdd3;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  color: #333;
-  font-weight: 700;
-} */
-
-
-/* Reset and Global Styles */
 * {
   margin: 0;
   padding: 0;
@@ -92,7 +10,6 @@ body {
   background-color: #fff;
 }
 
-/* Main Attendance Container */
 .attendance-container {
   display: flex;
   flex-direction: column;
@@ -107,7 +24,6 @@ body {
 
 .attendance-main {
   flex: 1;
-  padding: 20px;
   overflow-x: auto;
 }
 
@@ -123,6 +39,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
 .date-placeholder {
@@ -135,20 +52,21 @@ body {
   margin-right: 10%;
 }
 
-/* Table Wrapper */
+/* Table Wrapper (Ensures Scrollable Table) */
 .attendance-table-wrapper {
   background-color: #fdeff0;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
+  overflow-x: auto;  /* Enables horizontal scrolling */
+  width: 100%;
 }
 
 /* Table Styling */
 .attendance-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Fixes column width issues */
+  min-width: 600px;  /* Ensures table doesn't shrink on small screens */
 }
 
 .attendance-table th,
@@ -195,20 +113,68 @@ body {
   opacity: 0.8;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
+  .attendance-container {
+    padding: 10px;
+  }
+
+  /* Stack header items */
+  .attendance-header {
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trainer-name {
+    margin-right: 0;
+    margin-top: 5px;
+  }
+
+  /* Ensure table scrolls instead of disappearing */
   .attendance-table-wrapper {
     overflow-x: auto;
+    width: 100%;
   }
 
   .attendance-table {
+    min-width: 600px; /* Prevents shrinking */
+  }
+}
+
+/* Small Screen (iPhone SE) */
+@media (max-width: 375px) {
+  .attendance-title {
+    font-size: 16px;
+  }
+
+  .attendance-table-wrapper {
+    padding: 10px;
+    overflow-x: auto; /* Allows scrolling */
+    max-width: 100%; /* Ensures content stays visible */
+  }
+
+  .attendance-table {
+    min-width: 600px; /* Prevents table from becoming too small */
     display: block;
-    overflow-x: auto;
-    white-space: nowrap;
   }
 
   .attendance-table th,
   .attendance-table td {
-    white-space: nowrap;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .attendance-status {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .attendance-title {
+    text-align: center;
+    width: 100%;
   }
 }

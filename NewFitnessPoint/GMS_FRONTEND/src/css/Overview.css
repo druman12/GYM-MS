@@ -6,14 +6,7 @@
 }
 
 
-/* Collapsible sidebar for smaller screens */
-/* .sidebar.collapsed {
-  transform: translateX(-100%);
-  position: absolute;
-  z-index: 1000;
-} */
 
-/* Trainer Profile */
 .trainer-profile {
   text-align: center;
   margin-bottom: 20px;
@@ -24,7 +17,7 @@
   height: 60px;
   background-color: #e0e0e0;
   border-radius: 50%;
-  background-image: url('https://via.placeholder.com/60');
+  /* background-image: url('https://via.placeholder.com/60'); */
   background-size: cover;
 }
 
@@ -188,5 +181,12 @@ nav ul li a.active {
 
   .card {
       width: 80%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .overview-title {
+    text-align: center; /* Centers the header */
   }
 }
