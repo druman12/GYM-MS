@@ -226,6 +226,10 @@
   .exercise-buttons button:hover {
     font-size: 14px;
   }
+  .exercise-buttons button.active {
+    border-bottom: none;
+    border-left-color: #ff765a;
+  }
   
   .exercise-table th,
   .exercise-table td {

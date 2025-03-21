@@ -1,4 +1,4 @@
-.attendance-container {
+/* .attendance-container {
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -34,6 +34,8 @@
 
 .trainer-name {
   font-weight: bold;
+  margin-right: 12%;
+  
 }
 
 .attendance-table-wrapper {
@@ -75,4 +77,138 @@
   border-radius: 4px;
   color: #333;
   font-weight: 700;
+} */
+
+
+/* Reset and Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+/* Main Attendance Container */
+.attendance-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.attendance-content {
+  display: flex;
+  flex: 1;
+}
+
+.attendance-main {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+/* Header Styling */
+.attendance-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.date-placeholder {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.trainer-name {
+  font-weight: bold;
+  margin-right: 10%;
+}
+
+/* Table Wrapper */
+.attendance-table-wrapper {
+  background-color: #fdeff0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+/* Table Styling */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Fixes column width issues */
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #f5f5f5;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Ensures text doesn't overflow */
+}
+
+.attendance-table th {
+  background-color: #fecdd3;
+  font-weight: bold;
+}
+
+.attendance-table td {
+  background-color: #fdeff0;
+}
+
+/* Attendance Status Buttons */
+.attendance-status {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.attendance-status.absent {
+  background-color: #ffcccc;
+  color: #333;
+}
+
+.attendance-status.present {
+  background-color: #b3ffb3;
+  color: #333;
+}
+
+/* Hover Effects */
+.attendance-status:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .attendance-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .attendance-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    white-space: nowrap;
+  }
 }

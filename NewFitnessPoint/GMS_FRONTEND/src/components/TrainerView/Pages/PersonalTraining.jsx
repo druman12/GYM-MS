@@ -35,7 +35,7 @@ const PersonalTraining = () => {
     <div className="dashboard-container">
       <div className="content-wrapper">
         <Sidebar />
-        <div className="main-content">
+        <div className="PTmain-content">
           <TrainerHeader />
           <div className="members-table">
             <table>

@@ -63,7 +63,9 @@ nav ul li a.active {
   flex: 1;
   padding: 20px;
   overflow-x: hidden;
+  margin-left: 7%; /* Moves the entire main-content to the right */
 }
+
 
 /* Member Header (Top Bar) */
 .member-header {

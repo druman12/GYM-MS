@@ -12,6 +12,30 @@
   color: #333;
 }
 
+.cback-button {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* Move to left side */
+  background-color: #ffced0a3; /* White background */
+  border: none;
+  font-size: 40px; /* Bigger size */
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 50%; /* Optional: Makes it circular */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Increase size */
+  height: 50px; /* Increase size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds slight shadow */
+}
+
+.back-button:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+}
+
+
 /* Contact Content Layout */
 .contact-content {
   display: flex;
@@ -66,24 +90,24 @@
 
 .contact-center p {
   margin: 0.5rem 0;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #555;
 }
 
 /* Social Icons */
 .social-links {
-  margin-top: 1rem;
+  margin: 1rem;
 }
 
-.social-links i {
-  font-size: 1.5rem;
-  margin: 0 10px;
-  cursor: pointer;
-  transition: color 0.3s ease-in-out;
+.social-links .icon {
+  margin-inline: 10px;
 }
 
-.social-links i:hover {
-  color: #ff5733;
+
+.social-links .icon:hover {
+  height: 40px;
+  width: 40px;
+  transition: 0.3s;
 }
 
 /* Right Section (Quick Links) */
@@ -127,16 +151,47 @@
     text-align: center;
   }
   .contact-left{
-    width: 60%;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    flex-direction:row ;
+    justify-content: center;
+    align-items: center;
+  }
+  .contact-brand {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  img {
+    width: 50%;
+    height: auto;
   }
 
   .contact-center,
   .contact-right {
     width: 100%;
   }
+  
   .contact-center{
-    border-radius: 10px;
+    background-color: #ffced0a3;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
+  .contact-info{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .social-links{
+    margin: 10px;
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+  }
+
 }
 
 @media (max-width: 590px) {
@@ -148,14 +203,14 @@
   }
   .contact-center{
     width: 80%;
-    margin-top: 2px;
   }
   .contact-title {
     font-size: 1.5rem;
   }
 
   .contact-brand {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: bold;
   }
 
   .quick-links-title {
@@ -169,5 +224,19 @@
 
   .social-links i {
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 470px) {
+  .contact-left{
+    flex-direction: column;
+  }
+  .contact-center{
+    flex-direction: column;
+
+  }
+  .contact-brand {
+    font-size: 1rem;
+    font-weight: bold;
   }
 }

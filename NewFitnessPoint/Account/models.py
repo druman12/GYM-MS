@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime, timedelta
 from django.utils import timezone  # type: ignore 
+import cloudinary
+import cloudinary.models
 
 # Create your models here.
 class Member(models.Model):
@@ -60,14 +62,16 @@ class MemberMedicalDetails(models.Model):
     orthopedic_conditions = models.TextField(null=True, blank=True)  # To store orthopedic-related conditions
     other_conditions = models.TextField(null=True, blank=True)  # To store any other medical conditions
     
-    bmi_report_image = models.ImageField(
-        upload_to='bmi_reports/',  # Directory for uploaded BMI images
+    bmi_report_image =cloudinary.models.CloudinaryField(
+        'bmi_reports',
+        folder="images/MemberSection/BMIs",  # Directory for uploaded BMI images
         null=True,
         blank=True,
         help_text="Upload a BMI report image (optional)."
     )
-    diet_chart_image = models.ImageField(
-        upload_to='diet_charts/',  # Directory for uploaded diet chart images
+    diet_chart_image =cloudinary.models.CloudinaryField(
+        'diet_charts',  # Directory for uploaded diet chart images
+        folder="images/MemberSection/DietCharts",
         null=True,
         blank=True,
         help_text="Upload a diet chart image (optional)."
@@ -83,20 +87,23 @@ class Owner(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=220)
     description=models.TextField()
-    profile_photo=models.ImageField(
-        upload_to='ownerphoto/', 
+    profile_photo=cloudinary.models.CloudinaryField(
+        'owner photo', 
+        folder="images/OwnerData",
         help_text="Upload a profile photo"
     )
     aboutUsdescription=models.TextField()
-    AboutUs_photo=models.ImageField(
-        upload_to='ownerphoto/aboutUS_img', 
+    AboutUs_photo=cloudinary.models.CloudinaryField(
+        'owner AboutUs image',
+        folder="images/OwnerData", 
         help_text="Upload a AboutUs photo"
     )
     mission=models.TextField()
     vision=models.TextField()
     Goals=models.TextField()
-    heroimage=models.ImageField(
-        upload_to='ownerphoto/hero_section', 
+    heroimage=cloudinary.models.CloudinaryField(
+        'hero_section Image', 
+        folder="images/OwnerData",
         help_text="Upload a Hero Image"
     )
     hero_content1=models.TextField()
@@ -125,8 +132,9 @@ class Trainer(models.Model):
     dateofbirth=models.DateField(default='2000-01-01')
     experience=models.PositiveIntegerField(default=1)
     trainer_info=models.TextField()
-    trainer_profile_photo=models.ImageField(
-        upload_to='trainer_photo/', 
+    trainer_profile_photo=cloudinary.models.CloudinaryField(
+        'trainer profile photo', 
+        folder="images/TrainerProfile",
         help_text="Upload a profile photo"
     )
 
@@ -135,9 +143,10 @@ class Trainer(models.Model):
     
 class Gallery(models.Model):
     gallery_id=models.AutoField(primary_key=True)
-    image=models.ImageField(
-        upload_to='gallery/', 
-        help_text="Upload a gallery image"
-    )
+    # image=models.ImageField(
+    #     upload_to='gallery/', 
+    #     help_text="Upload a gallery image"
+    # )
+    image = cloudinary.models.CloudinaryField('image',folder="images/Gallery", help_text="Upload a gallery image")
     def __str__(self):
         return f"{self.gallery_id}"

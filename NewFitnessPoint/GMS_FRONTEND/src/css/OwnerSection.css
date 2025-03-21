@@ -1,25 +1,48 @@
 .owner-section {
   display: flex;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 2rem;
+  flex-direction: column;
   align-items: center;
+  padding: 2rem;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.owner-photo {
-  flex: 0 0 30%;  /* Don't grow, don't shrink, take 40% of space */
+/* Centered Header */
+.owner-header {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
 }
+
+/* Main content layout */
+.owner-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 90%;
+}
+
+/* Owner Photo (Image on Left)
+.owner-photo {
+  flex: 0 0 200px;
+  display: flex;
+  margin-right: 20px;
+  position: relative;
+  left: -10px; 
+} */
 
 .owner-photo img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height:200px;
+  border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Description on the right */
 .owner-details {
-  flex: 1;  /* Take up remaining space */
+  flex: 1;
+  text-align: left;
 }
 
 .owner-details p {
@@ -29,20 +52,33 @@
   margin: 0;
 }
 
-/* Media query for screens below 465px */
-@media (max-width: 465px) {
-  .owner-section {
+/* Loading text */
+.loading-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .owner-content {
     flex-direction: column;
+    align-items: center;
     text-align: center;
-    padding: 1.5rem;
   }
-  
+
   .owner-photo {
-    flex: 0 0 100%;
-    margin-bottom: 1.5rem;
+    flex: 0 0 120px; /* Smaller image for small screens */
+    margin-bottom: 1rem;
+    left: 0; /* Reset left position */
   }
-  
-  .owner-details p {
-    text-align: left;
+
+  .owner-photo img {
+    width: 100%;
+    max-width: 120px; /* Ensure it doesn't exceed this size */
+  }
+
+  .owner-details {
+    text-align: center;
   }
 }

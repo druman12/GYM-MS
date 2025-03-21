@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'Account',
     'Attendance',
     'Batches',
@@ -86,9 +89,9 @@ WSGI_APPLICATION = 'NewFitnessPoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'GMS_NFP',
+        'NAME': 'gms_nfp',
         'USER': 'root',
-        'PASSWORD': 'vivek',
+        'PASSWORD': '1225',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     },
@@ -139,5 +142,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPEND_SLASH = False
 
-MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/image/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dbsokdyz0',
+    'API_KEY': '444188369997249',
+    'API_SECRET': 'SMdwfVyLL3vSs3oDQ9TLP5RmqXE',
+    'SECURE': True
+}
+
+cloudinary.config( 
+    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+    secure=CLOUDINARY_STORAGE['SECURE']
+)

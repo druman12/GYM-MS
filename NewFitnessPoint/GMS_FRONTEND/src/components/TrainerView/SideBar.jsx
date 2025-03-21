@@ -18,7 +18,13 @@ function Sidebar() {
     return (
         <div className="sidebar">
             <div className="trainer-profile">
-                <div className="avatar"></div>
+                <div className="avatar">
+                    {trainer && trainer.trainer_profile_photo ? (
+                        <img src={trainer.trainer_profile_photo} alt="Trainer Avatar" className="trainer-img" />
+                    ) : (
+                        <span>Loading...</span>
+                    )}
+                </div>
                 <span className="trainer-name">{trainer ? trainer.name : 'Loading...'}</span>
             </div>
             <nav>
