@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LoadingProvider } from './components/LoadingContext';
 import Home from './components/Home';
@@ -17,6 +18,7 @@ import PersonalTraining from './components/TrainerView/Pages/PersonalTraining'
 import PersonalDetails from './components/Member/PersonalDetails'
 import OTPSection from './components/OTPSection';
 import ForgotPassword from './components/ForgotPassword';
+import MemberDetails from './components/TrainerView/Pages/MemberDetails';
 
 // Protected Route component
 const ProtectedRoute = ({ element, requiredUserType }) => {
@@ -75,6 +77,10 @@ function App() {
           <Route 
             path="/personaltraining" 
             element={<ProtectedRoute element={<PersonalTraining />} requiredUserType="trainer" />} 
+          />
+          <Route 
+            path="/member-details/:member_id/:name" 
+            element={<ProtectedRoute element={<MemberDetails />} requiredUserType="trainer" />} 
           />
           
           <Route 

@@ -1,0 +1,106 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+}
+
+/* Container */
+.MD_container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 20px; /* Top padding for fixed header */
+}
+
+/* Back Button */
+.MD_back-button {
+  background-color: #fda4af;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.MD_back-button:hover {
+  background-color: #f87191;
+}
+
+/* Title Styling */
+.MD_title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  width: 100%; /* Ensures full width */
+}
+
+/* Sections Wrapper */
+.MD_sections {
+  display: flex;
+  flex-direction: column; /* Always stacked */
+  gap: 20px;
+}
+
+/* Section Boxes */
+.MD_exercise-section, 
+.MD_bmi-section {
+ 
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* --- NO SIDE-BY-SIDE LAYOUT FOR DESKTOP --- */
+@media (min-width: 768px) {
+  .MD_sections {
+    flex-direction: column; /* Ensure stacking even on larger screens */
+  }
+}
+
+/* --- MOBILE VIEW (Max-width: 600px) --- */
+@media (max-width: 600px) {
+  /* Ensure padding and prevent content overlap */
+  
+
+  /* Center and Fix "Member Details" Header */
+  .MD_title {
+    position: relative;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: auto;
+    font-size: 20px;
+  }
+
+  /* Back Button Adjustments */
+  .MD_back-button {
+
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  /* Mobile View: Sections stay stacked */
+  .MD_sections {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Adjust Section Padding */
+  .MD_exercise-section, 
+  .MD_bmi-section {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

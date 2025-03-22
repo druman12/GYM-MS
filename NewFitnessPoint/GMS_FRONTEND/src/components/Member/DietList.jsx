@@ -6,20 +6,21 @@ const DietList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const member_id = sessionStorage.getItem("userId");
 
   useEffect(() => {
     const fetchDietChart = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/api/membermedicaldetails/"
+          `http://127.0.0.1:8000/api/membermedicaldetails/${member_id}/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch diet chart");
         }
         const data = await response.json();
-
-        if (data.length > 0) {
-          setDietImage(data[0].diet_chart_image); // Assuming the first item contains the image
+        console.log("diet"+data)
+        if (data) {
+          setDietImage(data.diet_chart_image); // Assuming the first item contains the image
         } else {
           throw new Error("No diet chart available");
         }
