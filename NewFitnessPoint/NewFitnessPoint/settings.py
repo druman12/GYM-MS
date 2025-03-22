@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'GMS_NFP',
         'USER': 'root',
-        'PASSWORD': 'vivek',
+        'PASSWORD': '1225',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     },
