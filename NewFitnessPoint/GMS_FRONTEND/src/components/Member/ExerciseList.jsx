@@ -1,18 +1,24 @@
+/* eslint-disable react/prop-types */
 import '../../css/ExerciseList.css';
 import { useEffect, useState } from "react";
 
-const ExerciseList = () => {
+const ExerciseList = ({ member_id: propMemberId}) => {
+  const extractedMemberId = propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
+  const member_id = extractedMemberId || sessionStorage.getItem("userId");
+
+  const isMember = propMemberId ? "member" : sessionStorage.getItem("userType");
+
+
+ 
+
   const [loading, setLoading] = useState(true);
   const [exerciseList, setExerciseList] = useState(null);
   const [selectedDay, setSelectedDay] = useState(1);
   const [exercises, setExercises] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(false);
 
-  const member_id = sessionStorage.getItem("userId");
-  const isMember = sessionStorage.getItem("userType");
-
-  const url = isMember === 'member' 
-    ? `http://127.0.0.1:8000/api/exercise/member/${member_id}/workoutplan/` 
+  const url = isMember === "member"
+    ? `http://127.0.0.1:8000/api/exercise/member/${member_id}/workoutplan/`
     : null;
 
   useEffect(() => {
@@ -31,19 +37,22 @@ const ExerciseList = () => {
       .then(data => {
         setExerciseList(data);
         setLoading(false);
-        // Fetch exercises for day 1 by default when workout plan loads
-        fetchExerciseDetails(1);
+
+        // ✅ Fetch exercises for Day 1 **AFTER** workout plan is set
+        if (data?.workout_plans?.length > 0) {
+          fetchExerciseDetails(1);
+        }
       })
       .catch(error => {
-        console.error('Error fetching WorkoutPlan data:', error);
+        console.error("Error fetching WorkoutPlan data:", error);
         setLoading(false);
       });
-  }, [url]);
+  }, [url]); // ✅ Removed url dependency to prevent unnecessary re-renders
 
   const fetchExerciseDetails = (day) => {
     setLoadingExercises(true);
     setSelectedDay(day);
-    
+
     fetch(`http://127.0.0.1:8000/api/exercise/member/${member_id}/day/${day}/`)
       .then(response => {
         if (!response.ok) {
@@ -53,20 +62,18 @@ const ExerciseList = () => {
       })
       .then(data => {
         setExercises(data.exercises);
-        
         setLoadingExercises(false);
+        console.log("122" + data.exercises)
       })
       .catch(error => {
         console.error(`Error fetching exercises for day ${day}:`, error);
         setLoadingExercises(false);
-        
         setExercises([]);
       });
   };
 
   if (loading) return <p>Loading workout...</p>;
 
-  // Ensure we have valid data before accessing properties
   const focusAreas = exerciseList?.workout_plans?.[0]?.focus_areas || {};
 
   return (
@@ -74,48 +81,21 @@ const ExerciseList = () => {
       <h2>Exercise List</h2>
       <div className="exercise-container">
         <div className="exercise-buttons">
-          <button 
-            onClick={() => fetchExerciseDetails(1)}
-            className={selectedDay === 1 ? "active" : ""}
-          >
-            Day1 {focusAreas.day1 || 'Day 1'}
-          </button>
-          <button 
-            onClick={() => fetchExerciseDetails(2)}
-            className={selectedDay === 2 ? "active" : ""}
-          >
-            Day2 {focusAreas.day2 || 'Day 2'}
-          </button>
-          <button 
-            onClick={() => fetchExerciseDetails(3)}
-            className={selectedDay === 3 ? "active" : ""}
-          >
-           Day3 {focusAreas.day3 || 'Day 3'}
-          </button>
-          <button 
-            onClick={() => fetchExerciseDetails(4)}
-            className={selectedDay === 4 ? "active" : ""}
-          >
-            Day4 {focusAreas.day4 || 'Day 4'}
-          </button>
-          <button 
-            onClick={() => fetchExerciseDetails(5)}
-            className={selectedDay === 5 ? "active" : ""}
-          >
-            Day5 {focusAreas.day5 || 'Day 5'}
-          </button>
-          <button 
-            onClick={() => fetchExerciseDetails(6)}
-            className={selectedDay === 6 ? "active" : ""}
-          >
-            Day6 {focusAreas.day6 || 'Day 6'}
-          </button>
+          {[1, 2, 3, 4, 5, 6].map(day => (
+            <button
+              key={day}
+              onClick={() => fetchExerciseDetails(day)}
+              className={selectedDay === day ? "active" : ""}
+            >
+              Day {day} {focusAreas[`day${day}`] || `Day ${day}`}
+            </button>
+          ))}
         </div>
+
         <div className="exercise-details">
           {loadingExercises ? (
             <p>Loading exercises...</p>
           ) : exercises.length > 0 ? (
-            
             <div className="exercises-list">
               <h3>Day {selectedDay}: {focusAreas[`day${selectedDay}`]}</h3>
               <table className="exercise-table">

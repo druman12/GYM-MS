@@ -1,6 +1,4 @@
 
-
-
 import "../../../css/Attendance.css";
 import TrainerHeader from "../TrainerHeader";
 import Sidebar from "../SideBar";
@@ -16,7 +14,7 @@ function Attendance() {
     const [trainer, setTrainer] = useState("");
     const trainer_id=sessionStorage.getItem("userId");
     const url=`http://127.0.0.1:8000/api/trainer/${trainer_id}/`
-    
+   
       useEffect(() => {
         fetch(url)  // Replace with your actual API URL
           .then(response => response.json())

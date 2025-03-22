@@ -8,7 +8,7 @@ def get_trainer_members(request, trainer_id):
             with connection.cursor() as cursor:
                 # Fetch members under a specific trainer
                 cursor.execute("""
-                    SELECT m.name, m.subscription_plan, m.joining_date
+                    SELECT m.member_id , m.name, m.subscription_plan, m.joining_date
                     FROM Account_member m
                     INNER JOIN pt_personal_training_members ptm ON m.member_id = ptm.member_id
                     INNER JOIN pt_personal_training pt ON ptm.personal_training_id = pt.id
@@ -24,7 +24,7 @@ def get_trainer_members(request, trainer_id):
 
             # Format the response
             member_list = [
-                {"name": member[0], "subscription_plan": member[1], "joining_date": str(member[2])}
+                {"member_id":member[0] ,"name": member[1], "subscription_plan": member[2], "joining_date": str(member[3])}
                 for member in members
             ]
             
