@@ -1,7 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import "../../css/BMIReport.css";
 
-const BMIReport = () => {
+const BMIReport = ({  member_id: propMemberId  }) => {
+ 
+  const extractedMemberId =
+  propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
+
+// Get from sessionStorage if not available from props
+const member_id = extractedMemberId || sessionStorage.getItem("userId");
+
   const [bmiImage, setBmiImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,14 +18,15 @@ const BMIReport = () => {
   useEffect(() => {
     const fetchBMIReport = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/membermedicaldetails/");
+        const response = await fetch(`http://127.0.0.1:8000/api/membermedicaldetails/${member_id}/`);
+      
         if (!response.ok) {
           throw new Error("Failed to fetch BMI report");
         }
         const data = await response.json();
 
-        if (data.length > 0) {
-          setBmiImage(data[0].bmi_report_image); // Assuming the first item contains the image
+        if (data) {
+          setBmiImage(data.bmi_report_image); // Assuming the first item contains the image
         } else {
           throw new Error("No BMI report available");
         }

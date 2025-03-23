@@ -1,16 +1,17 @@
-
-
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Body Styling */
 body {
   font-family: Arial, sans-serif;
   background-color: white;
 }
 
+/* Dashboard Layout */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -28,29 +29,31 @@ body {
   overflow-x: auto;
 }
 
+/* Members Table Styling */
 .members-table {
   background-color: #fdeff0;
   border-radius: 8px;
   padding: 20px;
   width: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  overflow: auto; /* Allow scrolling */
 }
 
+/* Table Styles */
 .members-table table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Fixes column width issues */
+  table-layout: fixed; /* Keeps column widths equal */
 }
 
+/* Table Headers and Data */
 .members-table th,
 .members-table td {
-
   padding: 10px;
   text-align: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  white-space: nowrap; /* Prevents text from wrapping */
+  white-space: normal; /* Allows text wrapping */
 }
 
 .members-table th {
@@ -69,41 +72,54 @@ body {
 .members-table tbody tr:last-child {
   border-bottom: none;
 }
-/* Existing desktop styles remain unchanged */
 
 /* --- MOBILE VIEW (MAX WIDTH: 600px) --- */
 @media (max-width: 600px) {
   .dashboard-container {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .sidebar {
-      display: none; /* Hide sidebar */
+    display: none; /* Hide sidebar */
   }
 
   .PTmain-content {
-      padding: 10px;
+    padding: 10px;
   }
 
+  /* Enable Horizontal Scrolling */
   .members-table {
-      padding: 12px;
-      overflow-x: auto; /* Enable horizontal scroll */
+    overflow-x: auto; /* Enables scrolling */
+    display: block;
   }
 
   .members-table table {
-      width: 100%;
-      overflow-x: auto;
-      white-space: nowrap; /* Prevent breaking text */
+   
+    min-width: 100%;
+    display: block;
   }
 
   .members-table th, .members-table td {
-      padding: 8px;
-      font-size: 14px;
-      text-align: left; /* Align text to the left for better readability */
+    padding: 8px;
+    font-size: 14px;
+    text-align: center; /* Keeps alignment */
+    white-space: nowrap; /* Prevents wrapping */
   }
 }
 
+/* Button Styling */
+.MM_buton {
+  background-color: #fda4af;
+  border: 1px solid #f58b9d;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  color: #000;
+}
 
+/* Mobile Header */
 .mobile-header {
   display: none;
   font-size: 20px;
