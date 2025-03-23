@@ -1,114 +1,99 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "../css/TrainersSection.css";
 
-export default function TrainersSection() {
-    const [trainers, setTrainers] = useState([]);
-    const carouselRef = useRef(null);
+const TrainersSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState(null);
+  const [trainers, setTrainers] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    const animationDuration = 3000;
-    const transitionDuration = 500;
-    const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/trainers/')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTrainers(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching trainer data:', error);
+        setLoading(false);
+      });
+  }, []);
 
-    // const baseImageUrl = "http://127.0.0.1:8000/";
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    if (trainers.length <= 1) return; // Don't animate if only one slide
+    
+    const interval = setInterval(() => {
+      if (!isAnimating) {
+        nextSlide();
+      }
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [currentIndex, trainers.length, isAnimating]);
 
-    useEffect(() => {
-        const fetchTrainers = async () => {
-            try {
-                const urls = [
-                    "http://127.0.0.1:8000/api/trainer/3/",
-                    "http://127.0.0.1:8000/api/trainer/4/",
-                    "http://127.0.0.1:8000/api/trainer/5/"
-                ];
+  const nextSlide = () => {
+    if (isAnimating || trainers.length <= 1) return;
+    
+    setIsAnimating(true);
+    setPreviousIndex(currentIndex);
+    
+    // Wait for animation to complete
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % trainers.length);
+      setIsAnimating(false);
+    }, 800); // Match transition duration in CSS
+  };
 
-                const responses = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
-                const formattedTrainers = responses.map(trainer => ({
-                    name: trainer.name,
-                    experience: "Experience: " + trainer.experience + " years",
-                    description: trainer.trainer_info,
-                    image: trainer.trainer_profile_photo
-                }));
-                setTrainers(formattedTrainers);
-            } catch (error) {
-                console.error("Failed to fetch trainers", error);
-            }
-        };
+  const getSlideClassName = (index) => {
+    if (index === currentIndex) return "carousel-slide active";
+    if (index === previousIndex) return "carousel-slide exit";
+    return "carousel-slide";
+  };
 
-        fetchTrainers();
-    }, []);
+  if (loading) {
+    return <p className="loading-text">Loading...</p>;
+  }
 
-    const cardWidth = 100 / trainers.length;
-    const extendedTrainers = [...trainers, ...trainers, ...trainers];
+  if (trainers.length === 0) {
+    return <p className="loading-text">No trainers available.</p>;
+  }
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => {
-                const nextIndex = prevIndex + 1;
-
-                if (nextIndex >= trainers.length * 2) {
-                    setTimeout(() => {
-                        if (carouselRef.current) {
-                            carouselRef.current.style.transition = "none";
-                            setCurrentIndex(nextIndex % trainers.length);
-                            carouselRef.current.offsetHeight;
-                            setTimeout(() => {
-                                if (carouselRef.current) {
-                                    carouselRef.current.style.transition = `transform ${transitionDuration}ms ease-in-out`;
-                                }
-                            }, 20);
-                        }
-                    }, transitionDuration);
-                }
-
-                return nextIndex;
-            });
-        }, animationDuration);
-
-        return () => clearInterval(interval);
-    }, [trainers.length]);
-
-    const translateX = `-${currentIndex * cardWidth}%`;
-
-    return (
-        <section className="trainers-section">
-            <h2>Our Expert Trainers</h2>
-            {trainers.length === 0 ? (
-                <p>Loading trainers...</p>
-            ) : ( 
-                <div className="carousel-container">
-                    <div
-                        ref={carouselRef}
-                        className="carousel"
-                        style={{
-                            transform: `translateX(${translateX})`,
-                            transition: `transform ${transitionDuration}ms ease-in-out`,
-                            width: `${extendedTrainers.length * cardWidth}%`,
-                        }}
-                    >
-                        {extendedTrainers.map((trainer, idx) => (
-                            <div
-                                key={idx}
-                                className="trainer-card"
-                                style={{ width: `${cardWidth}%` }}
-                            >
-                                <div className="trainer-image-container">
-                                    <img
-                                       src={trainer.image}
-                                        alt={trainer.name}
-                                        onError={(e) => {
-                                            e.target.src = "https://via.placeholder.com/100";
-                                        }}
-                                    />
-                                </div>
-                                <div className="trainer-info">
-                                    <h3>{trainer.name}</h3>
-                                    <h4>{trainer.experience}</h4>
-                                    <p>{trainer.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+  return (
+    <section className="trainers-section">
+      <h2 className="section-title">Our Trainers</h2>
+      <div className="carousel-container">
+        <div className="carousel-wrapper">
+          {trainers.map((trainer, index) => (
+            <div
+              key={index}
+              className={getSlideClassName(index)}
+            >
+              <div className="trainer-card">
+                <div className="trainer-image-container">
+                  <img
+                    src={trainer.trainer_profile_photo}
+                    alt={trainer.name}
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/150";
+                    }}
+                  />
                 </div>
-            )}
-        </section>
-    );
-}
+                <div className="trainer-info">
+                  <h3>Name : {trainer.name}</h3>
+                  <h4>Experience : {trainer.experience}</h4>
+                  <p>Information : {trainer.trainer_info}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TrainersSection;

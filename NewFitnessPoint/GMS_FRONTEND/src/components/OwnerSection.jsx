@@ -34,7 +34,7 @@ function OwnerSection() {
           /> */}
         </div>
         <div className="owner-details">
-          <h4>{OwnerData?.name}</h4>
+          <h2>{OwnerData?.name}</h2>
           <p>{OwnerData?.description || 'No description available.'}</p>
         </div>
       </div>
