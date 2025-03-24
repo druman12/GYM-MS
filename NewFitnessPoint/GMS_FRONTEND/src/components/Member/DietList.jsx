@@ -35,19 +35,7 @@ const DietList = () => {
   }, []);
 
   return (
-    //   <div className="diet-section">
-    //     <h2>Diet List</h2>
-    //     <div className="diet-container">
-    //       {loading && <p>Loading...</p>}
-    //       {error && <p className="error-text">{error}</p>}
-    //       {dietImage ? (
-    //         <img src={dietImage} alt="Diet Chart" className="diet-chart-image" />
-    //       ) : (
-    //         <p>No Diet Chart Available</p>
-    //       )}
-    //     </div>
-    //   </div>
-    // );
+   
     <div className="diet-section">
       <h2>Diet List</h2>
       <div className="diet-container">
@@ -55,7 +43,7 @@ const DietList = () => {
         {error && <p className="error-text">{error}</p>}
         {dietImage && (
           <>
-            {/* Thumbnail Image */}
+            
             <img
               src={dietImage}
               alt="Diet Chart"
@@ -63,7 +51,7 @@ const DietList = () => {
               onClick={() => setIsFullScreen(true)} // Open full-screen mode
             />
 
-            {/* Full-Screen Image Modal */}
+            
             {isFullScreen && (
               <div className="full-screen-overlay">
                 {/* Close Button in Top-Right of the Window */}

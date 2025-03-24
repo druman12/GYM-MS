@@ -7,7 +7,6 @@ const BMIReport = ({  member_id: propMemberId  }) => {
   const extractedMemberId =
   propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
 
-// Get from sessionStorage if not available from props
 const member_id = extractedMemberId || sessionStorage.getItem("userId");
 
   const [bmiImage, setBmiImage] = useState(null);

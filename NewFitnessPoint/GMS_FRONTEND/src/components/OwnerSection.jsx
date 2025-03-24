@@ -27,11 +27,11 @@ function OwnerSection() {
       <h2 className="owner-header">Owner Section</h2>
       <div className="owner-content">
         <div className="owner-photo">
-          {/* <img 
+          <img 
             src={OwnerData?.profile_photo || 'fallback-image.jpg'} 
             alt="Owner" 
             onError={(e) => e.target.src = 'fallback-image.jpg'} 
-          /> */}
+          />
         </div>
         <div className="owner-details">
           <h2>{OwnerData?.name}</h2>

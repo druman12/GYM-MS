@@ -67,7 +67,7 @@ ROOT_URLCONF = 'NewFitnessPoint.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'GMS_FRONTEND/dist')],
+        'DIRS': [os.path.join(BASE_DIR,'GMS_FRONTEND/dist') , os.path.join(BASE_DIR, 'templates') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'GMS_NFP',
         'USER': 'root',
-        'PASSWORD': 'vivek',
+        'PASSWORD': '1225',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     },
