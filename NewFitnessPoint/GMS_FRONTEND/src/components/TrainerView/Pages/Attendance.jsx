@@ -4,11 +4,11 @@ import Sidebar from "../SideBar";
 import { useState, useEffect } from "react";
 
 function Attendance() {
-  // const [attendance, setAttendance] = useState([]);
   const [isAbsent, setIsAbsent] = useState({});
   const [currentDate, setCurrentDate] = useState("");
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const URL = "http://127.0.0.1:8000/api/attendance/today/";
 
@@ -19,28 +19,37 @@ function Attendance() {
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setCurrentDate(today);
-    fetch(url) // Replace with your actual API URL
+    fetch(url)
       .then((response) => response.json())
       .then((data) => setTrainer(data))
       .catch((error) => console.error("Error fetching trainer data:", error));
   }, [url]);
+
   useEffect(() => {
     setLoading(true);
-    fetch(URL) // Replace with your actual API URL
+    fetch(URL)
       .then((response) => response.json())
-      .then((data) => setMembers(data.members))
-      .catch((error) => console.error("Error fetching trainer data:", error));
-      setLoading(false)
-  }, []);
-
-  // Function to send attendance data to API
-  const markAttendance = async (memberId, trainerId, status) => {
+      .then((data) => {
+        // Initialize isAbsent state based on members' today_attendance
+        const initialAbsentStatus = data.members.reduce((acc, member) => {
+          acc[member.member_id] = member.today_attendance === "absent";
+          return acc;
+        }, {});
+        
+        setMembers(data.members);
+        setIsAbsent(initialAbsentStatus);
+      })
+      .catch((error) => console.error("Error fetching trainer data:", error))
+      .finally(() => setLoading(false));
+  }, [refresh]);
+  
+  const markAttendance = async (memberId, trainerId, currentStatus) => {
     const payload = {
       member_id: memberId,
-      trainer_id: trainerId, // Replace with actual trainer ID if dynamic
-      attendance: status ? "absent" : "present",
+      trainer_id: trainerId,
+      attendance: currentStatus ? "present" : "absent",
     };
-
+  
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/api/attendance/make/",
@@ -51,16 +60,13 @@ function Attendance() {
           },
           body: JSON.stringify(payload),
         }
-      );
-
+      );  
       if (response.ok) {
-        console.log(
-          `Attendance marked for Member ID: ${memberId} as ${payload.attendance}`
-        );
         setIsAbsent((prevState) => ({
           ...prevState,
-          [memberId]: !status, // Toggle attendance status
+          [memberId]: !prevState[memberId],
         }));
+        setRefresh((prev) => !prev);
       } else {
         console.error("Failed to mark attendance:", response.statusText);
       }
@@ -68,6 +74,7 @@ function Attendance() {
       console.error("Error sending attendance data:", error);
     }
   };
+  
   if(loading){
     return <h1>Loading...</h1>
   }
@@ -88,7 +95,8 @@ function Attendance() {
               <thead>
                 <tr>
                   <th>Member Name</th>
-                  <th>Membership Type</th>
+                  <th>Joining Date</th>
+                  <th>Subscription End</th>
                   <th>Attendance</th>
                 </tr>
               </thead>
@@ -97,32 +105,27 @@ function Attendance() {
                   members.map((member) => (
                     <tr key={member.member_id}>
                       <td>{member.name}</td>
-                      <td>{member.subscription_plan}</td>
+                      <td>{member.joining_date}</td>
+                      <td>{member.subscription_end_date}</td>
                       <td>
                         <button
-                          className={`attendance-status ${
-                            member.today_attendance === "Absent"
-                              ? "absent"
-                              : "present"
-                          }`}
+                          className={`attendance-status ${isAbsent[member.member_id] ? "absent" : "present"}`}
                           onClick={() =>
                             markAttendance(
                               member.member_id,
                               trainer_id,
-                              member.today_attendance === "Absent"
+                              isAbsent[member.member_id]
                             )
                           }
                         >
-                          {member.today_attendance === "Present"
-                            ? "Present"
-                            : "Absent"}
+                          {isAbsent[member.member_id] ? "Absent" : "Present"}
                         </button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3">Loading...</td>
+                    <td colSpan="4">No members found</td>
                   </tr>
                 )}
               </tbody>

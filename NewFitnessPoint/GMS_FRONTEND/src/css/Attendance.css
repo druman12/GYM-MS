@@ -23,6 +23,7 @@ body {
 }
 
 .attendance-main {
+  margin: 12px;
   flex: 1;
   overflow-x: auto;
 }
