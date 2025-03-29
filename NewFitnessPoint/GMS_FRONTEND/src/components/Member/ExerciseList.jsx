@@ -38,7 +38,6 @@ const ExerciseList = ({ member_id: propMemberId}) => {
         setExerciseList(data);
         setLoading(false);
 
-        // ✅ Fetch exercises for Day 1 **AFTER** workout plan is set
         if (data?.workout_plans?.length > 0) {
           fetchExerciseDetails(1);
         }
@@ -47,7 +46,7 @@ const ExerciseList = ({ member_id: propMemberId}) => {
         console.error("Error fetching WorkoutPlan data:", error);
         setLoading(false);
       });
-  }, [url]); // ✅ Removed url dependency to prevent unnecessary re-renders
+  }, [url]);
 
   const fetchExerciseDetails = (day) => {
     setLoadingExercises(true);

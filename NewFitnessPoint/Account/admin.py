@@ -12,6 +12,7 @@ import json
 
 # Register your models here.
 class MemberAdmin(admin.ModelAdmin):
+    readonly_fields = ('subscription_end_date',)
     def changelist_view(self, request, extra_context=None):
         chart_data = (
             models.Member.objects.annotate(date=TruncDay("joining_date"))

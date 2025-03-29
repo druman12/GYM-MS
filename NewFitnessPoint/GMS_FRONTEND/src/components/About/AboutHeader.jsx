@@ -1,7 +1,7 @@
 import Logo from '../../assets/gms_logo.png';
 import { Link , useNavigate } from "react-router-dom";
 import '../../css/AboutHeader.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import { useLoading } from '../LoadingContext'; // Import the loading context
 
 
@@ -10,6 +10,7 @@ function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const { showLoader, hideLoader } = useLoading(); // Get loading functions
   const navigate = useNavigate();
+  const sideNavRef = useRef(null);
   
   // Check if screen is mobile size
   useEffect(() => {
@@ -28,6 +29,18 @@ function Header() {
       window.removeEventListener('resize', checkScreenSize);
     };
   }, []);
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (sideNavOpen && sideNavRef.current && !sideNavRef.current.contains(e.target)) {
+        setSideNavOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [sideNavOpen]);
   
   function openNav() {
     setSideNavOpen(true);
@@ -69,7 +82,7 @@ function Header() {
           <a href="/contact" onClick={(e) => handleNavigation('/contact', e)}>Contact</a>
         </nav>
       ) : (
-        <div className={`Asidenav ${sideNavOpen ? 'open' : ''}`} id="mobile-nav">
+        <div className={`Asidenav ${sideNavOpen ? 'open' : ''}`} id="mobile-nav" ref={sideNavRef}>
           <button className="closebtn" onClick={closeNav}>&times;</button>
           <div className="Asidenav-links">
             <a href="/" onClick={(e) => {

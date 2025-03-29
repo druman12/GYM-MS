@@ -8,7 +8,7 @@ import bcrypt
 import json
 import random
 from django.conf import settings
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta , date
 from django.utils.timezone import make_aware, now
 from django.core.mail import send_mail, EmailMessage
 from django.utils.html import format_html
@@ -17,26 +17,24 @@ CLOUDINARY_BASE_URL = "https://res.cloudinary.com/dbsokdyz0/"
 
 
 @csrf_exempt
-def memberapi(request , id=0):
+def memberapi(request, id=0):
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            if id != 0:
-                # Fetch a specific member by ID (all columns)
-                cursor.execute("SELECT * FROM account_member WHERE member_id = %s", [id])
-                row = cursor.fetchone()
-                if row:
-                    columns = [col[0] for col in cursor.description]  # Get column names
-                    member = dict(zip(columns, row))  # Map column names to values
-                    return JsonResponse(member, safe=False)
-                else:
-                    return JsonResponse({'message': 'Member not found'}, status=404)
-            else:
-                # Fetch all members (all columns)
-                cursor.execute("SELECT * FROM account_member")
-                rows = cursor.fetchall()
-                columns = [col[0] for col in cursor.description]  # Get column names
-                members = [dict(zip(columns, row)) for row in rows]  # Convert to list of dicts
-                return JsonResponse(members, safe=False)
+        if id != 0:
+            # Fetch a specific member by ID
+            try:
+                member = models.Member.objects.get(member_id=id)
+                if member.subscription_end_date < date.today():
+                    return JsonResponse({'message': 'Subscription expired'}, status=403)
+                return JsonResponse(member.to_dict(), safe=False)
+            except models.Member.DoesNotExist:
+                return JsonResponse({'message': 'Member not found'}, status=404)
+        else:
+            # Fetch all members
+            members = models.Member.objects.filter(subscription_end_date__gte=date.today())
+
+            member_list = [member.to_dict() for member in members]
+            return JsonResponse(member_list, safe=False)
+
             
 @csrf_exempt
 def Authenticate(request):
@@ -44,7 +42,7 @@ def Authenticate(request):
         try:
             data = json.loads(request.body)
             email = data.get('email')
-            password = data.get('password')  # ✅ Plain-text password from request
+            password = data.get('password') 
 
             # 🔹 Check Trainer table first
             trainer = models.Trainer.objects.filter(email=email).first()
@@ -59,7 +57,9 @@ def Authenticate(request):
             user = models.Member.objects.filter(email=email).first()
             if user:
                 stored_hashed_password = user.password
-                if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):  
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
+                    if user.subscription_end_date < date.today():
+                        return JsonResponse({'status': False, 'error': 'Subscription expired'}, status=403)  
                     return JsonResponse({'status': True, 'member_id': user.member_id, 'user_type': 'member'})
                 else:
                     return JsonResponse({'status': False, 'error': 'Invalid credentials'}, status=401)
@@ -229,6 +229,35 @@ def send_otp_email(email, otp):
     email_message.content_subtype = "html"  # Set email format to HTML
     email_message.send()
 
+@csrf_exempt
+def notify_reset_pass(email):
+    subject = "Your Password Has Been Reset - New Fitness Point GYM"
+    message = format_html(
+        """
+        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+            <h2 style="color: #333;">Password Successfully Reset</h2>
+            <p style="font-size: 16px; color: #555;">
+                We have successfully processed your password reset request. You can now log in using your new password.
+            </p>
+            <p style="font-size: 14px; color: #777;">
+                If you did not request this change, please contact <strong>New Fitness Point GYM</strong> immediately.
+            </p>
+            <p style="font-size: 14px; color: #777;">
+                For assistance, you can reach us via email or visit our front desk.
+            </p>
+            <p style="font-size: 14px; color: #777;">
+                Regards, <br><strong>New Fitness Point GYM Team</strong>
+            </p>
+        </div>
+        """
+    )
+    
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+
+    email_message = EmailMessage(subject, message, email_from, recipient_list)
+    email_message.content_subtype = "html"  # Set email format to HTML
+    email_message.send()
 
 @csrf_exempt
 def send_otp(request):
@@ -287,7 +316,7 @@ def reset_password(request):
         email = data.get("email")
         new_password = data.get("password")
 
-        print(email , new_password)
+        
 
         # Check if the email exists in Member or Trainer
         user = None
@@ -298,12 +327,10 @@ def reset_password(request):
 
         if not user:
             return JsonResponse({"error": "User not found."}, status=400)
-        
-        print(user)
 
         # Hash and update the password
         hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
         user.password = hashed_password
         user.save()
-
+        notify_reset_pass(email)
         return JsonResponse({"message": "Password reset successful. You can now log in."})

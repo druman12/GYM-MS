@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const [password, setPassword] = useState("");
@@ -39,10 +40,11 @@ function ForgotPassword() {
       const data = await response.json();
 
       if (data) {
-        alert("Password reset successful!");
+        toast.success("Password reset successful!");
         navigate("/login"); // Redirect to login page
       } else {
         setError(data.message || "Password reset failed. Please try again.");
+        toast.error("Password reset failed. Please try again.");
       }
     } catch (error) {
       setError("An error occurred. Please try again later.");

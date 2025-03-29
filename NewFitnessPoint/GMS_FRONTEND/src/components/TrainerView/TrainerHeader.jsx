@@ -2,6 +2,7 @@ import '../../css/TrainerHeader.css';
 import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
 import { useState, useEffect, useRef } from 'react';
+import {toast} from 'react-toastify';
 
 const TrainerHeader = () => {
     const { showLoader, hideLoader } = useLoading();
@@ -57,6 +58,7 @@ const TrainerHeader = () => {
 
         showLoader();
         if (path === '/') {
+            toast.success('Logged out successfully');
             sessionStorage.removeItem('userId');
             sessionStorage.removeItem('userType');
             sessionStorage.removeItem('activeMenu'); // Clear active menu on logout

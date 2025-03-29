@@ -6,7 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 def get_trainer_members(request, trainer_id):
         if request.method == 'GET':
             with connection.cursor() as cursor:
-                # Fetch members under a specific trainer
                 cursor.execute("""
                     SELECT m.member_id , m.name, m.subscription_plan, m.joining_date
                     FROM Account_member m
@@ -15,10 +14,8 @@ def get_trainer_members(request, trainer_id):
                     WHERE pt.trainer_id = %s
                 """, [trainer_id])
 
-                # Fetch all results
                 members = cursor.fetchall()
 
-            # If no members found, return empty list with count 0
             if not members:
                 return JsonResponse({"trainer_id": trainer_id, "members": [], "PT_count": 0}, status=200)
 

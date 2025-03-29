@@ -3,6 +3,7 @@ import { Audio } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -31,17 +32,27 @@ function Login() {
         if (data.member_id) {
           sessionStorage.setItem("userId", data.member_id);
           sessionStorage.setItem("userType", "member");
+          toast.success("Login successful!");
           navigate("/member-home");
         } else if (data.trainer_id) {
           sessionStorage.setItem("userId", data.trainer_id);
           sessionStorage.setItem("userType", "trainer");
+          toast.success("Login successful!");
           navigate("/overview");
         }
       } else {
-        setError("Login failed. Please check your email and password.");
+        if(data.error === "Subscription expired"){
+          setError("Subscription expired. Please renew your subscription ");
+          toast.error("Subscription expired. Please renew your subscription ");
+        }else{
+          setError("Login failed. Please check your email and password.");
+          toast.error("Login failed. Please check your email and password.");
+        }        
       }
     } catch (error) {
+      
       setError("An error occurred. Please try again later.");
+     
       console.error("Login error:", error);
     } finally {
       setIsLoading(false);

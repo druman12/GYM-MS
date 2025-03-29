@@ -3,6 +3,7 @@ import { Audio } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
+import {toast} from 'react-toastify';
 
 function OTPSection() {
   const [email, setEmail] = useState("");
@@ -30,8 +31,10 @@ function OTPSection() {
 
       if (response.ok) {
         setIsOtpSent(true);
+        toast.success("OTP sent successfully");
       } else {
         setError(data.error || "Failed to send OTP. Please try again.");
+        toast.error("Failed to send OTP. Please try again.");
       }
     } catch (error) {
       setError("An error occurred. Please try again later.");
@@ -58,6 +61,7 @@ function OTPSection() {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success("OTP verified successfully");
         navigate("/reset-password", { state: { email } });  // Redirect to reset password page
       } else {
         setError(data.error || "Invalid OTP. Please try again.");

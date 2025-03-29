@@ -1,6 +1,6 @@
-
 import '../../css/PersonalDetails.css';
 import { useEffect, useState } from 'react';
+import {toast} from 'react-toastify';
 
 const PersonalDetails = () => {
   const memberId = sessionStorage.getItem("userId");
@@ -11,15 +11,28 @@ const PersonalDetails = () => {
 
   useEffect(() => {
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setPersonalDetail(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error fetching Batches data:', error);
-            setLoading(false);
-        });
+      .then(response => response.json())
+      .then(data => {
+        setPersonalDetail(data);
+        setLoading(false);
+
+        // Check for subscription end date warning
+        if (data?.subscription_end_date) {
+          const today = new Date();
+          const endDate = new Date(data.subscription_end_date);
+
+          const differenceInTime = endDate - today;
+          const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+          if (differenceInDays <= 7 && differenceInDays >= 0) {
+            toast.warning("Your subscription is expiring within a week!");
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching member data:', error);
+        setLoading(false);
+      });
 }, [url]);
 
 
@@ -41,13 +54,8 @@ if (loading) return <p>Loading...</p>;
         </div>
         
         <div className="detail-row">
-          <span className="detail-label">Gender :</span>
-          <span className="detail-value">{PersonalDetail?PersonalDetail.gender:'Loading...'}</span>
-        </div>
-        
-        <div className="detail-row">
-          <span className="detail-label">Height/weight :</span>
-          <span className="detail-value">{PersonalDetail?PersonalDetail.height/PersonalDetail.weight:'Loading...'}</span>
+          <span className="detail-label">Height | weight :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.height +" cm | " +PersonalDetail.weight + " kg":'Loading...'}</span>
         </div>
         
         <div className="detail-row">
@@ -56,19 +64,20 @@ if (loading) return <p>Loading...</p>;
         </div>
         
         <div className="detail-row">
-          <span className="detail-label">Address</span>
-          <span className="detail-value">{PersonalDetail?PersonalDetail.address:'Loading...'}</span>
-        </div>
-        
-        <div className="detail-row">
-          <span className="detail-label">Telephone:</span>
-          <span className="detail-value">{PersonalDetail?PersonalDetail.mobile_no:'Loading...'}</span>
-        </div>
-        
-        <div className="detail-row">
           <span className="detail-label">Email :</span>
           <span className="detail-value">{PersonalDetail?PersonalDetail.email:'Loading...'}</span>
         </div>
+
+        <div className="detail-row">
+          <span className="detail-label">Subscription Plan :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.subscription_plan:'Loading...'}</span>
+        </div>
+
+        <div className="detail-row">
+          <span className="detail-label">Subscription End Date :</span>
+          <span className="detail-value">{PersonalDetail?PersonalDetail.subscription_end_date:'Loading...'}</span>
+        </div>
+
       </div>
     </div>
   );

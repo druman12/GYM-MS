@@ -2,6 +2,7 @@ import "../../../css/Attendance.css";
 import TrainerHeader from "../TrainerHeader";
 import Sidebar from "../SideBar";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Attendance() {
   const [isAbsent, setIsAbsent] = useState({});
@@ -67,8 +68,10 @@ function Attendance() {
           [memberId]: !prevState[memberId],
         }));
         setRefresh((prev) => !prev);
+        toast.success("Attendance marked successfully!");
       } else {
         console.error("Failed to mark attendance:", response.statusText);
+        toast.error("Failed to mark attendance!");
       }
     } catch (error) {
       console.error("Error sending attendance data:", error);

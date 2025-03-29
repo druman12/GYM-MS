@@ -30,8 +30,8 @@
 }
 
 .detail-label {
-  min-width: 120px;
-  width: 120px;
+  min-width: 150px;
+  width: 150px;
   color: #333;
   text-align: left;
   margin-right: 10px;
@@ -78,10 +78,6 @@
     margin-bottom: 5px;
   }
   
-  .detail-label {
-    min-width: 100px;
-    width: 100px;
-  }
 }
 
 /* Small screens */

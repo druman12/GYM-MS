@@ -1,7 +1,6 @@
 from django.db import models
 from Account.models import Trainer , Member
 
-# Create your models here.
 class Batch(models.Model):
     SESSION_CHOICES = [
         ('morning', 'Morning'),
@@ -21,7 +20,7 @@ class Batch(models.Model):
         return f"{self.name} - {self.session}"
 
 class BatchMembership(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE , limit_choices_to={'is_active': True} )
     batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
     joined_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)

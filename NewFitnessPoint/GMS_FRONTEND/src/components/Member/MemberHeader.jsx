@@ -3,6 +3,7 @@ import PP from '../../assets/profile-boy-icon.png';
 import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const MemberHeader = () => {
   const { showLoader, hideLoader } = useLoading(); // Get loading functions
@@ -21,10 +22,9 @@ const MemberHeader = () => {
           return response.json();
         })
         .then(data => {
-          // Assuming the API returns an object with a name property
-          // Adjust the property according to your actual API response
           if (data.name) {
             setMemberName(data.name);
+           
           } else if (data.first_name && data.last_name) {
             setMemberName(`${data.first_name} ${data.last_name}`);
           } else if (data.username) {
@@ -41,10 +41,10 @@ const MemberHeader = () => {
   const handleAction = (path, e = null) => {
     if (e) e.preventDefault();
     
-    showLoader(); // Show loader before navigation
+    showLoader(); 
 
-    // If logging out, clear localStorage
     if (path === '/') {
+      toast.success('Logged out successfully!');
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userType');
     }

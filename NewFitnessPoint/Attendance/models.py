@@ -15,7 +15,7 @@ class MemberAttendance(models.Model):
 class AllMemberAttendance(models.Model):
     date = models.ForeignKey(MemberAttendance, on_delete=models.CASCADE)
     member = models.ForeignKey(Member, on_delete=models.DO_NOTHING)
-    trainer=models.ForeignKey(Trainer , on_delete=models.DO_NOTHING)
+    trainer=models.ForeignKey(Trainer , on_delete=models.SET_NULL, null=True, blank=True)
     attendance_choice = [
         ('present', 'Present'),
         ('absent', 'Absent'),

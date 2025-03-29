@@ -109,7 +109,7 @@ def get_today_attendance(request):
     today_date = now().date()
 
     # Fetch all members' details
-    members = Member.objects.all()
+    members = Member.objects.filter(subscription_end_date__gte=date.today())
 
     member_data = []
 

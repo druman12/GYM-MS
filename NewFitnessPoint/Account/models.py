@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta , date
 from django.utils import timezone  # type: ignore 
 import cloudinary
 import cloudinary.models
@@ -35,6 +35,7 @@ class Member(models.Model):
     subscription_plan = models.CharField(max_length=2, choices=SUBSCRIPTION_CHOICES, default='3M')
     joining_date = models.DateField(default=get_tomorrow)
     subscription_end_date = models.DateField(editable=False , default=get_default_end_date)
+    is_active = models.BooleanField(editable=False , default=True)
     def save(self, *args, **kwargs):
         # Calculate subscription end date based on joining date and plan
         if self.joining_date:
@@ -48,8 +49,23 @@ class Member(models.Model):
                 days = 365
                 
             self.subscription_end_date = self.joining_date + timedelta(days=days)
+            self.is_active = self.subscription_end_date >= date.today()
 
         super().save(*args, **kwargs)
+
+    def to_dict(self):
+        return {
+            'member_id': self.member_id,
+            'name': self.name,
+            'dateofbirth': self.dateofbirth,
+            'email': self.email,
+            'joining_date': self.joining_date,
+            'subscription_end_date': self.subscription_end_date,
+            'subscription_plan': self.subscription_plan,
+            'weight':self.weight,
+            'height':self.height,
+            'occupation':self.occupation,
+        }
 
     def __str__(self):
         return f"{self.member_id}-{self.name}"
@@ -151,7 +167,7 @@ class Gallery(models.Model):
     
 
 class OTPVerification(models.Model):
-    email = models.EmailField()  # Stores email instead of linking to a model
+    email = models.EmailField()
     otp = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
 

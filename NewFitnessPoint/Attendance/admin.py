@@ -40,29 +40,3 @@ class MemberAttendanceAdmin(admin.ModelAdmin):
 class AllMemberAttendanceAdmin(admin.ModelAdmin):
     list_display = ('date', 'member','trainer' , 'attendance')
     list_filter = ('attendance', 'date', 'member')
-
-
-class AttendanceAdmin(admin.ModelAdmin):
-    change_list_template = "admin/AttendanceGraphs/change_list.html"
-
-    def changelist_view(self, request, extra_context=None):
-        # Aggregating attendance by trainer
-        attendance_data = (
-            AllMemberAttendance.objects.values('trainer__name')
-            .annotate(
-                present_count=Count('id', filter=Q(attendance='present')),
-                absent_count=Count('id', filter=Q(attendance='absent'))
-            )
-            .order_by('trainer__name')
-        )
-
-        attendance_chart_data = json.dumps(list(attendance_data), cls=DjangoJSONEncoder)
-
-        extra_context = extra_context or {}
-        extra_context["attendance_chart_data"] = attendance_chart_data
-
-        return super().changelist_view(request, extra_context=extra_context)
-    
-
-
-admin.site.register(AllMemberAttendance, AttendanceAdmin)
