@@ -1,30 +1,27 @@
 {
+    "name": "GMS-MS",
     "build": {
+      "builder": "NIXPACKS",
       "nixpacks": {
-        "plan": {
-          "phases": {
-            "setup": {
-              "nixpkgs": ["python311", "nodejs_20"]
-            },
-            "install": {
-              "cmds": [
-                "pip install -r NewFitnessPoint/requirements.txt",
-                "cd NewFitnessPoint/GMS_FRONTEND && npm install && npm run build"
-              ]
-            },
-            "build": {
-              "cmds": [
-                "cd NewFitnessPoint && python manage.py collectstatic --noinput"
-              ]
-            }
-          }
+        "features": {
+          "nodejs": "18",
+          "python": "3.9"
         }
-      }
+      },
+      "buildCommand": "cd NewFitnessPoint/GMS_FRONTEND && npm install && npm run build && cd .. && pip install -r requirements.txt && python manage.py collectstatic --noinput"
     },
-    "start": "cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT",
+    "deploy": {
+      "startCommand": "cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT"
+    },
+    "env": {
+      "DJANGO_SETTINGS_MODULE": "NewFitnessPoint.settings",
+      "PYTHONUNBUFFERED": "1",
+      "PORT": "8000",
+      "DEBUG": "False",
+      "ALLOWED_HOSTS": "*"
+    },
     "static": {
       "path": "NewFitnessPoint/GMS_FRONTEND/dist",
       "serve": true
     }
-  }
-  
+}
