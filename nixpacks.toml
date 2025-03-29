@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["nodejs", "npm", "python39", "python39Packages.pip"]
+
+[phases.build]
+cmds = [
+  "cd NewFitnessPoint/GMS_FRONTEND && npm install && npm run build",
+  "cd NewFitnessPoint && pip install -r requirements.txt",
+  "cd NewFitnessPoint && python manage.py collectstatic --noinput"
+]
+
+[start]
+cmd = "cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT"
