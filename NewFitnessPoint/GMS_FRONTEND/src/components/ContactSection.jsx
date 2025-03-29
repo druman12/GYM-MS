@@ -1,12 +1,43 @@
-import '../css/ContactSection.css';
+import "../css/ContactSection.css";
+import { useState, useEffect } from "react";
 import Logo from '../assets/gms_logo.png';
+import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
+import { SocialIcon } from "react-social-icons";
+import { useLoading } from "./LoadingContext"; // Import the loading context
 
 const ContactSection = () => {
+  const [ContactData, setContactData] = useState(null);
+  const { showLoader, hideLoader } = useLoading();
+  const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/ownerdetails/")
+      .then((response) => response.json())
+      .then((data) => setContactData(data))
+      .catch((error) => console.error("Error fetching hero data:", error));
+  }, []);
+
+  const handleNavigation = (path, e) => {
+    e.preventDefault();
+    showLoader();
+    setTimeout(() => {
+      navigate(path);
+      hideLoader();
+    }, 500);
+  };
+
   return (
     <div className="contact-section">
+      {/* Show Back Button only if NOT on Home Page */}
+      {location.pathname === "/contact" && (
+        <button className="cback-button" onClick={(e) => handleNavigation("/", e)}>
+          &lt;
+        </button>
+      )}
+
       <h1 className="contact-title">Contact Us</h1>
       <div className="contact-content">
-        {/* Left Section */}
         <div className="contact-left">
           <div className="logo-box">
             <img src={Logo} alt="Company Logo" className="contact-logo" />
@@ -16,29 +47,26 @@ const ContactSection = () => {
           </h2>
         </div>
 
-        {/* Center Section */}
         <div className="contact-center">
-          <p>
-            Address: Quard view Complex, College Rd, opp. Hyundai Showroom,
-            Shanti Nagar, Nadiad, Gujarat 387001
-          </p>
-          <p>Contact No.: +91 8000041999</p>
-          <p>Email: gymemail@gmail.com</p>
+          <div className="contact-info">
+            <p>{ContactData ? ContactData.Address : "Loading..."} </p>
+            <p>{ContactData ? ContactData.officeMobileNo : "Loading..."} </p>
+            <p>{ContactData ? ContactData.officeEmail : "Loading..."} </p>
+          </div>
           <div className="social-links">
-            <i className="fab fa-facebook"></i>
-            <i className="fab fa-twitter"></i>
-            <i className="fab fa-instagram"></i>
+            <SocialIcon url="https://facebook.com/" style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://twitter.com/" style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://instagram.com/" style={{ height: 30, width: 30 }} />
           </div>
         </div>
 
-        {/* Right Section */}
         <div className="contact-right">
           <h3 className="quick-links-title">Quick Links</h3>
           <ul className="quick-links-list">
-            <li ><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li>T &amp; C</li>
+            <li><a href="/" onClick={(e) => handleNavigation("/", e)}>Home</a></li>
+            <li><a href="/about" onClick={(e) => handleNavigation("/about", e)}>About</a></li>
+            <li><a href="/gallery" onClick={(e) => handleNavigation("/gallery", e)}>Gallery</a></li>
+            <li><a href="#">T &amp; C</a></li>
           </ul>
         </div>
       </div>

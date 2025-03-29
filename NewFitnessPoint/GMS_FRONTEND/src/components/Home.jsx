@@ -1,5 +1,3 @@
-
-//import MemberView from './Member/MemberView'
 import Header from './Header'
 import HeroSection from './HeroSection'
 import OwnerSection from './OwnerSection'
@@ -11,17 +9,15 @@ import Footer from './Footer'
 
 
   function Home() {
-  
     return (
       <>
-        <Header /> 
-         <HeroSection /> 
-        <OwnerSection />
-        <TrainersSection />
-         <ContactSection />
-         <Footer /> 
       
-     
+        <Header /> 
+        <HeroSection />  
+        <OwnerSection /> 
+        <TrainersSection />
+        <ContactSection />
+        <Footer />        
       </>
     )
   }

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,19 +39,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'Account',
     'Attendance',
     'Batches',
     'Exercise',
     'rest_framework',
+    'PT',
+    "corsheaders",
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',  
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -61,7 +67,7 @@ ROOT_URLCONF = 'NewFitnessPoint.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'GMS_FRONTEND/dist')],
+        'DIRS': [os.path.join(BASE_DIR,'GMS_FRONTEND/dist') , os.path.join(BASE_DIR, 'templates') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,11 +89,11 @@ WSGI_APPLICATION = 'NewFitnessPoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gms_nfp',
-        'USER': 'root',
-        'PASSWORD': '1225',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'NAME': os.environ.get('MYSQL_DATABASE', 'GMS_NFP'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', '1225'),
+        'HOST': os.environ.get('MYSQL_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),
     },
 }
 
@@ -136,5 +142,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPEND_SLASH = False
 
-MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/image/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'SECURE': True,
+}
+
+cloudinary.config( 
+    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+    secure=CLOUDINARY_STORAGE['SECURE']
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'testerstudent224@gmail.com'  # Your email
+EMAIL_HOST_PASSWORD = 'skaukkzpwgrisulk'  # App password
+ 

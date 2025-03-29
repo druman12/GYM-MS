@@ -45,9 +45,24 @@ def get_member_workout_plans(request, member_id):
         })
 
 @require_http_methods(["GET"])
-def get_member_day_exercises(request, member_id, workout_plan_id, day):
+def get_member_day_exercises(request, member_id, day):
     with connection.cursor() as cursor:
-        # First verify the workout plan belongs to the member
+        # First fetch the most recent workout plan for the member
+        cursor.execute("""
+            SELECT workoutplan_id 
+            FROM exercise_workoutplan
+            WHERE member_id = %s
+        """, [member_id])
+        
+        result = cursor.fetchone()
+        if not result:
+            return JsonResponse({
+                'error': 'No workout plan found for this member'
+            }, status=404)
+        
+        workout_plan_id = result[0]
+        
+        # Get the workout plan details
         cursor.execute("""
             SELECT title, day1_focus_area, day2_focus_area, day3_focus_area,
                    day4_focus_area, day5_focus_area, day6_focus_area
@@ -62,7 +77,14 @@ def get_member_day_exercises(request, member_id, workout_plan_id, day):
             }, status=404)
         
         # Get the focus area for the specified day
-        focus_area = workout_plan[day]  # day1_focus_area is at index 1, day2 at 2, etc.
+        # Convert day string to index (e.g., 'day1' -> 1, 'day2' -> 2)
+        try:
+            day_num = day
+            focus_area = workout_plan[day_num]  # day1_focus_area is at index 1, day2 at 2, etc.
+        except (ValueError, IndexError):
+            return JsonResponse({
+                'error': f'Invalid day format: {day}. Expected format: day1, day2, etc.'
+            }, status=400)
         
         # Query to get exercises for the specific day
         cursor.execute("""
@@ -99,39 +121,3 @@ def get_member_day_exercises(request, member_id, workout_plan_id, day):
             'focus_area': focus_area,
             'exercises': exercises
         })
-
-# @require_http_methods(["GET"])
-# def get_workout_focus_areas(request, workout_plan_id):
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT 
-#                 workoutplan_id,
-#                 title,
-#                 day1_focus_area,
-#                 day2_focus_area,
-#                 day3_focus_area,
-#                 day4_focus_area,
-#                 day5_focus_area,
-#                 day6_focus_area
-#             FROM Exercise_workoutplan
-#             WHERE workoutplan_id = %s
-#         """, [workout_plan_id])
-        
-#         workout_plan = cursor.fetchone()
-#         if not workout_plan:
-#             return JsonResponse({
-#                 'error': 'Workout plan not found'
-#             }, status=404)
-        
-#         return JsonResponse({
-#             'workoutplan_id': workout_plan[0],
-#             'title': workout_plan[1],
-#             'focus_areas': {
-#                 'day1': workout_plan[2],
-#                 'day2': workout_plan[3],
-#                 'day3': workout_plan[4],
-#                 'day4': workout_plan[5],
-#                 'day5': workout_plan[6],
-#                 'day6': workout_plan[7]
-#             }
-#         })

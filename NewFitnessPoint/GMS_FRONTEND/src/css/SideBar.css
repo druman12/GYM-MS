@@ -1,50 +1,70 @@
 .sidebar {
-    width: 250px;
-    background-color: #fff1f2;
-    padding: 20px;
-    border-right: 1px solid #fecdd3;
-  }
-  
-  .profile {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #4a90e2;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .trainer-name {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .sidebar nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar nav ul li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar nav ul li a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-  }
-  
-  .sidebar nav ul li a:hover,
-  .sidebar nav ul li a.active {
-    background-color: #fecdd3;
-    color: #d70040;
-  }
-  
-  
+  background-color: #ffe6ea;
+  padding-top: 20px;
+  width: 250px; /* Set sidebar width explicitly */
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+
+}
+
+.trainer-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 100px; /* Adjust size as needed */
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden; /* Ensures image does not overflow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ddd;
+}
+
+.trainer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  border-radius: 50%;
+  display: block;
+}
+
+.trainer-name {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  padding: 0;
+  width: 100%; /* Ensure the <li> takes full width */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  display: block;
+  padding: 12px 20px;
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+nav ul li a.active {
+  background-color: #ff99a0;
+  color: black;
+  width: 100%; 
+  display: block;
+}

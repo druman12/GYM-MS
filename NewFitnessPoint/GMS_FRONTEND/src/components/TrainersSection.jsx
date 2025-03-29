@@ -1,66 +1,92 @@
 import { useEffect, useState } from "react";
 import "../css/TrainersSection.css";
 
-function TrainersSection() {
-  const trainers = [
-    {
-      name: "Jane Doe",
-      designation: "Personal Trainer",
-      description: "Expert in fitness coaching and weight training.",
-      image:
-        "https://images.pexels.com/photos/5473187/pexels-photo-5473187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100",
-    },
-    {
-      name: "John Smith",
-      designation: "Yoga & Wellness Coach",
-      description: "Focuses on mindfulness, flexibility, and balance.",
-      image:
-        "https://images.pexels.com/photos/4325461/pexels-photo-4325461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100",
-    },
-    {
-      name: "Emily Johnson",
-      designation: "Cardio Specialist",
-      description: "Helps with endurance training and running techniques.",
-      image:
-        "https://images.pexels.com/photos/6455596/pexels-photo-6455596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100",
-    },
-  ];
-
-  const [index, setIndex] = useState(1); // Start at the second card for centering
+const TrainersSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState(null);
+  const [trainers, setTrainers] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % trainers.length);
-    }, 3000); // Change slides every 3 seconds
+    fetch('http://127.0.0.1:8000/api/trainers/')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTrainers(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching trainer data:', error);
+        setLoading(false);
+      });
+  }, []);
 
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    if (trainers.length <= 1) return; // Don't animate if only one slide
+    
+    const interval = setInterval(() => {
+      if (!isAnimating) {
+        nextSlide();
+      }
+    }, 3000);
+    
     return () => clearInterval(interval);
-  }, [trainers.length]);
+  }, [currentIndex, trainers.length, isAnimating]);
+
+  const nextSlide = () => {
+    if (isAnimating || trainers.length <= 1) return;
+    
+    setIsAnimating(true);
+    setPreviousIndex(currentIndex);
+    
+    // Wait for animation to complete
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % trainers.length);
+      setIsAnimating(false);
+    }, 800); // Match transition duration in CSS
+  };
+
+  const getSlideClassName = (index) => {
+    if (index === currentIndex) return "carousel-slide active";
+    if (index === previousIndex) return "carousel-slide exit";
+    return "carousel-slide";
+  };
+
+  if (loading) {
+    return <p className="loading-text">Loading...</p>;
+  }
+
+  if (trainers.length === 0) {
+    return <p className="loading-text">No trainers available.</p>;
+  }
 
   return (
     <section className="trainers-section">
-      <h2>Trainers</h2>
+      <h2 className="section-title">Our Trainers</h2>
       <div className="carousel-container">
-        <div
-          className="carousel"
-          style={{
-            transform: `translateX(-${index * 33.33}%)`,
-          }}
-        >
-          {[...trainers, ...trainers, ...trainers].map((trainer, idx) => (
-            <div key={idx} className="trainer-card">
-              <div className="trainer-image-container">
-                <img
-                  src={trainer.image}
-                  alt={trainer.name}
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/100";
-                  }}
-                />
-              </div>
-              <div className="trainer-info">
-                <h3>{trainer.name}</h3>
-                <h4>{trainer.designation}</h4>
-                <p>{trainer.description}</p>
+        <div className="carousel-wrapper">
+          {trainers.map((trainer, index) => (
+            <div
+              key={index}
+              className={getSlideClassName(index)}
+            >
+              <div className="trainer-card">
+                <div className="trainer-image-container">
+                  <img
+                    src={trainer.trainer_profile_photo}
+                    alt={trainer.name}
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/150";
+                    }}
+                  />
+                </div>
+                <div className="trainer-info">
+                  <h3>Name : {trainer.name}</h3>
+                  <h4>Experience : {trainer.experience}</h4>
+                  <p>Information : {trainer.trainer_info}</p>
+                </div>
               </div>
             </div>
           ))}
@@ -68,6 +94,6 @@ function TrainersSection() {
       </div>
     </section>
   );
-}
+};
 
 export default TrainersSection;

@@ -1,61 +1,204 @@
 .batch-list-container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #fff1f2;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+}
+
+/* Main content area */
+.batch-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Batch Card */
+.batch-card {
+  background-color: #feeef0;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid black;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header inside each batch */
+.batch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Batch name & time */
+.batch-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.batch-time {
+  font-size: 14px;
+  color: #555;
+  margin-top: 2px;
+}
+
+/* See Member Button */
+.see-member-btn {
+  background-color: #fda4af;
+  border: 1px solid #f58b9d;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.see-member-btn:hover {
+  background-color: #f58b9d;
+}
+
+/* Members table (shown when expanded) */
+.member-details {
+  padding: 10px;
+  background-color: #feeef0;
+  border-top: 1px solid #ddd;
+  margin-top: 5px;
+}
+
+/* Member header (name, membership type, join date) */
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Individual member row */
+.member-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.no-members {
+  font-size: 14px;
+  font-style: italic;
+  color: #777;
+}
+.mmember-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures equal column distribution */
+  margin-top: 10px;
+}
+
+
+
+.mmember-table th, .mmember-table td {
+  border:  #ddd;
+  padding: 10px;
+  text-align: center; /* Center the text */
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+ 
+
+
+.mmember-table th {
+  background-color: #fda4af; /* Header background color */
+  color: white;
+  font-weight: bold;
+}
+
+
+.mmember-table tr:nth-child(even) {
+  background-color: #feeef0; /* Alternate row color */
+}
+
+.mmember-table tr:hover {
+  background-color: #feeef0; /* Hover effect */
+}
+
+/* Existing desktop styles remain unchanged */
+
+/* --- MOBILE VIEW (MAX WIDTH: 600px) --- */
+@media (max-width: 600px) {
+  .batch-list-container {
+      flex-direction: column; /* Stack content */
   }
-  
+
+  .sidebar {
+      display: none; /* Hide sidebar */
+  }
+
+  .batch-content {
+      padding: 10px;
+  }
+
   .batch-card {
-    background-color: #feeef0;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 12px;
   }
-  
+
   .batch-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
   }
-  
-  .batch-name {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .batch-time {
-    font-size: 14px;
-    color: #333;
-  }
-  
+
   .see-member-btn {
-    background-color: #f9a1b1;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
+      width: 100%;
+      margin-top: 8px;
   }
-  
-  .see-member-btn:hover {
-    background-color: #f58b9d;
-  }
-  
+
   .member-details {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #ddd;
+      overflow-x: auto;
   }
-  
-  .member-header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    padding-bottom: 5px;
+
+  .mmember-table {
+      
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
   }
-  
+
+  .mmember-table th, .mmember-table td {
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+  }
+
+  .member-header,
   .member-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
   }
-  
+}
+
+.mobile-header {
+  display: none;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .mobile-header {
+    display: block; /* Show only on mobile */
+  }
+}

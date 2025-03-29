@@ -1,76 +1,181 @@
-.trainers-section {
-  padding: 40px 20px;
-  text-align: center;
-  background-color: #f8f9fc;
-  overflow: hidden;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.trainers-section h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
 }
 
-.carousel-container {
+.attendance-container {
   display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 100%;
-  max-width: 1200px; /* Ensures proper centering */
-  margin: auto;
-  position: relative;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
 }
 
-.carousel {
+.attendance-content {
   display: flex;
-  transition: transform 1s ease-in-out;
-  will-change: transform;
-}
-
-.trainer-card {
-  min-width: 33.33%;
-  max-width: 33.33%;
-  height: 250px; /* Slightly taller for better proportion */
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  transition: transform 0.5s ease-in-out;
-}
-
-.trainer-image-container {
-  flex: 0 0 100px;
-  margin-right: 15px;
-}
-
-.trainer-image-container img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.trainer-info {
   flex: 1;
-  text-align: left;
 }
 
-.trainer-info h3 {
-  font-size: 1.2em;
+.attendance-main {
+  margin: 12px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* Header Styling */
+.attendance-title {
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
-.trainer-info h4 {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 5px;
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
-.trainer-info p {
-  font-size: 0.8em;
-  color: #444;
-  line-height: 1.4;
+.date-placeholder {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.trainer-name {
+  font-weight: bold;
+  margin-right: 10%;
+}
+
+/* Table Wrapper (Ensures Scrollable Table) */
+.attendance-table-wrapper {
+  background-color: #fdeff0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;  /* Enables horizontal scrolling */
+  width: 100%;
+}
+
+/* Table Styling */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;  /* Ensures table doesn't shrink on small screens */
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #f5f5f5;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Ensures text doesn't overflow */
+}
+
+.attendance-table th {
+  background-color: #fecdd3;
+  font-weight: bold;
+}
+
+.attendance-table td {
+  background-color: #fdeff0;
+}
+
+/* Attendance Status Buttons */
+.attendance-status {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.attendance-status.absent {
+  background-color: #ffcccc;
+  color: #333;
+}
+
+.attendance-status.present {
+  background-color: #b3ffb3;
+  color: #333;
+}
+
+/* Hover Effects */
+.attendance-status:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .attendance-container {
+    padding: 10px;
+  }
+
+  /* Stack header items */
+  .attendance-header {
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trainer-name {
+    margin-right: 0;
+    margin-top: 5px;
+  }
+
+  /* Ensure table scrolls instead of disappearing */
+  .attendance-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .attendance-table {
+    min-width: 600px; /* Prevents shrinking */
+  }
+}
+
+/* Small Screen (iPhone SE) */
+@media (max-width: 375px) {
+  .attendance-title {
+    font-size: 16px;
+  }
+
+  .attendance-table-wrapper {
+    padding: 10px;
+    overflow-x: auto; /* Allows scrolling */
+    max-width: 100%; /* Ensures content stays visible */
+  }
+
+  .attendance-table {
+    min-width: 600px; /* Prevents table from becoming too small */
+    display: block;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .attendance-status {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .attendance-title {
+    text-align: center;
+    width: 100%;
+  }
 }

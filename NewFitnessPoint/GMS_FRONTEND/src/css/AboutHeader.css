@@ -1,47 +1,50 @@
-/* AboutHeader.css */
-.about-header {
+/* Header.css */
+.Amain-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #fff;
-  color: gray;
+  padding: 0.5vh 1vw;
+  background-color: #F8F8FF;
+  color: #9E9E9E;
   height: 100px;
 }
 
-.about-logo {
+.main-logo {
+  max-height: fit-content;
   display: flex;
   align-items: center;
 }
 
-.about-logo img {
-  height: 120px;
+.main-logo img {
+  height: 100px;
+  width: 100%;
 }
 
-.about-nav {
+.Adesktop-nav {
   display: flex;
   align-items: center;
 }
 
-.about-nav a {
-  color: gray;
+.Amain-nav a {
+  color: #9E9E9E;
   text-decoration: none;
   margin: 0 10px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
-.about-nav a:hover {
-  color: #000;
+.Amain-nav a:hover {
+  color: #ff4d4d;
 }
 
-.Alogin-button {
+.AMlogin-button {
   background-color: #FFCED0;
   color: #000;
   border: none;
   text-decoration: none;
   padding: 8px 15px;
+  margin-right: 1vw;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
@@ -49,23 +52,94 @@
   transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.AMlogin-button:hover {
   background-color: #ff4d4d;
   color: #fff;
 }
 
-@media (max-width: 768px) {
-  .about-header {
-    flex-direction: column;
-    align-items: center;
-  }
-  .about-nav {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-  .about-nav a {
-    margin: 5px;
-  }
+.Amenu-toggle {
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: black;
+}
+
+/* Sidenav styles */
+.Asidenav {
+  height: 90vh;
+  width: 0;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: #f8e1e2;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Asidenav.open {
+  width: 250px;
+}
+
+.Asidenav-links {
+  flex-grow: 1;
+}
+
+.Asidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.Asidenav a:hover {
+  color: #000000;
+}
+
+.Asidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  background: none;
+  border: none;
+  color: #818181;
+  cursor: pointer;
+}
+
+/* Sidenav footer and login button */
+.Asidenav-footer {
+  padding: 20px;
+  border-top: 1px solid #333;
+  margin-bottom: 30px;
+}
+
+.Asidenav-login-button {
+  background-color: #FFCED0;
+  color: #000 !important;
+  border: none;
+  text-decoration: none;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.Asidenav-login-button:hover {
+  background-color: #ff4d4d;
+  color: #fff !important;
 }

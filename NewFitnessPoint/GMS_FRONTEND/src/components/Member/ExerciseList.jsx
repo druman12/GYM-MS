@@ -1,20 +1,125 @@
+/* eslint-disable react/prop-types */
+import '../../css/ExerciseList.css';
+import { useEffect, useState } from "react";
 
-import '../../css/ExerciseList.css'
+const ExerciseList = ({ member_id: propMemberId}) => {
+  const extractedMemberId = propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
+  const member_id = extractedMemberId || sessionStorage.getItem("userId");
 
-const ExerciseList = () => {
+  const isMember = propMemberId ? "member" : sessionStorage.getItem("userType");
+
+
+ 
+
+  const [loading, setLoading] = useState(true);
+  const [exerciseList, setExerciseList] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(1);
+  const [exercises, setExercises] = useState([]);
+  const [loadingExercises, setLoadingExercises] = useState(false);
+
+  const url = isMember === "member"
+    ? `http://127.0.0.1:8000/api/exercise/member/${member_id}/workoutplan/`
+    : null;
+
+  useEffect(() => {
+    if (!url) {
+      setLoading(false);
+      return;
+    }
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setExerciseList(data);
+        setLoading(false);
+
+        if (data?.workout_plans?.length > 0) {
+          fetchExerciseDetails(1);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching WorkoutPlan data:", error);
+        setLoading(false);
+      });
+  }, [url]);
+
+  const fetchExerciseDetails = (day) => {
+    setLoadingExercises(true);
+    setSelectedDay(day);
+
+    fetch(`http://127.0.0.1:8000/api/exercise/member/${member_id}/day/${day}/`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setExercises(data.exercises);
+        setLoadingExercises(false);
+        console.log("122" + data.exercises)
+      })
+      .catch(error => {
+        console.error(`Error fetching exercises for day ${day}:`, error);
+        setLoadingExercises(false);
+        setExercises([]);
+      });
+  };
+
+  if (loading) return <p>Loading workout...</p>;
+
+  const focusAreas = exerciseList?.workout_plans?.[0]?.focus_areas || {};
+
   return (
     <div className="exercise-section">
       <h2>Exercise List</h2>
       <div className="exercise-container">
         <div className="exercise-buttons">
-          <button>Day 1 Chest & Triceps</button>
-          <button>Day 2 Back & Biceps</button>
-          <button>Day 3 Shoulder</button>
-          <button>Day 4 Legs</button>
-          <button>Day 5 Chest & Triceps</button>
-          <button>Day 6 Back & Biceps</button>
+          {[1, 2, 3, 4, 5, 6].map(day => (
+            <button
+              key={day}
+              onClick={() => fetchExerciseDetails(day)}
+              className={selectedDay === day ? "active" : ""}
+            >
+              Day {day} {focusAreas[`day${day}`] || `Day ${day}`}
+            </button>
+          ))}
         </div>
-        <div className="exercise-details">Details Of exercises for selected day.</div>
+
+        <div className="exercise-details">
+          {loadingExercises ? (
+            <p>Loading exercises...</p>
+          ) : exercises.length > 0 ? (
+            <div className="exercises-list">
+              <h3>Day {selectedDay}: {focusAreas[`day${selectedDay}`]}</h3>
+              <table className="exercise-table">
+                <thead>
+                  <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exercises.map((exercise, index) => (
+                    <tr key={index}>
+                      <td>{exercise.exercise_name}</td>
+                      <td>{exercise.sets}</td>
+                      <td>{exercise.reps}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p>No exercises found for this day.</p>
+          )}
+        </div>
       </div>
     </div>
   );
