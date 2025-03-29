@@ -1,4 +1,4 @@
-import "../../../css/personalTraining.css";
+import "../../../css/PersonalTraining.css";
 import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
 import { useState, useEffect } from "react";
