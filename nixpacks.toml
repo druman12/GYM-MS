@@ -1,12 +1,13 @@
 [phases.setup]
-nixPkgs = ["nodejs", "python311", "python311Packages.pip"]
+nixPkgs = ["nodejs", "python311"]
 
 [phases.build]
 cmds = [
   "cd NewFitnessPoint/GMS_FRONTEND && npm install && npm run build",
-  "cd NewFitnessPoint && pip install -r requirements.txt",
-  "cd NewFitnessPoint && python manage.py collectstatic --noinput"
+  "python -m venv /tmp/venv",
+  "source /tmp/venv/bin/activate && cd NewFitnessPoint && pip install -r requirements.txt",
+  "source /tmp/venv/bin/activate && cd NewFitnessPoint && python manage.py collectstatic --noinput"
 ]
 
 [start]
-cmd = "cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT"
+cmd = "source /tmp/venv/bin/activate && cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT"
