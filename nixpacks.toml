@@ -1,6 +1,10 @@
 [phases.setup]
 nixPkgs = ["nodejs", "python311", "mysql80", "pkg-config", "zlib", "openssl"]
 
+[env]
+MYSQLCLIENT_CFLAGS = "-I/nix/store/include/mysql"
+MYSQLCLIENT_LDFLAGS = "-L/nix/store/lib/mysql -lmysqlclient"
+
 [phases.build]
 cmds = [
   "cd NewFitnessPoint/GMS_FRONTEND && npm install && npm run build",
@@ -8,9 +12,7 @@ cmds = [
   "source /tmp/venv/bin/activate && cd NewFitnessPoint && pip install -r requirements.txt",
   "source /tmp/venv/bin/activate && cd NewFitnessPoint && python manage.py collectstatic --noinput"
 ]
-[env]
-MYSQLCLIENT_CFLAGS = "-I/nix/store/include/mysql"
-MYSQLCLIENT_LDFLAGS = "-L/nix/store/lib/mysql -lmysqlclient"
+
 
 [start]
 cmd = "source /tmp/venv/bin/activate && cd NewFitnessPoint && gunicorn NewFitnessPoint.wsgi:application --bind 0.0.0.0:$PORT"
