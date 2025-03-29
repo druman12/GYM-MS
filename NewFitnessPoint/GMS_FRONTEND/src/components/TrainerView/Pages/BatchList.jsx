@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../../css/batchList.css";
+import "../../../css/BatchList.css";
 import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
 import { useEffect } from "react";
