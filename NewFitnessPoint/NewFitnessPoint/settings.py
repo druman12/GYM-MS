@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'NewFitnessPoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'GMS_NFP',
-        'USER': 'root',
-        'PASSWORD': '1225',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'NAME': os.environ.get('MYSQL_DATABASE', 'GMS_NFP'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', '1225'),
+        'HOST': os.environ.get('MYSQL_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),
     },
 }
 
@@ -152,10 +152,10 @@ import cloudinary.uploader
 import cloudinary.api
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dbsokdyz0',
-    'API_KEY': '444188369997249',
-    'API_SECRET': 'SMdwfVyLL3vSs3oDQ9TLP5RmqXE',
-    'SECURE': True
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'SECURE': True,
 }
 
 cloudinary.config( 
