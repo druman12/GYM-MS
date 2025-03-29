@@ -1,4 +1,4 @@
-import '../../css/MemberHeader.css';
+import '../../css/Memberheader.css';
 import PP from '../../assets/profile-boy-icon.png';
 import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
