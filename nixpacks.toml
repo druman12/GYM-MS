@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs", "python311", "mysql57", "pkg-config", "zlib", "openssl"]
+nixPkgs = ["nodejs", "python311", "mysql80", "pkg-config", "zlib", "openssl"]
 
 [phases.build]
 cmds = [
