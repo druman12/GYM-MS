@@ -157,7 +157,7 @@ class Trainer(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.trainer_id}_{self.name}"
     
 class Gallery(models.Model):
     gallery_id=models.AutoField(primary_key=True)

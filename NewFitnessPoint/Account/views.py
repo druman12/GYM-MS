@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
-from django.db import connection
 from . import models
 import cloudinary.utils
 import bcrypt
 import json
 import random
+import cloudinary.utils
 from django.conf import settings
 from datetime import datetime, timedelta , date
-from django.utils.timezone import make_aware, now
+from django.utils.timezone import now
 from django.core.mail import send_mail, EmailMessage
 from django.utils.html import format_html
 
@@ -73,131 +73,99 @@ def Authenticate(request):
 
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
+
 @csrf_exempt
 def OwnerDetailsapi(request):
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM account_owner")
-            row = cursor.fetchone()
-            
-            if row:
-                columns = [col[0] for col in cursor.description]  # Get column names
-                owner = dict(zip(columns, row))  # Convert to dictionary
-                
-                # Convert image fields to Cloudinary URLs
-                if "profile_photo" in owner and owner["profile_photo"]:
-                    owner["profile_photo"] = f"https://res.cloudinary.com/dbsokdyz0/{owner['profile_photo']}"
-                
-                if "AboutUs_photo" in owner and owner["AboutUs_photo"]:
-                    owner["AboutUs_photo"] = f"https://res.cloudinary.com/dbsokdyz0/{owner['AboutUs_photo']}"
-                    
-                if "heroimage" in owner and owner["heroimage"]:
-                    owner["heroimage"]=f"https://res.cloudinary.com/dbsokdyz0/{owner['heroimage']}"
-
-                return JsonResponse(owner, safe=False)
+        try:
+            owner = models.Owner.objects.first()  # Get the first record
+            if owner:
+                owner_data = {
+                    "id": owner.id,
+                    "name": owner.name,
+                    "profile_photo": cloudinary.utils.cloudinary_url(owner.profile_photo.public_id)[0] if owner.profile_photo else None,
+                    "AboutUs_photo": cloudinary.utils.cloudinary_url(owner.AboutUs_photo.public_id)[0] if owner.AboutUs_photo else None,
+                    "heroimage": cloudinary.utils.cloudinary_url(owner.heroimage.public_id)[0] if owner.heroimage else None,
+                }
+                return JsonResponse(owner_data, safe=False)
             else:
                 return JsonResponse({"message": "Owner details not found"}, status=404)
-          
+        except models.Owner.DoesNotExist:
+            return JsonResponse({"message": "Owner details not found"}, status=404)   
 
 @csrf_exempt
 def membermedicaldetailsapi(request, id=0):
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            if id != 0:
-                # Fetch a specific member by ID
-                cursor.execute("SELECT * FROM account_membermedicaldetails WHERE member_id = %s", [id])
-                row = cursor.fetchone()
-                if row:
-                    columns = [col[0] for col in cursor.description]  # Get column names
-                    memberMD = dict(zip(columns, row))  # Map column names to values
-                    
-                    # Append Cloudinary base URL to image fields
-                    if memberMD.get("bmi_report_image"):
-                        memberMD["bmi_report_image"] = CLOUDINARY_BASE_URL + memberMD["bmi_report_image"]
-                    if memberMD.get("diet_chart_image"):
-                        memberMD["diet_chart_image"] = CLOUDINARY_BASE_URL + memberMD["diet_chart_image"]
-
-                    return JsonResponse(memberMD, safe=False)
-            else:
-                # Fetch all members
-                cursor.execute("SELECT * FROM account_membermedicaldetails")
-                rows = cursor.fetchall()
-                columns = [col[0] for col in cursor.description]  # Get column names
-                membersMD = [dict(zip(columns, row)) for row in rows]  # Convert to list of dicts
-                
-                # Append Cloudinary base URL to image fields for all records
-                for memberMD in membersMD:
-                    if memberMD.get("bmi_report_image"):
-                        memberMD["bmi_report_image"] = CLOUDINARY_BASE_URL + memberMD["bmi_report_image"]
-                    if memberMD.get("diet_chart_image"):
-                        memberMD["diet_chart_image"] = CLOUDINARY_BASE_URL + memberMD["diet_chart_image"]
-
-                return JsonResponse(membersMD, safe=False)
-
-
+        if id != 0:
+            # Fetch a specific member by ID
+            try:
+                memberMD = models.MemberMedicalDetails.objects.get(member_id=id)
+                memberMD_data = {
+                    "mmd_id": memberMD.mmd_id,
+                    "member_id": memberMD.member_id,
+                    "bmi_report_image": cloudinary.utils.cloudinary_url(memberMD.bmi_report_image.public_id)[0] if memberMD.bmi_report_image else None,
+                    "diet_chart_image": cloudinary.utils.cloudinary_url(memberMD.diet_chart_image.public_id)[0] if memberMD.diet_chart_image else None,
+                }
+                return JsonResponse(memberMD_data, safe=False)
+            except models.MemberMedicalDetails.DoesNotExist:
+                return JsonResponse({"message": "Member medical details not found"}, status=404)
+        else:
+            # Fetch all members
+            membersMD = models.MemberMedicalDetails.objects.all()
+            membersMD_data = []
+            for memberMD in membersMD:
+                memberMD_data = {
+                    "mmd_id": memberMD.mmd_id,
+                    "member_id": memberMD.member_id,
+                    "bmi_report_image": cloudinary.utils.cloudinary_url(memberMD.bmi_report_image.public_id)[0] if memberMD.bmi_report_image else None,
+                    "diet_chart_image": cloudinary.utils.cloudinary_url(memberMD.diet_chart_image.public_id)[0] if memberMD.diet_chart_image else None,
+                }
+                membersMD_data.append(memberMD_data)
+            return JsonResponse(membersMD_data, safe=False)
+        
 @csrf_exempt
 def trainerapi(request, id=0):
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            if id != 0:
-                # Fetch specific trainer details
-                cursor.execute("""
-                    SELECT name, experience, trainer_profile_photo, trainer_info 
-                    FROM account_trainer 
-                    WHERE trainer_id = %s
-                """, [id])
-                row = cursor.fetchone()
+        if id != 0:
+            # Fetch specific trainer details
+            try:
+                trainer = models.Trainer.objects.get(trainer_id=id)
+                trainer_data = {
+                    "name": trainer.name,
+                    "experience": trainer.experience,
+                    "trainer_profile_photo": cloudinary.utils.cloudinary_url(trainer.trainer_profile_photo.public_id)[0] if trainer.trainer_profile_photo else None,
+                    "trainer_info": trainer.trainer_info
+                }
+                return JsonResponse(trainer_data)
+            except models.Trainer.DoesNotExist:
+                return JsonResponse({'message': 'Trainer not found'}, status=404)
+        else:
+            # Fetch all trainers
+            trainers = models.Trainer.objects.all()
+            trainers_data = []
+            for trainer in trainers:
+                trainer_data = {
+                    "name": trainer.name,
+                    "experience": trainer.experience,
+                    "trainer_profile_photo": cloudinary.utils.cloudinary_url(trainer.trainer_profile_photo.public_id)[0] if trainer.trainer_profile_photo else None,
+                    "trainer_info": trainer.trainer_info
+                }
+                trainers_data.append(trainer_data)
+            return JsonResponse(trainers_data, safe=False)
 
-                if row:
-                    name, experience, profile_photo, trainer_info = row
-
-                    # Construct Cloudinary URL
-                    image_url = f"https://res.cloudinary.com/dbsokdyz0/{profile_photo}" if profile_photo else None
-                    
-                    return JsonResponse({
-                        "name": name,
-                        "experience": experience,
-                        "trainer_profile_photo": image_url,
-                        "trainer_info": trainer_info
-                    })
-                else:
-                    return JsonResponse({'message': 'Trainer not found'}, status=404)
-            else:
-                # Fetch all trainers
-                cursor.execute("""
-                    SELECT name, experience, trainer_profile_photo, trainer_info 
-                    FROM account_trainer
-                """)
-                rows = cursor.fetchall()
-
-                trainers = [{
-                    "name": row[0],
-                    "experience": row[1],
-                    "trainer_profile_photo": f"https://res.cloudinary.com/dbsokdyz0/{row[2]}" if row[2] else None,
-                    "trainer_info": row[3]
-                } for row in rows]
-
-                return JsonResponse(trainers, safe=False)
-
-@csrf_exempt    
+@csrf_exempt
 def getGalleryImages(request):
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM account_gallery")
-            rows = cursor.fetchall()
-            columns = [col[0] for col in cursor.description]  # Get column names
-
-            images = []
-            for row in rows:
-                image_data = dict(zip(columns, row))  # Convert row to dictionary
-                
-                # Assuming "image" is the column storing the Cloudinary path
-                if "image" in image_data and image_data["image"]:
-                    image_data["image_url"] = CLOUDINARY_BASE_URL + image_data["image"]  # Add full URL
-                
-                images.append(image_data)
-                
-            return JsonResponse(images, safe=False)
+        # Fetch all gallery images
+        images = models.Gallery.objects.all()
+        images_data = []
+        for image in images:
+            image_data = {
+                "gallery_id": image.gallery_id,
+                "image_url": cloudinary.utils.cloudinary_url(image.image.public_id)[0] if image.image else None
+            }
+            images_data.append(image_data)
+        return JsonResponse(images_data, safe=False)
         
 
 @csrf_exempt
@@ -226,7 +194,7 @@ def send_otp_email(email, otp):
     recipient_list = [email]
 
     email_message = EmailMessage(subject, message, email_from, recipient_list)
-    email_message.content_subtype = "html"  # Set email format to HTML
+    email_message.content_subtype = "html"  
     email_message.send()
 
 @csrf_exempt
