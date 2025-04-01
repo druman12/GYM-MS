@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import url from "../../URL/url";
 
 const MemberHeader = () => {
   const { showLoader, hideLoader } = useLoading(); // Get loading functions
@@ -14,7 +15,8 @@ const MemberHeader = () => {
   // Fetch member data on component mount
   useEffect(() => {
     if (memberId) {
-      fetch(`http://127.0.0.1:8000/api/member/${memberId}/`)
+      // fetch(`http://127.0.0.1:8000/api/member/${memberId}/`)
+      fetch(`${url}api/member/${memberId}/`)
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -25,9 +27,7 @@ const MemberHeader = () => {
           if (data.name) {
             setMemberName(data.name);
            
-          } else if (data.first_name && data.last_name) {
-            setMemberName(`${data.first_name} ${data.last_name}`);
-          } else if (data.username) {
+          }else if (data.username) {
             setMemberName(data.username);
           }
         })

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
 import {toast} from 'react-toastify';
+import url from "../URL/url";
 
 function OTPSection() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,8 @@ function OTPSection() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/send-otp/", {
+      // const response = await fetch("http://127.0.0.1:8000/api/send-otp/", {
+        const response = await fetch(url+"api/send-otp/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +52,8 @@ function OTPSection() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/verify-otp/", {
+      // const response = await fetch("http://127.0.0.1:8000/api/verify-otp/", {
+      const response = await fetch(url+"api/verify-otp/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
