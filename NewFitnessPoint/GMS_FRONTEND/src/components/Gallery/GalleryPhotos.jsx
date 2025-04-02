@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from "react"
 import "../../css/GalleryPhotos.css"
+import url from "../../URL/url"
 
 const GalleryPhotos = () => {
   const [images, setImages] = useState([])
@@ -11,7 +11,7 @@ const GalleryPhotos = () => {
     const fetchImages = async () => {
       try {
         setLoading(true)
-        const response = await fetch("http://127.0.0.1:8000/api/gallery/")
+        const response = await fetch(url+"api/gallery/")
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)

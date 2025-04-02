@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import '../../css/ExerciseList.css';
 import { useEffect, useState } from "react";
+import url from "../../URL/url"
 
 const ExerciseList = ({ member_id: propMemberId}) => {
   const extractedMemberId = propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
@@ -8,26 +9,23 @@ const ExerciseList = ({ member_id: propMemberId}) => {
 
   const isMember = propMemberId ? "member" : sessionStorage.getItem("userType");
 
-
- 
-
   const [loading, setLoading] = useState(true);
   const [exerciseList, setExerciseList] = useState(null);
   const [selectedDay, setSelectedDay] = useState(1);
   const [exercises, setExercises] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(false);
 
-  const url = isMember === "member"
-    ? `http://127.0.0.1:8000/api/exercise/member/${member_id}/workoutplan/`
+  const url1 = isMember === "member"
+    ? `${url}api/exercise/member/${member_id}/workoutplan/`
     : null;
 
   useEffect(() => {
-    if (!url) {
+    if (!url1) {
       setLoading(false);
       return;
     }
 
-    fetch(url)
+    fetch(url1)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -46,13 +44,13 @@ const ExerciseList = ({ member_id: propMemberId}) => {
         console.error("Error fetching WorkoutPlan data:", error);
         setLoading(false);
       });
-  }, [url]);
+  }, [url1]);
 
   const fetchExerciseDetails = (day) => {
     setLoadingExercises(true);
     setSelectedDay(day);
 
-    fetch(`http://127.0.0.1:8000/api/exercise/member/${member_id}/day/${day}/`)
+    fetch(`${url}api/exercise/member/${member_id}/day/${day}/`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

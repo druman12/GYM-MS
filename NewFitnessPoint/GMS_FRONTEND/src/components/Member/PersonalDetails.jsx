@@ -1,16 +1,17 @@
 import '../../css/PersonalDetails.css';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
+import url from "../../URL/url"
 
 const PersonalDetails = () => {
   const memberId = sessionStorage.getItem("userId");
   const [loading, setLoading] = useState(true);
   const [PersonalDetail,setPersonalDetail]=useState(null);
 
-  const url = `http://127.0.0.1:8000/api/member/${memberId}/`;
+  const url1 = `${url}api/member/${memberId}/`;
 
   useEffect(() => {
-    fetch(url)
+    fetch(url1)
       .then(response => response.json())
       .then(data => {
         setPersonalDetail(data);
@@ -33,7 +34,7 @@ const PersonalDetails = () => {
         console.error('Error fetching member data:', error);
         setLoading(false);
       });
-}, [url]);
+}, [url1]);
 
 
 

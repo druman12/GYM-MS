@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import Calendar from "react-calendar"
 import "react-calendar/dist/Calendar.css"
 import "../../css/AttendanceCalendar.css" // Add custom styles
+import url from "../../URL/url"
 
 const AttendanceCalendar = () => {
   const [attendanceData, setAttendanceData] = useState([])
@@ -13,7 +14,7 @@ const AttendanceCalendar = () => {
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/attendance/${memberId}/`)
+        const response = await fetch(`${url}api/attendance/${memberId}/`)
         if (!response.ok) {
           throw new Error("Failed to fetch attendance data")
         }

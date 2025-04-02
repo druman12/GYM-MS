@@ -73,25 +73,38 @@ def Authenticate(request):
 
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
-
 @csrf_exempt
 def OwnerDetailsapi(request):
     if request.method == 'GET':
         try:
             owner = models.Owner.objects.first()  # Get the first record
             if owner:
-                owner_data = {
-                    "id": owner.id,
-                    "name": owner.name,
-                    "profile_photo": cloudinary.utils.cloudinary_url(owner.profile_photo.public_id)[0] if owner.profile_photo else None,
-                    "AboutUs_photo": cloudinary.utils.cloudinary_url(owner.AboutUs_photo.public_id)[0] if owner.AboutUs_photo else None,
-                    "heroimage": cloudinary.utils.cloudinary_url(owner.heroimage.public_id)[0] if owner.heroimage else None,
-                }
+                # Get all fields from the model
+                owner_data = {}
+                
+                # Get all fields dynamically
+                for field in owner._meta.fields:
+                    field_name = field.name
+                    field_value = getattr(owner, field_name)
+                    
+                    # Handle CloudinaryField specially
+                    if isinstance(field, cloudinary.models.CloudinaryField) and field_value:
+                        owner_data[field_name] = cloudinary.utils.cloudinary_url(field_value.public_id)[0]
+                    # Handle other field types as needed
+                    elif isinstance(field_value, (int, str, bool, float)) or field_value is None:
+                        owner_data[field_name] = field_value
+                    elif hasattr(field_value, 'isoformat'):  # For date/datetime fields
+                        owner_data[field_name] = field_value.isoformat()
+                    else:
+                        # Convert other objects to string representation
+                        owner_data[field_name] = str(field_value)
+                
                 return JsonResponse(owner_data, safe=False)
             else:
                 return JsonResponse({"message": "Owner details not found"}, status=404)
         except models.Owner.DoesNotExist:
-            return JsonResponse({"message": "Owner details not found"}, status=404)   
+            return JsonResponse({"message": "Owner details not found"}, status=404)
+
 
 @csrf_exempt
 def membermedicaldetailsapi(request, id=0):

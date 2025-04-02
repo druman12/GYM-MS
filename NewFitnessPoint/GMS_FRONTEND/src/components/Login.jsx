@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
 import { toast } from "react-toastify";
+import url from "../URL/url"
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ function Login() {
     setIsLoading(true);
     
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(url+"api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

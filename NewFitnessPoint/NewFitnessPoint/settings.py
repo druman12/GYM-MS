@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@ku8+7r+f)2)mk-rud1lhfh7^ni$mcl8v$j*$1qe4x^r5f6r-e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*','druman12.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -133,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'GMS_FRONTEND/dist')]
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'GMS_FRONTEND/dist/')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

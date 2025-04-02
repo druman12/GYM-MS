@@ -1,11 +1,12 @@
 import '../css/HeroSection.css';
 import { useState, useEffect } from 'react';
+import url from "../URL/url"
 
 function HeroSection() {
   const [heroData, setHeroData] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/ownerdetails/') // Replace with your actual API URL
+    fetch(url+'api/ownerdetails/')
       .then(response => response.json())
       .then(data => setHeroData(data))
       .catch(error => console.error('Error fetching hero data:', error));

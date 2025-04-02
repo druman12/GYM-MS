@@ -1,12 +1,13 @@
 import '../css/OwnerSection.css'
 import { useState, useEffect } from 'react';
+import url from "../URL/url"
 
 function OwnerSection() {
   const [OwnerData, setOwnerData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/ownerdetails/')  // Replace with your actual API URL
+    fetch(url+'api/ownerdetails/')  
       .then(response => response.json())
       .then(data => {
         setOwnerData(data);

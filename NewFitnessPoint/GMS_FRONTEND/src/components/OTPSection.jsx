@@ -20,7 +20,6 @@ function OTPSection() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch("http://127.0.0.1:8000/api/send-otp/", {
         const response = await fetch(url+"api/send-otp/", {
         method: "POST",
         headers: {
@@ -52,7 +51,6 @@ function OTPSection() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch("http://127.0.0.1:8000/api/verify-otp/", {
       const response = await fetch(url+"api/verify-otp/", {
         method: "POST",
         headers: {

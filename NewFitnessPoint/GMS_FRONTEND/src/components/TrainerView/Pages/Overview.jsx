@@ -3,12 +3,13 @@ import Sidebar from "../SideBar";
 import { useState } from "react";
 import TrainerHeader from "../TrainerHeader";
 import {  useEffect } from 'react';
+import url from "../../../URL/url"
 
 function Overview() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
      const trainer_id=sessionStorage.getItem('userId');
         const [Batches, setBatches] = useState(null);
-        const url1=`http://127.0.0.1:8000/api/batches/trainer/${trainer_id}/`
+        const url1=`${url}api/batches/trainer/${trainer_id}/`
         
           useEffect(() => {
             fetch(url1)  // Replace with your actual API URL
@@ -18,7 +19,7 @@ function Overview() {
           }, [url1]);
 
           const [PT, setPT] = useState(null);
-        const url2=`http://127.0.0.1:8000/api/pt/${trainer_id}/`
+        const url2=`${url}api/pt/${trainer_id}/`
         
           useEffect(() => {
             fetch(url2)  // Replace with your actual API URL

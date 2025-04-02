@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoading } from '../LoadingContext';
 import { useState, useEffect, useRef } from 'react';
 import {toast} from 'react-toastify';
+import url from "../../URL/url"
 
 const TrainerHeader = () => {
     const { showLoader, hideLoader } = useLoading();
@@ -15,14 +16,14 @@ const TrainerHeader = () => {
 
     const trainer_id = sessionStorage.getItem('userId');
     const [trainer, setTrainer] = useState(null);
-    const url = `http://127.0.0.1:8000/api/trainer/${trainer_id}/`;
+    const url1 = `${url}api/trainer/${trainer_id}/`;
 
     useEffect(() => {
-        fetch(url)
+        fetch(url1)
             .then(response => response.json())
             .then(data => setTrainer(data))
             .catch(error => console.error('Error fetching trainer data:', error));
-    }, [url]);
+    }, [url1]);
 
     useEffect(() => {
         const handleResize = () => {

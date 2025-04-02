@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../../css/DietList.css";
+import url from "../../URL/url"
 
 const DietList = () => {
   const [dietImage, setDietImage] = useState(null);
@@ -12,7 +13,7 @@ const DietList = () => {
     const fetchDietChart = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/membermedicaldetails/${member_id}/`
+          `${url}api/membermedicaldetails/${member_id}/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch diet chart");

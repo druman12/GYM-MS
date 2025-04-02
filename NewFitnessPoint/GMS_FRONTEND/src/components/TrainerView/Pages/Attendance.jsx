@@ -3,6 +3,7 @@ import TrainerHeader from "../TrainerHeader";
 import Sidebar from "../SideBar";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import url from "../../../URL/url"
 
 function Attendance() {
   const [isAbsent, setIsAbsent] = useState({});
@@ -11,20 +12,20 @@ function Attendance() {
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-  const URL = "http://127.0.0.1:8000/api/attendance/today/";
+  const URL = url+"api/attendance/today/";
 
   const [trainer, setTrainer] = useState("");
   const trainer_id = sessionStorage.getItem("userId");
-  const url = `http://127.0.0.1:8000/api/trainer/${trainer_id}/`;
+  const url1 = `${url}api/trainer/${trainer_id}/`;
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setCurrentDate(today);
-    fetch(url)
+    fetch(url1)
       .then((response) => response.json())
       .then((data) => setTrainer(data))
       .catch((error) => console.error("Error fetching trainer data:", error));
-  }, [url]);
+  }, [url1]);
 
   useEffect(() => {
     setLoading(true);

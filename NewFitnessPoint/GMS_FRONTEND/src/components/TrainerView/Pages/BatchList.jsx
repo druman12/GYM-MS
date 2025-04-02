@@ -3,16 +3,17 @@ import "../../../css/BatchList.css";
 import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
 import { useEffect } from "react";
+import url from "../../../URL/url"
 
 const BatchList = () => {
   const [openBatch, setOpenBatch] = useState(null);
   const [loading, setLoading] = useState(true);
   const trainer_id = sessionStorage.getItem("userId");
   const [Batches, setBatches] = useState(null);
-  const url = `http://127.0.0.1:8000/api/batches/trainer/${trainer_id}/`;
+  const url1 = `${url}api/batches/trainer/${trainer_id}/`;
 
   useEffect(() => {
-    fetch(url)
+    fetch(url1)
       .then((response) => response.json())
       .then((data) => {
         setBatches(data);
@@ -22,7 +23,7 @@ const BatchList = () => {
         console.error("Error fetching Batches data:", error);
         setLoading(false);
       });
-  }, [url]);
+  }, [url1]);
 
   if (loading) {
     return <p>Loading batches...</p>;

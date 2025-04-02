@@ -127,7 +127,7 @@
   color: #000 !important;
   border: none;
   text-decoration: none;
-  padding: 10px 30px;
+  padding: 10px 30px !important;
   cursor: pointer;
   border-radius: 5px;
   font-size: 18px;

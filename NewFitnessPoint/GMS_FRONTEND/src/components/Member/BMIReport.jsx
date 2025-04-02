@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import "../../css/BMIReport.css";
+import url from "../../URL/url"
 
 const BMIReport = ({  member_id: propMemberId  }) => {
  
@@ -17,7 +18,7 @@ const member_id = extractedMemberId || sessionStorage.getItem("userId");
   useEffect(() => {
     const fetchBMIReport = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/membermedicaldetails/${member_id}/`);
+        const response = await fetch(`${url}api/membermedicaldetails/${member_id}/`);
       
         if (!response.ok) {
           throw new Error("Failed to fetch BMI report");

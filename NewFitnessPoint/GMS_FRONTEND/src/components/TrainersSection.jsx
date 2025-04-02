@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../css/TrainersSection.css";
+import url from "../URL/url"
 
 const TrainersSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -9,7 +10,7 @@ const TrainersSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/trainers/')
+    fetch(url+'api/trainers/')
       .then(response => response.json())
       .then(data => {
         console.log(data);

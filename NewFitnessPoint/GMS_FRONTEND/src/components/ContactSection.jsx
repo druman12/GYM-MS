@@ -4,6 +4,7 @@ import Logo from '../assets/gms_logo.png';
 import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import { SocialIcon } from "react-social-icons";
 import { useLoading } from "./LoadingContext"; // Import the loading context
+import url from "../URL/url";
 
 const ContactSection = () => {
   const [ContactData, setContactData] = useState(null);
@@ -12,7 +13,7 @@ const ContactSection = () => {
   const location = useLocation(); // Get the current route
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/ownerdetails/")
+    fetch(url+"api/ownerdetails/")
       .then((response) => response.json())
       .then((data) => setContactData(data))
       .catch((error) => console.error("Error fetching hero data:", error));

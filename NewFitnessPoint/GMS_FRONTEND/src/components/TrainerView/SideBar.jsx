@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../../css/SideBar.css";
+import url from "../../URL/url"
 
 function Sidebar() {
   const trainer_id = sessionStorage.getItem("userId");
   const [trainer, setTrainer] = useState(null);
-  const url = `http://127.0.0.1:8000/api/trainer/${trainer_id}/`;
+  const url1 = `${url}api/trainer/${trainer_id}/`;
   
    useEffect(() => {
-       fetch(url)  // Replace with your actual API URL
+       fetch(url1)  // Replace with your actual API URL
           .then(response => response.json())
           .then(data => setTrainer(data))
           .catch(error => console.error('Error fetching trainer data:', error));
-      }, [url]);
+      }, [url1]);
 
 
   return (

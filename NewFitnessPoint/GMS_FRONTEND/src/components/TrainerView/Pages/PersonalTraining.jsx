@@ -3,16 +3,17 @@ import Sidebar from "../SideBar";
 import TrainerHeader from "../TrainerHeader";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import url from "../../../URL/url"
 
 const PersonalTraining = () => {
   const trainer_id = sessionStorage.getItem("userId");
   const [loading, setLoading] = useState(true);
   const [PT, setPT] = useState(null);
   const navigate = useNavigate();
-  const url = `http://127.0.0.1:8000/api/pt/${trainer_id}/`;
+  const url1 = `${url}api/pt/${trainer_id}/`;
 
   useEffect(() => {
-    fetch(url)
+    fetch(url1)
       .then((response) => response.json())
       .then((data) => {
         setPT(data);
@@ -22,7 +23,7 @@ const PersonalTraining = () => {
         console.error("Error fetching Batches data:", error);
         setLoading(false);
       });
-  }, [url]);
+  }, [url1]);
 
   if (loading) {
     return <p>Loading batches...</p>;

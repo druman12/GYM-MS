@@ -4,6 +4,7 @@ import { Audio } from "react-loader-spinner";
 import "../css/Login.css";
 import Logo from "../assets/gms_logo.png";
 import { toast } from "react-toastify";
+import url from "../URL/url"
 
 function ForgotPassword() {
   const [password, setPassword] = useState("");
@@ -32,7 +33,7 @@ function ForgotPassword() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/reset_password/", {
+        const response = await fetch(url+"api/reset_password/", {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });

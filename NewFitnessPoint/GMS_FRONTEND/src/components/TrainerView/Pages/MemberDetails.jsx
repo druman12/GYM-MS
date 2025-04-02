@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import ExerciseList from "../../Member/ExerciseList";
 import BMIReport from "../../Member/BMIReport";
-import  "../../../css/MemberDetails.css"
+import  "../../../css/MemberDetails.css";
+
 
 const MemberDetails = () => {
   const { member_id,name} = useParams();
-  console.log("member name"+name)
  
    // Get member_id from URL
   const navigate = useNavigate(); // Hook for navigation
