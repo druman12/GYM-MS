@@ -15,7 +15,6 @@ const MemberHeader = () => {
   // Fetch member data on component mount
   useEffect(() => {
     if (memberId) {
-      // fetch(`http://127.0.0.1:8000/api/member/${memberId}/`)
       fetch(`${url}api/member/${memberId}/`)
         .then(response => {
           if (!response.ok) {

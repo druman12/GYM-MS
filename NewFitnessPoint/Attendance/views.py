@@ -81,24 +81,52 @@ def mark_member_attendance(request):
         return JsonResponse({'error': 'Trainer not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-    
-
 
 @csrf_exempt
 def get_today_attendance(request):
     # Get today's date in YYYY-MM-DD format
     today_date = now().date()
 
-    # Fetch all members' details
+    # Fetch all active members
     members = Member.objects.filter(subscription_end_date__gte=today_date)
-
+    
+    # Get or create today's attendance date record
+    attendance_date, attendance_date_created = MemberAttendance.objects.get_or_create(date=today_date)
+    
     # Fetch today's attendance records
     attendance_records = AllMemberAttendance.objects.filter(
-        date__date=today_date
+        date=attendance_date
     ).select_related('member')
 
     # Map attendance by member_id
     attendance_by_member = {record.member.member_id: record.attendance for record in attendance_records}
+    
+    # If no attendance records exist for today, create "absent" records for all members
+    if not attendance_records:
+        # Get a default trainer for initialization
+        default_trainer = None
+        try:
+            default_trainer = Trainer.objects.first()
+        except:
+            # Handle case where no trainers exist
+            return JsonResponse({"error": "No trainers in system to initialize attendance"}, status=400)
+            
+        # Create bulk attendance records
+        bulk_attendance_records = []
+        for member in members:
+            # Create absent record for each member
+            new_attendance = AllMemberAttendance(
+                date=attendance_date,
+                member=member,
+                attendance="absent",
+                trainer=default_trainer
+            )
+            bulk_attendance_records.append(new_attendance)
+            attendance_by_member[member.member_id] = "absent"
+        
+        # Bulk create all the records
+        if bulk_attendance_records:
+            AllMemberAttendance.objects.bulk_create(bulk_attendance_records)
 
     # Build the response
     member_data = []
@@ -111,4 +139,4 @@ def get_today_attendance(request):
             "today_attendance": attendance_by_member.get(member.member_id, "absent")
         })
 
-    return JsonResponse({"date": str(today_date), "members": member_data})
+    return JsonResponse({"date": str(today_date), "members": member_data})    

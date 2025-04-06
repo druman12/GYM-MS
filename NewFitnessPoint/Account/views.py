@@ -24,7 +24,7 @@ def memberapi(request, id=0):
             try:
                 member = models.Member.objects.get(member_id=id)
                 if member.subscription_end_date < date.today():
-                    return JsonResponse({'message': 'Subscription expired'}, status=403)
+                    return JsonResponse({'message': 'Subscription expired'}, status=403)    
                 return JsonResponse(member.to_dict(), safe=False)
             except models.Member.DoesNotExist:
                 return JsonResponse({'message': 'Member not found'}, status=404)
