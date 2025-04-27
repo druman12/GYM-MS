@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import NetworkDetector from './components/NetworkDetector';
 import { LoadingProvider } from './components/LoadingContext';
 import Home from './components/Home';
 import Gallery from './components/Gallery/Gallery';
@@ -49,7 +50,8 @@ const ProtectedRoute = ({ element, requiredUserType }) => {
 
 function App() {
   return (
-    <LoadingProvider>
+   <LoadingProvider>
+    <NetworkDetector>
       <BrowserRouter>
         <Routes>
           {/* Public Routes */}
@@ -104,7 +106,8 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
-    </LoadingProvider>
+    </NetworkDetector>
+   </LoadingProvider>
   );
 }
 

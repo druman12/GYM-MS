@@ -2,12 +2,10 @@ import Logo from '../assets/gms_logo.png';
 import { useNavigate } from "react-router-dom";
 import '../css/Header.css';
 import { useState, useEffect, useRef } from 'react';
-import { useLoading } from './LoadingContext'; // Import the loading context
 
 function Header() {
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { showLoader, hideLoader } = useLoading(); // Get loading functions
   const navigate = useNavigate();
   const sideNavRef = useRef(null); // Ref for side nav
 
@@ -45,12 +43,9 @@ function Header() {
   // Function to handle navigation with loading state
   const handleNavigation = (path, e) => {
     e.preventDefault();
-    showLoader(); // Show loader before navigation
-
-    setTimeout(() => {
-      navigate(path);
-      hideLoader(); // Hide loader after navigation
-    }, 500);
+   
+    navigate(path);
+    
   };
 
   return (

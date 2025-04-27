@@ -13,19 +13,19 @@ const ContactSection = () => {
   const location = useLocation(); // Get the current route
 
   useEffect(() => {
+    showLoader()
     fetch(url+"api/ownerdetails/")
       .then((response) => response.json())
       .then((data) => setContactData(data))
       .catch((error) => console.error("Error fetching hero data:", error));
+      hideLoader()
   }, []);
 
   const handleNavigation = (path, e) => {
     e.preventDefault();
     showLoader();
-    setTimeout(() => {
-      navigate(path);
-      hideLoader();
-    }, 500);
+    navigate(path);
+    hideLoader();
   };
 
   return (

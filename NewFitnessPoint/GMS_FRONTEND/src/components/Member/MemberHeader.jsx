@@ -14,6 +14,7 @@ const MemberHeader = () => {
 
   // Fetch member data on component mount
   useEffect(() => {
+    showLoader();
     if (memberId) {
       fetch(`${url}api/member/${memberId}/`)
         .then(response => {
@@ -29,29 +30,27 @@ const MemberHeader = () => {
           }else if (data.username) {
             setMemberName(data.username);
           }
+          hideLoader();
         })
         .catch(error => {
           console.error('Error fetching member data:', error);
+          hideLoader();
         });
-    }
+    }else{
+      hideLoader();
+    } 
   }, [memberId]);
 
   // Function to handle navigation with loading state
   const handleAction = (path, e = null) => {
     if (e) e.preventDefault();
-    
-    showLoader(); 
-
     if (path === '/') {
       toast.success('Logged out successfully!');
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userType');
     }
-
-    setTimeout(() => {
         navigate(path);
-        hideLoader(); // Hide loader after navigation
-    }, 500); // Simulated delay
+
   };
 
   // Function to navigate to personal details page

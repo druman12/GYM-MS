@@ -19,10 +19,12 @@ const TrainerHeader = () => {
     const url1 = `${url}api/trainer/${trainer_id}/`;
 
     useEffect(() => {
+        showLoader()
         fetch(url1)
             .then(response => response.json())
             .then(data => setTrainer(data))
-            .catch(error => console.error('Error fetching trainer data:', error));
+            .catch(error => console.error('Error fetching trainer data:', error))
+            .finally(()=> hideLoader())
     }, [url1]);
 
     useEffect(() => {
@@ -63,11 +65,9 @@ const TrainerHeader = () => {
             sessionStorage.removeItem('userId');
             sessionStorage.removeItem('userType');
             sessionStorage.removeItem('activeMenu'); // Clear active menu on logout
-        }
-        setTimeout(() => {
             navigate(path);
-            hideLoader();
-        }, 500);
+           hideLoader()
+        }
     };
 
     return (

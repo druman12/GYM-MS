@@ -1,0 +1,122 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #FFFFFF; /* White background */
+    color: #333333; /* Dark Gray text */
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .card {
+    background-color: #FFFFFF;
+    padding: 1.5rem 2rem; /* Adjust padding */
+    border-radius: 0.75rem; /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.15); /* Subtle red glow shadow */
+    border: 2px solid #FF0000; /* Red border */
+    max-width: 450px;
+    width: 100%;
+    overflow: hidden; /* Ensure border contains elements */
+  }
+  
+  .header {
+    border-bottom: 1px solid rgba(255, 0, 0, 0.2); /* Light red border */
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #FF0000; /* Red text for header */
+  }
+  
+  .wifiIcon {
+    width: 4rem; /* 64px */
+    height: 4rem; /* 64px */
+    margin-bottom: 1rem;
+    animation: pulse-strong 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .title {
+    font-size: 2.25rem; /* Larger title */
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description {
+    font-size: 1.1rem; /* Slightly larger description */
+    opacity: 0.9;
+  }
+  
+  .content {
+    padding-top: 1rem; /* Add some space above content */
+  }
+  
+  .dumbbellIcon {
+    width: 3rem; /* 48px */
+    height: 3rem; /* 48px */
+    margin: 0 auto 1rem auto; /* Center and add bottom margin */
+    color: #333333; /* Dark Gray */
+    animation: lift 1.5s ease-in-out infinite;
+  }
+  
+  .motivationalTitle {
+    font-size: 1.5rem; /* Larger motivational text */
+    font-weight: 600; /* Semi-bold */
+    color: #333333; /* Dark Gray */
+    margin-bottom: 0.25rem;
+  }
+  
+  .motivationalText {
+    color: #555555; /* Medium-Dark Gray */
+    font-size: 1rem;
+  }
+  
+  .footer {
+    margin-top: 2rem; /* Add space above button */
+  }
+  
+  .retryButton {
+    background-color: #FF0000; /* Red background */
+    color: #FFFFFF; /* White text */
+    border: none;
+    padding: 0.8rem 2rem; /* Generous padding */
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.5rem; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .retryButton:hover {
+    background-color: #CC0000; /* Darker red on hover */
+  }
+  
+  .retryButton:active {
+    transform: scale(0.98); /* Slight shrink on click */
+  }
+  
+  /* Animations */
+  @keyframes pulse-strong {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(1.05); /* Subtle scale */
+    }
+  }
+  
+  @keyframes lift {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+       transform: translateY(-12px) rotate(-6deg); /* Increased lift/rotation */
+    }
+    75% {
+       transform: translateY(-12px) rotate(6deg); /* Increased lift/rotation */
+    }
+  }
+  

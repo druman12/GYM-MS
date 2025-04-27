@@ -1,18 +1,21 @@
 import "../../css/AboutUs.css";
 import { useState, useEffect } from 'react';
 import url from "../../URL/url"
+import {useLoading} from "../LoadingContext";
 
 
 const AboutUs = () => {
    const [AboutData, setAboutData] = useState("");
-
+  const { showLoader, hideLoader } = useLoading();
   useEffect(() => {
+    showLoader();
     fetch(url+'api/ownerdetails/')  // Replace with your actual API URL
       .then(response => response.json())
-      .then(data => setAboutData(data))
-      .catch(error => console.error('Error fetching hero data:', error));
-
-      console.log(AboutData)
+      .then(data =>setAboutData(data) )
+      .catch(error => console.error('Error fetching hero data:', error) )
+      .finally(()=> {
+        hideLoader()
+      }) 
   }, []);
 
   return (

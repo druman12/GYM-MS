@@ -3,9 +3,11 @@ import Calendar from "react-calendar"
 import "react-calendar/dist/Calendar.css"
 import "../../css/AttendanceCalendar.css" // Add custom styles
 import url from "../../URL/url"
+import {useLoading} from "../LoadingContext";
 
 const AttendanceCalendar = () => {
   const [attendanceData, setAttendanceData] = useState([])
+  const { showLoader, hideLoader } = useLoading();
   const [joiningDate, setJoiningDate] = useState(null)
   const [subscriptionEndDate, setSubscriptionEndDate] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -14,6 +16,7 @@ const AttendanceCalendar = () => {
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
+        showLoader()
         const response = await fetch(`${url}api/attendance/${memberId}/`)
         if (!response.ok) {
           throw new Error("Failed to fetch attendance data")
@@ -26,8 +29,10 @@ const AttendanceCalendar = () => {
         // Force dates to be interpreted in local timezone without time component
         setJoiningDate(new Date(data.joining_date + "T00:00:00"))
         setSubscriptionEndDate(new Date(data.subscription_end_date + "T00:00:00"))
+        hideLoader()
       } catch (error) {
         console.error("Error fetching attendance:", error)
+        hideLoader()
       }
     }
 

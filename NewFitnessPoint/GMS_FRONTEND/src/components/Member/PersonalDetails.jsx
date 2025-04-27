@@ -2,20 +2,24 @@ import '../../css/PersonalDetails.css';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import url from "../../URL/url"
+import {useLoading} from "../LoadingContext";
+
 
 const PersonalDetails = () => {
   const memberId = sessionStorage.getItem("userId");
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [PersonalDetail,setPersonalDetail]=useState(null);
+  const { showLoader, hideLoader } = useLoading();
 
   const url1 = `${url}api/member/${memberId}/`;
 
   useEffect(() => {
+    showLoader()
     fetch(url1)
       .then(response => response.json())
       .then(data => {
         setPersonalDetail(data);
-        setLoading(false);
+        // setLoading(false);
 
         // Check for subscription end date warning
         if (data?.subscription_end_date) {
@@ -32,13 +36,15 @@ const PersonalDetails = () => {
       })
       .catch(error => {
         console.error('Error fetching member data:', error);
-        setLoading(false);
-      });
+        
+      }).finally(()=>{
+        hideLoader()
+      })
 }, [url1]);
 
 
 
-if (loading) return <p>Loading...</p>;
+// if (loading) return <p>Loading...</p>;
   return (
     <div className="personal-details-container">
       <h3 className="personal-details-title">Personal Details</h3>

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import "../../css/DietList.css";
 import url from "../../URL/url"
+import {useLoading} from "../LoadingContext";
 
 const DietList = () => {
   const [dietImage, setDietImage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const { showLoader , hideLoader , isLoading}=useLoading();
   const [error, setError] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const member_id = sessionStorage.getItem("userId");
@@ -12,6 +14,7 @@ const DietList = () => {
   useEffect(() => {
     const fetchDietChart = async () => {
       try {
+        showLoader()
         const response = await fetch(
           `${url}api/membermedicaldetails/${member_id}/`
         );
@@ -19,16 +22,17 @@ const DietList = () => {
           throw new Error("Failed to fetch diet chart");
         }
         const data = await response.json();
-        console.log("diet"+data)
+        
         if (data) {
-          setDietImage(data.diet_chart_image); // Assuming the first item contains the image
+          setDietImage(data.diet_chart_image); 
+         
         } else {
           throw new Error("No diet chart available");
         }
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false);
+        hideLoader()
       }
     };
 
@@ -40,7 +44,7 @@ const DietList = () => {
     <div className="diet-section">
       <h2>Diet List</h2>
       <div className="diet-container">
-        {loading && <p>Loading...</p>}
+        {isLoading && <p>Loading...</p>}
         {error && <p className="error-text">{error}</p>}
         {dietImage && (
           <>

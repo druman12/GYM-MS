@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import "../css/TrainersSection.css";
 import url from "../URL/url"
+import { useLoading } from "./LoadingContext";
 
 const TrainersSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState(null);
   const [trainers, setTrainers] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  // const [loading, setLoading] = useState(true);
+const { showLoader , hideLoader} = useLoading();
   useEffect(() => {
+    showLoader()
     fetch(url+'api/trainers/')
       .then(response => response.json())
       .then(data => {
         console.log(data);
         setTrainers(data);
-        setLoading(false);
+        // setLoading(false);
+        hideLoader()
       })
       .catch(error => {
         console.error('Error fetching trainer data:', error);
-        setLoading(false);
+        hideLoader()
       });
   }, []);
 
@@ -55,9 +58,9 @@ const TrainersSection = () => {
     return "carousel-slide";
   };
 
-  if (loading) {
-    return <p className="loading-text">Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p className="loading-text">Loading...</p>;
+  // }
 
   if (trainers.length === 0) {
     return <p className="loading-text">No trainers available.</p>;

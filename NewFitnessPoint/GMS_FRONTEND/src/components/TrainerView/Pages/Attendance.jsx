@@ -4,12 +4,15 @@ import Sidebar from "../SideBar";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import url from "../../../URL/url"
+import {useLoading} from "../../LoadingContext";
+
 
 function Attendance() {
   const [isAbsent, setIsAbsent] = useState({});
   const [currentDate, setCurrentDate] = useState("");
   const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const { showLoader, hideLoader } = useLoading();
   const [refresh, setRefresh] = useState(false);
 
   const URL = url+"api/attendance/today/";
@@ -19,16 +22,22 @@ function Attendance() {
   const url1 = `${url}api/trainer/${trainer_id}/`;
 
   useEffect(() => {
+    showLoader()
     const today = new Date().toISOString().split("T")[0];
     setCurrentDate(today);
+    
     fetch(url1)
       .then((response) => response.json())
       .then((data) => setTrainer(data))
-      .catch((error) => console.error("Error fetching trainer data:", error));
+      .catch((error) => console.error("Error fetching trainer data:", error))
+      .finally(()=>{
+        hideLoader()
+      })
   }, [url1]);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
+    showLoader()
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
@@ -42,7 +51,7 @@ function Attendance() {
         setIsAbsent(initialAbsentStatus);
       })
       .catch((error) => console.error("Error fetching trainer data:", error))
-      .finally(() => setLoading(false));
+      .finally(() => hideLoader());
   }, [refresh]);
   
   const markAttendance = async (memberId, trainerId, currentStatus) => {
@@ -53,6 +62,7 @@ function Attendance() {
     };
   
     try {
+      showLoader()
       const response = await fetch(
         "http://127.0.0.1:8000/api/attendance/make/",
         {
@@ -62,7 +72,8 @@ function Attendance() {
           },
           body: JSON.stringify(payload),
         }
-      );  
+      );
+      hideLoader()  
       if (response.ok) {
         setIsAbsent((prevState) => ({
           ...prevState,
@@ -79,9 +90,9 @@ function Attendance() {
     }
   };
   
-  if(loading){
-    return <h1>Loading...</h1>
-  }
+  // if(loading){
+  //   return <h1>Loading...</h1>
+  // }
 
   return (
     <div className="attendance-container">

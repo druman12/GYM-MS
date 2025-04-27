@@ -1,15 +1,22 @@
 import '../css/HeroSection.css';
 import { useState, useEffect } from 'react';
 import url from "../URL/url"
+import {useLoading} from "./LoadingContext";
 
 function HeroSection() {
   const [heroData, setHeroData] = useState(null);
+  const { showLoader, hideLoader } = useLoading();
+
 
   useEffect(() => {
+    showLoader()
     fetch(url+'api/ownerdetails/')
       .then(response => response.json())
       .then(data => setHeroData(data))
-      .catch(error => console.error('Error fetching hero data:', error));
+      .catch(error => console.error('Error fetching hero data:', error))
+      .finally(()=> {
+        hideLoader()
+      })
   }, []);
 
   const backgroundImage = heroData?.heroimage

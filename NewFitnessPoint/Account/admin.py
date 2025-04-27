@@ -37,8 +37,14 @@ class MemberAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Member, MemberAdmin)
 
+@admin.register(models.Owner)
+class OwnerAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        # Allow add only if no Owner exists
+        if models.Owner.objects.exists():
+            return False
+        return True
 
 admin.site.register(models.MemberMedicalDetails)
-admin.site.register(models.Owner)
 admin.site.register(models.Trainer)
 admin.site.register(models.Gallery)

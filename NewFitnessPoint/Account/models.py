@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime, timedelta , date
+from django.forms import ValidationError
 from django.utils import timezone  # type: ignore 
 import cloudinary
 import cloudinary.models
@@ -8,7 +9,7 @@ import cloudinary.models
 class Member(models.Model):
     member_id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
-    password=models.CharField(max_length=255,blank=True, null=True , default="None")
+    password=models.CharField(max_length=255,blank=True, null=True , default="None" , editable=False)
     dateofbirth=models.DateField(default='2000-01-01')
     gender = models.CharField(max_length=10,choices=[('Male', 'Male'),('Female', 'Female')],default='Male')
     occupation=models.CharField(max_length=120)
@@ -18,7 +19,7 @@ class Member(models.Model):
     address = models.TextField() 
     pincode = models.CharField(max_length=6 , default='387001')  
     mobile_no = models.CharField(max_length=10)
-    email= models.CharField(max_length=150)
+    email= models.CharField(max_length=150 , unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     SUBSCRIPTION_CHOICES = [
@@ -66,7 +67,13 @@ class Member(models.Model):
             'height':self.height,
             'occupation':self.occupation,
         }
+    def clean(self):
+        super().clean()
+        today = timezone.now().date()
+        eighty_years_ago = today.replace(year=today.year - 80)
 
+        if self.dateofbirth < eighty_years_ago:
+            raise ValidationError({'dateofbirth': "Member's birthdate must be within the last 80 years."})
     def __str__(self):
         return f"{self.member_id}-{self.name}"
 
@@ -134,19 +141,14 @@ class Owner(models.Model):
     instagramLink=models.CharField(max_length=120)
     twitterLink=models.CharField(max_length=120)
 
-    def save(self, *args, **kwargs):
-        if not self.pk and Owner.objects.exists():
-            raise ValueError("Only one Owner instance is allowed.")
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return f"{self.name}"
     
 class Trainer(models.Model):
     trainer_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=120)
-    password=models.CharField(max_length=255,blank=True, null=True , default="None")
-    email= models.CharField(max_length=150)
+    password=models.CharField(max_length=255,blank=True, null=True , default="None" , editable=False)
+    email= models.CharField(max_length=150 , unique=True , null=False)
     dateofbirth=models.DateField(default='2000-01-01')
     experience=models.PositiveIntegerField(default=1)
     trainer_info=models.TextField()
@@ -155,6 +157,13 @@ class Trainer(models.Model):
         folder="images/TrainerProfile",
         help_text="Upload a profile photo"
     )
+    def clean(self):
+        super().clean()
+        today = timezone.now().date()
+        eighty_years_ago = today.replace(year=today.year - 80)
+
+        if self.dateofbirth < eighty_years_ago:
+            raise ValidationError({'dateofbirth': "Trainer's birthdate must be within the last 80 years."})
 
     def __str__(self):
         return f"{self.trainer_id}_{self.name}"

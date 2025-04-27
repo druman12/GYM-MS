@@ -1,27 +1,30 @@
 import '../css/OwnerSection.css'
 import { useState, useEffect } from 'react';
 import url from "../URL/url"
+import { useLoading } from './LoadingContext';
 
 function OwnerSection() {
   const [OwnerData, setOwnerData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const { showLoader , hideLoader} = useLoading();
 
   useEffect(() => {
+    showLoader()
     fetch(url+'api/ownerdetails/')  
       .then(response => response.json())
       .then(data => {
         setOwnerData(data);
-        setLoading(false);
+        hideLoader()
       })
       .catch(error => {
         console.error('Error fetching Owner data:', error);
-        setLoading(false);
+        hideLoader()
       });
   }, []);
 
-  if (loading) {
-    return <p className="loading-text">Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p className="loading-text">Loading...</p>;
+  // }
 
   return (
     <section className="owner-section">

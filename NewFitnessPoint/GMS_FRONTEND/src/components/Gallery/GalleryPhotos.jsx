@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
 import "../../css/GalleryPhotos.css"
 import url from "../../URL/url"
+import {useLoading} from "../LoadingContext";
 
 const GalleryPhotos = () => {
   const [images, setImages] = useState([])
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const { showLoader , hideLoader}=useLoading();
 
   useEffect(() => {
+    
     const fetchImages = async () => {
+      showLoader()
       try {
-        setLoading(true)
         const response = await fetch(url+"api/gallery/")
 
         if (!response.ok) {
@@ -19,24 +21,25 @@ const GalleryPhotos = () => {
 
         const data = await response.json()
         setImages(data)
-        setLoading(false)
+        hideLoader()
       } catch (error) {
         console.error("Error fetching images:", error)
         setError("Failed to load images. Please try again later.")
-        setLoading(false)
+        // setLoading(false)
+        hideLoader()
       }
     }
 
     fetchImages()
   }, [])
 
-  if (loading) {
-    return (
-      <div className="gallery-container">
-        <div className="loading-message">Loading images...</div>
-      </div>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="gallery-container">
+  //       <div className="loading-message">Loading images...</div>
+  //     </div>
+  //   )
+  // }
 
   if (error) {
     return (

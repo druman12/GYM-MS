@@ -1,30 +1,35 @@
 /* eslint-disable react/prop-types */
 import '../../css/ExerciseList.css';
 import { useEffect, useState } from "react";
+import { useLoading } from '../LoadingContext';
+
 import url from "../../URL/url"
 
 const ExerciseList = ({ member_id: propMemberId}) => {
+  const { showLoader, hideLoader , isLoading} = useLoading();
   const extractedMemberId = propMemberId && typeof propMemberId === "object" ? propMemberId.member_id : propMemberId;
   const member_id = extractedMemberId || sessionStorage.getItem("userId");
 
   const isMember = propMemberId ? "member" : sessionStorage.getItem("userType");
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [exerciseList, setExerciseList] = useState(null);
   const [selectedDay, setSelectedDay] = useState(1);
   const [exercises, setExercises] = useState([]);
-  const [loadingExercises, setLoadingExercises] = useState(false);
+  // const [loadingExercises, setLoadingExercises] = useState(false);
 
   const url1 = isMember === "member"
     ? `${url}api/exercise/member/${member_id}/workoutplan/`
     : null;
 
   useEffect(() => {
+    showLoader()
     if (!url1) {
-      setLoading(false);
+      // setLoading(false);
+      hideLoader();
       return;
     }
-
+    
     fetch(url1)
       .then(response => {
         if (!response.ok) {
@@ -34,7 +39,7 @@ const ExerciseList = ({ member_id: propMemberId}) => {
       })
       .then(data => {
         setExerciseList(data);
-        setLoading(false);
+        hideLoader();
 
         if (data?.workout_plans?.length > 0) {
           fetchExerciseDetails(1);
@@ -42,12 +47,14 @@ const ExerciseList = ({ member_id: propMemberId}) => {
       })
       .catch(error => {
         console.error("Error fetching WorkoutPlan data:", error);
-        setLoading(false);
+        // setLoading(false);
+        hideLoader()
       });
   }, [url1]);
 
   const fetchExerciseDetails = (day) => {
-    setLoadingExercises(true);
+    // setLoadingExercises(true);
+    showLoader()
     setSelectedDay(day);
 
     fetch(`${url}api/exercise/member/${member_id}/day/${day}/`)
@@ -59,17 +66,18 @@ const ExerciseList = ({ member_id: propMemberId}) => {
       })
       .then(data => {
         setExercises(data.exercises);
-        setLoadingExercises(false);
-        console.log("122" + data.exercises)
+        // setLoadingExercises(false);
+        hideLoader()
       })
       .catch(error => {
         console.error(`Error fetching exercises for day ${day}:`, error);
-        setLoadingExercises(false);
+        // setLoadingExercises(false);
+        hideLoader()
         setExercises([]);
       });
   };
 
-  if (loading) return <p>Loading workout...</p>;
+  // if (loading) return <p>Loading workout...</p>;
 
   const focusAreas = exerciseList?.workout_plans?.[0]?.focus_areas || {};
 
@@ -90,7 +98,7 @@ const ExerciseList = ({ member_id: propMemberId}) => {
         </div>
 
         <div className="exercise-details">
-          {loadingExercises ? (
+          {isLoading ? (
             <p>Loading exercises...</p>
           ) : exercises.length > 0 ? (
             <div className="exercises-list">
